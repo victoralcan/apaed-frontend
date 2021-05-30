@@ -9,6 +9,7 @@ interface ILoginProps extends StateProps, DispatchProps {}
 
 class Login extends React.Component<ILoginProps> {
   handleSubmit = (event, errors, { username, password }) => {
+    event.persist();
     if (errors.length === 0) console.log('Loguei!');
   };
 
