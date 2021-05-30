@@ -49,6 +49,10 @@ div[class*='col-'] {
     padding: 0;
 }
 
+#root {
+    height: 100vh;
+}
+
 :root {
     --white: #fff;
     --pastel: #fdf0ee;
