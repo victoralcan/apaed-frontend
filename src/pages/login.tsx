@@ -4,6 +4,7 @@ import '../styles/pages/login.scss';
 import { connect } from 'react-redux';
 import { Button, Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 import { AvField, AvForm } from 'availity-reactstrap-validation';
+import { Link } from 'react-router-dom';
 
 interface ILoginProps extends StateProps, DispatchProps {}
 
@@ -16,7 +17,7 @@ class Login extends React.Component<ILoginProps> {
   render() {
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
-        <Card className="w-25">
+        <Card className="w-25 shadow-lg">
           <CardHeader className="bg-dark text-white">Login</CardHeader>
           <CardBody>
             <AvForm onSubmit={this.handleSubmit}>
@@ -53,9 +54,11 @@ class Login extends React.Component<ILoginProps> {
                 </Col>
               </Row>
               <div className="mt-1">&nbsp;</div>
-              <Button color="secondary" type="submit">
-                Logar
-              </Button>
+              <Link to="/home">
+                <Button color="secondary" type="submit">
+                  Logar
+                </Button>
+              </Link>
             </AvForm>
           </CardBody>
         </Card>
