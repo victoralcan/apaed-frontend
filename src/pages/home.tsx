@@ -40,7 +40,7 @@ class Home extends React.Component<IHomeProps> {
             </tr>
           </tbody>
         </Table>
-        <div>uopa</div>
+        <div></div>
       </>
     );
   }
