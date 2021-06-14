@@ -55,7 +55,7 @@ class Login extends React.Component<ILoginProps> {
               </Row>
               <div className="mt-1">&nbsp;</div>
               <Link to="/home">
-                <Button color="secondary" type="submit">
+                <Button color="success" type="submit">
                   Logar
                 </Button>
               </Link>
