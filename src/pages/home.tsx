@@ -10,7 +10,7 @@ class Home extends React.Component<IHomeProps> {
   render() {
     return (
       <>
-        <Table>
+        <Table bordered responsive striped>
           <thead>
             <tr>
               <th>ID</th>
@@ -40,7 +40,7 @@ class Home extends React.Component<IHomeProps> {
             </tr>
           </tbody>
         </Table>
-        <div>blablabla</div>
+        <div>uopa</div>
       </>
     );
   }
