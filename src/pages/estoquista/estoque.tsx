@@ -1,12 +1,12 @@
 import React from 'react';
 
-import '../styles/pages/login.scss';
+import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
 import { Table } from 'reactstrap';
 
 interface IHomeProps extends StateProps, DispatchProps {}
 
-class Home extends React.Component<IHomeProps> {
+class Estoque extends React.Component<IHomeProps> {
   render() {
     return (
       <>
@@ -51,4 +51,4 @@ const mapDispatchToProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Estoque);

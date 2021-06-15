@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/pages/login.scss';
+import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

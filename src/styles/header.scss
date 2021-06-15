@@ -1,18 +1,6 @@
 .header-option {
   padding: 20px;
-  color: var(--black);
   font-size: large;
   font-weight: bold;
   flex: 1;
-  &:hover {
-    color: var(--pastel);
-  }
-}
-
-a p {
-  color: var(--gray);
-}
-
-p, h5 {
-  margin: 0 !important;
 }

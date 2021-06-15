@@ -24,16 +24,16 @@ function Header(props: IHeaderProps) {
       </NavbarToggler>
       <Collapse isOpen={isOpen} navbar className="w-100">
         <Nav className="d-flex w-100" navbar>
-          <Link className="header-option text-center" to="/estoque" style={{ textDecoration: 'none' }}>
+          <Link className="header-option text-center" to="/user/estoque" style={{ textDecoration: 'none' }}>
             <h6 className="text-white">Estoque</h6>
           </Link>
-          <Link className="header-option text-center" to="/fornecedor" style={{ textDecoration: 'none' }}>
+          <Link className="header-option text-center" to="/user/fornecedor" style={{ textDecoration: 'none' }}>
             <h6 className="text-white">Fornecedor</h6>
           </Link>
-          <Link className="header-option text-center" to="/local" style={{ textDecoration: 'none' }}>
+          <Link className="header-option text-center" to="/user/local" style={{ textDecoration: 'none' }}>
             <h6 className="text-white">Local</h6>
           </Link>
-          <Link className="header-option text-center" to="/produto" style={{ textDecoration: 'none' }}>
+          <Link className="header-option text-center" to="/user/produto" style={{ textDecoration: 'none' }}>
             <h6 className="text-white">Produto</h6>
           </Link>
           <Link className="header-option text-center" to="/" style={{ textDecoration: 'none' }}>
