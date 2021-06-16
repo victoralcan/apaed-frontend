@@ -8,13 +8,11 @@ import Estoque from './estoque';
 import Fornecedor from './fornecedor';
 
 const Routes = ({ match }) => (
-  <div>
-    <Switch>
-      <ErrorBoundaryRoute path={`${match.url}/estoque`} component={Estoque} />
-      <ErrorBoundaryRoute path={`${match.url}/fornecedor`} component={Fornecedor} />
-      <ErrorBoundaryRoute component={PageNotFound} />
-    </Switch>
-  </div>
+  <Switch>
+    <ErrorBoundaryRoute path={`${match.url}/estoque`} component={Estoque} />
+    <ErrorBoundaryRoute path={`${match.url}/fornecedor`} component={Fornecedor} />
+    <ErrorBoundaryRoute component={PageNotFound} />
+  </Switch>
 );
 
 export default Routes;

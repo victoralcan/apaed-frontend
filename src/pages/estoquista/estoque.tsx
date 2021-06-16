@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
-import { Table } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 
 interface IHomeProps extends StateProps, DispatchProps {}
 
@@ -10,6 +10,9 @@ class Estoque extends React.Component<IHomeProps> {
   render() {
     return (
       <>
+        <div className="d-flex h-25 align-items-end">
+          <Button className="mb-4">Pesquisar</Button>
+        </div>
         <Table bordered responsive striped>
           <thead>
             <tr>
@@ -22,6 +25,86 @@ class Estoque extends React.Component<IHomeProps> {
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>1</td>
+              <td>Arroz</td>
+              <td>30 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>2</td>
+              <td>Feijao</td>
+              <td>20 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
+            <tr>
+              <th scope="row">1</th>
+              <td>1</td>
+              <td>Arroz</td>
+              <td>30 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>2</td>
+              <td>Feijao</td>
+              <td>20 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
+            <tr>
+              <th scope="row">1</th>
+              <td>1</td>
+              <td>Arroz</td>
+              <td>30 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>2</td>
+              <td>Feijao</td>
+              <td>20 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
+            <tr>
+              <th scope="row">1</th>
+              <td>1</td>
+              <td>Arroz</td>
+              <td>30 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>2</td>
+              <td>Feijao</td>
+              <td>20 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
+            <tr>
+              <th scope="row">1</th>
+              <td>1</td>
+              <td>Arroz</td>
+              <td>30 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>2</td>
+              <td>Feijao</td>
+              <td>20 KG</td>
+              <td>20/10/2021</td>
+              <td>Seta</td>
+            </tr>
             <tr>
               <th scope="row">1</th>
               <td>1</td>

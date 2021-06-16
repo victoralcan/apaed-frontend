@@ -14,11 +14,10 @@ class Fornecedor extends React.Component<IFornecedorProps> {
         <Card className="w-25 shadow-lg">
           <CardHeader className="bg-dark text-white">Fornecedor</CardHeader>
           <CardBody>
-            <div className="mt-1">&nbsp;</div>
-            <Button color="success" type="submit">
+            <Button className="mb-4 float-right" color="success">
               Adicionar
             </Button>
-            <Table dark hover>
+            <Table hover>
               <tbody>
                 <tr>
                   <th scope="row">Fornecedor 1</th>
