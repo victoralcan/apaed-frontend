@@ -6,6 +6,7 @@ import { ColorPallet } from '../../model/enum/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGripLines } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import { logout } from '../../reducers/authentication';
 
 interface IHeaderProps extends StateProps, DispatchProps {}
 
@@ -36,7 +37,7 @@ function Header(props: IHeaderProps) {
           <Link className="header-option text-center" to="/user/produto" style={{ textDecoration: 'none' }}>
             <h6 className="text-white">Produto</h6>
           </Link>
-          <Link className="header-option text-center" to="/" style={{ textDecoration: 'none' }}>
+          <Link className="header-option text-center" to="/" style={{ textDecoration: 'none' }} onClick={props.logout}>
             <h6 className="text-white">Sair</h6>
           </Link>
         </Nav>
@@ -46,9 +47,12 @@ function Header(props: IHeaderProps) {
 }
 
 const mapStateToProps = () => ({});
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  logout,
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
+// @ts-ignore
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

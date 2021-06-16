@@ -1,7 +1,6 @@
-import axios from 'axios';
-
 import { FAILURE, REQUEST, SUCCESS } from './action-type.util';
 import APIUrl from '../../config/api';
+import { IAccount } from '../model/account.model';
 
 export const ACTION_TYPES = {
   LOGIN: 'authentication/LOGIN',
@@ -15,9 +14,8 @@ const initialState = {
   isAuthenticated: false,
   loginSuccess: false,
   loginError: false, // Errors returned from server side
-  account: {} as any,
+  account: {} as IAccount,
   sessionHasBeenFetched: false,
-  idToken: null as string,
 };
 
 export type AuthenticationState = Readonly<typeof initialState>;
@@ -56,7 +54,7 @@ export default (state: AuthenticationState = initialState, action): Authenticati
         ...initialState,
       };
     case SUCCESS(ACTION_TYPES.GET_SESSION): {
-      const isAuthenticated = action.payload && action.payload.data && action.payload.data.activated;
+      const isAuthenticated = action.payload && action.payload.data && action.payload.data.active;
       return {
         ...state,
         isAuthenticated,
@@ -79,30 +77,25 @@ export default (state: AuthenticationState = initialState, action): Authenticati
 export const getSession = () => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.GET_SESSION,
-    payload: axios.get('api/account'),
+    payload: APIUrl.get('session'),
   });
 };
 
-export const login = (username, password, rememberMe = false) => async (dispatch) => {
+export const login = (username, password) => async (dispatch) => {
   const result = await dispatch({
     type: ACTION_TYPES.LOGIN,
-    payload: axios.post('api/authenticate', { username, password, rememberMe }),
+    payload: APIUrl.post('session', { username, password }),
   });
-  const bearerToken = result.value.headers.authorization;
-  if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
-    const jwt = bearerToken.slice(7, bearerToken.length);
+  const token = result.value.data.token;
+  if (token) {
+    const bearerToken = `Bearer ${token}`;
     APIUrl.defaults.headers.common.Authorization = bearerToken;
-    if (rememberMe) {
-      localStorage.setItem('jwt_access_token', jwt);
-    } else {
-      sessionStorage.setItem('jwt_access_token', jwt);
-    }
+    localStorage.setItem('jwt_access_token', bearerToken);
   }
   await dispatch(getSession());
 };
 
 export const clearAuthToken = () => {
-  sessionStorage.removeItem('jwt_access_token');
   localStorage.removeItem('jwt_access_token');
   delete APIUrl.defaults.headers.common.Authorization;
 };
