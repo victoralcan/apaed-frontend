@@ -3,6 +3,8 @@ import React from 'react';
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
 import { Button, Table } from 'reactstrap';
+import { faArrowAltCircleRight, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IHomeProps extends StateProps, DispatchProps {}
 
@@ -31,7 +33,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Arroz</td>
               <td>30 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -39,7 +48,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Feijao</td>
               <td>20 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">1</th>
@@ -47,7 +63,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Arroz</td>
               <td>30 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -55,7 +78,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Feijao</td>
               <td>20 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">1</th>
@@ -63,7 +93,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Arroz</td>
               <td>30 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -71,7 +108,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Feijao</td>
               <td>20 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">1</th>
@@ -79,7 +123,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Arroz</td>
               <td>30 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -87,7 +138,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Feijao</td>
               <td>20 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">1</th>
@@ -95,7 +153,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Arroz</td>
               <td>30 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -103,7 +168,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Feijao</td>
               <td>20 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">1</th>
@@ -111,7 +183,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Arroz</td>
               <td>30 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -119,7 +198,14 @@ class Estoque extends React.Component<IHomeProps> {
               <td>Feijao</td>
               <td>20 KG</td>
               <td>20/10/2021</td>
-              <td>Seta</td>
+              <td>
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>{' '}
+                <Button outline color="secondary">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>{' '}
+              </td>
             </tr>
           </tbody>
         </Table>
