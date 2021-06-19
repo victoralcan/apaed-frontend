@@ -8,6 +8,7 @@ import { faGripLines } from '@fortawesome/free-solid-svg-icons/faGripLines';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import { faInfo } from '@fortawesome/free-solid-svg-icons/faInfo';
 import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
+import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons/faArrowAltCircleRight';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 export const loadIcons = () => {
@@ -22,5 +23,6 @@ export const loadIcons = () => {
     faChevronRight,
     faInfo,
     faEdit,
+    faArrowAltCircleRight,
   );
 };

@@ -2,28 +2,25 @@ import React from 'react';
 
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
-interface IFornecedorProps extends StateProps, DispatchProps {}
+interface ISetorProps extends StateProps, DispatchProps {}
 
-class Fornecedor extends React.Component<IFornecedorProps> {
+class Setor extends React.Component<ISetorProps> {
   render() {
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
         <Card className="w-25 shadow-lg">
-          <CardHeader className="bg-dark text-white">Fornecedores</CardHeader>
+          <CardHeader className="bg-dark text-white">Setores</CardHeader>
           <CardBody>
-            <Link to="/user/adicionarFornecedor">
-              <Button className="mb-4 float-right" color="success">
-                Adicionar
-              </Button>
-            </Link>
+            <Button className="mb-4 float-right" color="success">
+              Adicionar
+            </Button>
             <Table hover>
               <tbody>
                 <tr>
-                  <th scope="row">Fornecedor 1</th>
+                  <th scope="row">Cozinha</th>
                   <td>
                     <Button color="info">
                       <FontAwesomeIcon icon={faInfo} />
@@ -31,7 +28,7 @@ class Fornecedor extends React.Component<IFornecedorProps> {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Fornecedor 2</th>
+                  <th scope="row">Panificação</th>
                   <td>
                     <Button color="info">
                       <FontAwesomeIcon icon={faInfo} />
@@ -39,7 +36,23 @@ class Fornecedor extends React.Component<IFornecedorProps> {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Doador 2</th>
+                  <th scope="row">Limpeza</th>
+                  <td>
+                    <Button color="info">
+                      <FontAwesomeIcon icon={faInfo} />
+                    </Button>{' '}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Casa carinho</th>
+                  <td>
+                    <Button color="info">
+                      <FontAwesomeIcon icon={faInfo} />
+                    </Button>{' '}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Bezerra de menezes</th>
                   <td>
                     <Button color="info">
                       <FontAwesomeIcon icon={faInfo} />
@@ -61,4 +74,4 @@ const mapDispatchToProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Fornecedor);
+export default connect(mapStateToProps, mapDispatchToProps)(Setor);
