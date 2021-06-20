@@ -28,8 +28,9 @@ class AddProduto extends React.Component<IAddProdutoProps> {
                 <br></br>
                 <Col md="4">
                   <FormGroup>
-                    <Label>Quantidade em estoque</Label>
-                    <Input placeholder="Autopreencher"></Input>
+                    <Link to="">
+                      <Button collor="success">Novo tipo de produto</Button>
+                    </Link>
                   </FormGroup>
                 </Col>
               </Row>
