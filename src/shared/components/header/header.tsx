@@ -34,7 +34,7 @@ function Header(props: IHeaderProps) {
           <Link className="header-option text-center" to="/user/setor" style={{ textDecoration: 'none' }}>
             <h6 className="text-white">Setor</h6>
           </Link>
-          <Link className="header-option text-center" to="/user/produto" style={{ textDecoration: 'none' }}>
+          <Link className="header-option text-center" to="/user/transferir" style={{ textDecoration: 'none' }}>
             <h6 className="text-white">Produto</h6>
           </Link>
           <Link className="header-option text-center" to="/" style={{ textDecoration: 'none' }} onClick={props.logout}>

@@ -2,6 +2,7 @@ import React from 'react';
 
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { faArrowAltCircleRight, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -37,9 +38,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -52,9 +55,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -67,9 +72,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -82,9 +89,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -97,9 +106,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -112,9 +123,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -127,9 +140,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -142,9 +157,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -157,9 +174,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -172,9 +191,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -187,9 +208,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
             <tr>
@@ -202,9 +225,11 @@ class Estoque extends React.Component<IHomeProps> {
                 <Button outline color="secondary">
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>{' '}
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                </Button>{' '}
+                <Link to="/user/transferir">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  </Button>{' '}
+                </Link>
               </td>
             </tr>
           </tbody>
