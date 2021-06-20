@@ -6,11 +6,18 @@ import { Link } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { faArrowAltCircleRight, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getStock } from '../../shared/reducers/stock';
+import { IRootState } from '../../shared/reducers';
 
-interface IHomeProps extends StateProps, DispatchProps {}
+interface IStockProps extends StateProps, DispatchProps {}
 
-class Estoque extends React.Component<IHomeProps> {
+class Stock extends React.Component<IStockProps> {
+  componentDidMount() {
+    this.props.getStock();
+  }
+
   render() {
+    const { stock } = this.props;
     return (
       <>
         <div className="d-flex h-25 align-items-end">
@@ -28,245 +35,44 @@ class Estoque extends React.Component<IHomeProps> {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>1</td>
-              <td>Arroz</td>
-              <td>30 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>2</td>
-              <td>Feijao</td>
-              <td>20 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>1</td>
-              <td>Arroz</td>
-              <td>30 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>2</td>
-              <td>Feijao</td>
-              <td>20 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>1</td>
-              <td>Arroz</td>
-              <td>30 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>2</td>
-              <td>Feijao</td>
-              <td>20 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>1</td>
-              <td>Arroz</td>
-              <td>30 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>2</td>
-              <td>Feijao</td>
-              <td>20 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>1</td>
-              <td>Arroz</td>
-              <td>30 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>2</td>
-              <td>Feijao</td>
-              <td>20 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>1</td>
-              <td>Arroz</td>
-              <td>30 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>2</td>
-              <td>Feijao</td>
-              <td>20 KG</td>
-              <td>20/10/2021</td>
-              <td>
-                <Link to="/user/editarProduto">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>{' '}
-                </Link>
-                <Link to="/user/transferir">
-                  <Button outline color="secondary">
-                    <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                  </Button>{' '}
-                </Link>
-              </td>
-            </tr>
+            {stock &&
+              stock.map((product) => (
+                <tr key={product.product_id}>
+                  <th scope="row">{product.id}</th>
+                  <td>{product.ncm_code}</td>
+                  <td>{product.name}</td>
+                  <td>{product.amount}</td>
+                  <td>{new Date(product.expiration_date).toUTCString()}</td>
+                  <td>
+                    <Link to="/user/editarProduto">
+                      <Button outline color="secondary">
+                        <FontAwesomeIcon icon={faEdit} />
+                      </Button>{' '}
+                    </Link>
+                    <Link to="/user/transferir">
+                      <Button outline color="secondary">
+                        <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                      </Button>{' '}
+                    </Link>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
-        <div></div>
       </>
     );
   }
 }
-const mapStateToProps = () => ({});
-const mapDispatchToProps = {};
+
+const mapStateToProps = (store: IRootState) => ({
+  stock: store.stock.stock,
+});
+const mapDispatchToProps = {
+  getStock,
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Estoque);
+// @ts-ignore
+export default connect(mapStateToProps, mapDispatchToProps)(Stock);
