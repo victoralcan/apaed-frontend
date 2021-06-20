@@ -57,7 +57,7 @@ class Transferir extends React.Component<ITransferirProps> {
               </Button>
             </Link>
             <Link to="/user/estoque">
-              <Button className="mb-4 float-right" color="danger">
+              <Button className="mb-4 float-left" color="danger">
                 Cancelar
               </Button>
             </Link>

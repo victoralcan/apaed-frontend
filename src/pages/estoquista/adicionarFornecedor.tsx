@@ -50,6 +50,11 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
                 Confirmar
               </Button>
             </Link>
+            <Link to="/user/fornecedor">
+              <Button className="mb-4 float-left" color="danger">
+                Cancelar
+              </Button>
+            </Link>
           </CardBody>
         </Card>
       </div>
