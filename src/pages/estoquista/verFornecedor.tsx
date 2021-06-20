@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Card, CardBody, CardHeader, Button } from 'reactstrap';
 
-interface IAddFornecedorProps extends StateProps, DispatchProps {}
+interface IVerProps extends StateProps, DispatchProps {}
 
-class AddFornecedor extends React.Component<IAddFornecedorProps> {
+class VerFornecedor extends React.Component<IVerProps> {
   render() {
     return (
       <div className="d-flex h-150 align-items-center justify-content-center">
@@ -46,8 +46,8 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
               </FormGroup>
             </Form>
             <Link to="/user/fornecedor">
-              <Button className="mb-4 float-right" color="success">
-                Confirmar
+              <Button className="mb-4 float-right" color="danger">
+                Voltar
               </Button>
             </Link>
           </CardBody>
@@ -63,4 +63,4 @@ const mapDispatchToProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddFornecedor);
+export default connect(mapStateToProps, mapDispatchToProps)(VerFornecedor);

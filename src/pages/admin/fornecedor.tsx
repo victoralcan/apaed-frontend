@@ -25,31 +25,25 @@ class Fornecedor extends React.Component<IFornecedorProps> {
                 <tr>
                   <th scope="row">Fornecedor 1</th>
                   <td>
-                    <Link to="/user/verFornecedor">
-                      <Button color="info">
-                        <FontAwesomeIcon icon={faInfo} />
-                      </Button>{' '}
-                    </Link>
+                    <Button color="info">
+                      <FontAwesomeIcon icon={faInfo} />
+                    </Button>{' '}
                   </td>
                 </tr>
                 <tr>
                   <th scope="row">Fornecedor 2</th>
                   <td>
-                    <Link to="/user/verFornecedor">
-                      <Button color="info">
-                        <FontAwesomeIcon icon={faInfo} />
-                      </Button>{' '}
-                    </Link>
+                    <Button color="info">
+                      <FontAwesomeIcon icon={faInfo} />
+                    </Button>{' '}
                   </td>
                 </tr>
                 <tr>
                   <th scope="row">Doador 2</th>
                   <td>
-                    <Link to="/user/verFornecedor">
-                      <Button color="info">
-                        <FontAwesomeIcon icon={faInfo} />
-                      </Button>{' '}
-                    </Link>
+                    <Button color="info">
+                      <FontAwesomeIcon icon={faInfo} />
+                    </Button>{' '}
                   </td>
                 </tr>
               </tbody>
