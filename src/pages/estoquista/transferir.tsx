@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Card, CardBody, CardHeader, Button, Col, Row } from 'reactstrap';
 
-interface IAddFornecedorProps extends StateProps, DispatchProps {}
+interface ITransferirProps extends StateProps, DispatchProps {}
 
-class AddFornecedor extends React.Component<IAddFornecedorProps> {
+class Transferir extends React.Component<ITransferirProps> {
   render() {
     return (
       <div className="d-flex h-150 align-items-center justify-content-center">
@@ -74,4 +74,4 @@ const mapDispatchToProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddFornecedor);
+export default connect(mapStateToProps, mapDispatchToProps)(Transferir);
