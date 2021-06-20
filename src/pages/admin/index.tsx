@@ -11,8 +11,8 @@ import AdicionarSetor from './adicionarSetor';
 const Routes = ({ match }) => (
   <Switch>
     <ErrorBoundaryRoute path={`${match.url}/estoque`} component={<div>Estoque admin</div>} />
-    <ErrorBoundaryRoute path={`${match.url}/fornecedorAdm`} component={FornecedorAdm} />
-    <ErrorBoundaryRoute path={`${match.url}/setorAdm`} component={SetorAdm} />
+    <ErrorBoundaryRoute path={`${match.url}/fornecedor`} component={FornecedorAdm} />
+    <ErrorBoundaryRoute path={`${match.url}/setor`} component={SetorAdm} />
     <ErrorBoundaryRoute path={`${match.url}/adicionarSetor`} component={AdicionarSetor} />
     <ErrorBoundaryRoute component={PageNotFound} />
   </Switch>
