@@ -5,18 +5,23 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Card, CardBody, CardHeader, Button } from 'reactstrap';
 
-interface IAddSetoresProps extends StateProps, DispatchProps {}
+interface IVerSetorProps extends StateProps, DispatchProps {}
 
-class AddSetores extends React.Component<IAddSetoresProps> {
+class VerSetor extends React.Component<IVerSetorProps> {
   render() {
     return (
       <div className="d-flex h-150 align-items-center justify-content-center">
         <Card className="w-50 shadow-lg">
-          <CardHeader className="bg-dark text-white">Adicionar fornecedor</CardHeader>
+          <CardHeader className="bg-dark text-white">Setor</CardHeader>
           <CardBody>
             <Form>
+              <FormGroup>
+                <Label>Nome do Setor</Label>
+                <Input placeholder="Digite aqui..."></Input>
+              </FormGroup>
+              <br></br>
               <FormGroup row>
-                <Label for="exampleEmail">Email de contato</Label>
+                <Label for="exampleEmail">Email de contato (opcional)</Label>
                 <Input type="email" name="email" id="exampleEmail" placeholder="exemplo@gmail.com" />
               </FormGroup>
               <br></br>
@@ -31,23 +36,18 @@ class AddSetores extends React.Component<IAddSetoresProps> {
               </FormGroup>
               <br></br>
               <FormGroup>
-                <Label>Nome fantasia ou razão social</Label>
-                <Input placeholder="Digite aqui..."></Input>
-              </FormGroup>
-              <br></br>
-              <FormGroup>
                 <Label>Endereço</Label>
                 <Input placeholder="Digite aqui..."></Input>
               </FormGroup>
               <br></br>
               <FormGroup>
-                <Label>Telefone responsável</Label>
+                <Label>Telefone responsável (opcional)</Label>
                 <Input placeholder="xxxxx-xxxx"></Input>
               </FormGroup>
             </Form>
             <Link to="/user/fornecedor">
-              <Button className="mb-4 float-right" color="success">
-                Confirmar
+              <Button className="mb-4 float-right" color="danger">
+                Voltar
               </Button>
             </Link>
           </CardBody>
@@ -63,4 +63,4 @@ const mapDispatchToProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddSetores);
+export default connect(mapStateToProps, mapDispatchToProps)(VerSetor);

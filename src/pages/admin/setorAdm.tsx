@@ -2,6 +2,7 @@ import React from 'react';
 
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
@@ -14,9 +15,11 @@ class Setor extends React.Component<ISetorProps> {
         <Card className="w-25 shadow-lg">
           <CardHeader className="bg-dark text-white">Setores</CardHeader>
           <CardBody>
-            <Button className="mb-4 float-right" color="success">
-              Adicionar
-            </Button>
+            <Link to="/admin/adicionarSetor">
+              <Button className="mb-4 float-right" color="success">
+                Adicionar
+              </Button>
+            </Link>
             <Table hover>
               <tbody>
                 <tr>

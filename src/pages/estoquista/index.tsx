@@ -9,6 +9,7 @@ import Fornecedor from './fornecedor';
 import Setor from './setor';
 import AdicionarFornecedor from './adicionarFornecedor';
 import VerFornecedor from './verFornecedor';
+import VerSetor from './verSetor';
 
 const Routes = ({ match }) => (
   <Switch>
@@ -17,6 +18,7 @@ const Routes = ({ match }) => (
     <ErrorBoundaryRoute path={`${match.url}/setor`} component={Setor} />
     <ErrorBoundaryRoute path={`${match.url}/adicionarFornecedor`} component={AdicionarFornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/verFornecedor`} component={VerFornecedor} />
+    <ErrorBoundaryRoute path={`${match.url}/verSetor`} component={VerSetor} />
     <ErrorBoundaryRoute component={PageNotFound} />
   </Switch>
 );
