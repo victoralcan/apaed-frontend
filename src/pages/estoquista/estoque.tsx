@@ -35,9 +35,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>30 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -52,9 +54,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>20 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -69,9 +73,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>30 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -86,9 +92,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>20 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -103,9 +111,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>30 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -120,9 +130,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>20 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -137,9 +149,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>30 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -154,9 +168,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>20 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -171,9 +187,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>30 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -188,9 +206,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>20 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -205,9 +225,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>30 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
@@ -222,9 +244,11 @@ class Estoque extends React.Component<IHomeProps> {
               <td>20 KG</td>
               <td>20/10/2021</td>
               <td>
-                <Button outline color="secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>{' '}
+                <Link to="/user/editarProduto">
+                  <Button outline color="secondary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>{' '}
+                </Link>
                 <Link to="/user/transferir">
                   <Button outline color="secondary">
                     <FontAwesomeIcon icon={faArrowAltCircleRight} />
