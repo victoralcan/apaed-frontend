@@ -36,6 +36,10 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
     };
   }
 
+  componentWillUnmount() {
+    this.props.reset();
+  }
+
   componentDidUpdate(prevProps: Readonly<IAddProdutoProps>) {
     if (prevProps.donor.id !== this.props.donor.id) {
       this.props.getCategories();
