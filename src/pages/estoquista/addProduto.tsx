@@ -11,6 +11,7 @@ import { getDonorByDocument, reset } from '../../shared/reducers/donor.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import { getCategories } from '../../shared/reducers/category.reducer';
+import { getProductsByNCM } from '../../shared/reducers/product.reducer';
 
 interface IAddProdutoProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -64,9 +65,10 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
 
   loadProductType = (category) => {
     if (category) {
-      // Chamar no backend as categorias
+      this.props.getProductsByNCM(category.value);
       this.setState({
         category: category,
+        productType: {},
       });
     }
   };
@@ -81,14 +83,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
   };
 
   render() {
-    const { donor, getDonorSuccess, getDonorError, categories } = this.props;
-    const tipoProduto = [
-      {
-        value: 1,
-        label: 'Arroz São Joao',
-        key: 1,
-      },
-    ];
+    const { donor, getDonorSuccess, getDonorError, categories, products } = this.props;
 
     if (!getDonorSuccess && getDonorError) {
       const MySwal = withReactContent(Swal);
@@ -131,7 +126,6 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                           key: category.id,
                         }))}
                         placeholder="Categoria"
-                        noOptionsMessage="Selecione uma categoria"
                         onChange={this.loadProductType}
                         value={this.state.category}
                       />
@@ -152,13 +146,13 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                         classNamePrefix="select"
                         id="productType"
                         name="productType"
-                        options={tipoProduto.map((product) => ({
-                          value: product.value,
-                          label: product.label,
-                          key: product.key,
+                        options={products.map((product) => ({
+                          value: product.id,
+                          label: product.name,
+                          key: product.id,
                         }))}
                         placeholder="Tipo do produto"
-                        noOptionsMessage="Selecione uma categoria"
+                        noOptionsMessage={() => 'Selecione uma categoria'}
                         onChange={this.changeProductType}
                         value={this.state.productType}
                       />
@@ -248,11 +242,13 @@ const mapStateToProps = (store: IRootState) => ({
   getDonorError: store.donor.getDonorError,
   getDonorSuccess: store.donor.getDonorSuccess,
   categories: store.category.categories,
+  products: store.product.products,
 });
 
 const mapDispatchToProps = {
   getDonorByDocument,
   getCategories,
+  getProductsByNCM,
   reset,
 };
 
