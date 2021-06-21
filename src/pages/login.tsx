@@ -7,6 +7,7 @@ import { AvField, AvForm } from 'availity-reactstrap-validation';
 import { Redirect } from 'react-router-dom';
 import { login } from '../shared/reducers/authentication';
 import { IRootState } from '../shared/reducers';
+import { AUTHORITIES } from '../config/constants';
 
 interface ILoginProps extends StateProps, DispatchProps {}
 
@@ -19,7 +20,15 @@ class Login extends React.Component<ILoginProps> {
   render() {
     return (
       <>
-        {this.props.isAuthenticated && <Redirect to="/user/estoque" />}
+        {this.props.isAuthenticated ? (
+          this.props.user.roles[0] === AUTHORITIES.USER ? (
+            <Redirect to="/user/estoque" />
+          ) : (
+            <Redirect to="/admin/estoque" />
+          )
+        ) : (
+          ''
+        )}
         <div className="d-flex h-100 align-items-center justify-content-center">
           <Card className="w-25 shadow-lg">
             <CardHeader className="bg-dark text-white">Login</CardHeader>
@@ -72,6 +81,7 @@ class Login extends React.Component<ILoginProps> {
 
 const mapStateToProps = (store: IRootState) => ({
   isAuthenticated: store.authentication.isAuthenticated,
+  user: store.authentication.account,
 });
 const mapDispatchToProps = {
   login,
