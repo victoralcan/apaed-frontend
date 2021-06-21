@@ -45,7 +45,7 @@ class VerSetor extends React.Component<IVerSetorProps> {
                 <Input placeholder="xxxxx-xxxx"></Input>
               </FormGroup>
             </Form>
-            <Link to="/user/fornecedor">
+            <Link to="/user/setor">
               <Button className="mb-4 float-right" color="danger">
                 Voltar
               </Button>
