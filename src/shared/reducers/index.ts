@@ -4,6 +4,7 @@ import stock, { StockState } from './stock.reducer';
 import donor, { DonorState } from './donor.reducer';
 import category, { CategoryState } from './category.reducer';
 import product, { ProductState } from './product.reducer';
+import donation, { DonationState } from './donation.reducer';
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -11,6 +12,7 @@ export interface IRootState {
   readonly donor: DonorState;
   readonly category: CategoryState;
   readonly product: ProductState;
+  readonly donation: DonationState;
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -19,6 +21,7 @@ const rootReducer = combineReducers<IRootState>({
   donor,
   category,
   product,
+  donation,
 });
 
 export default rootReducer;
