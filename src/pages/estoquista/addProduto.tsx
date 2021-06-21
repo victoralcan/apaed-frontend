@@ -111,7 +111,9 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                     />
                   </FormGroup>
                 </Col>
-                <Col md={12}>
+              </Row>
+              <Row className="d-flex align-items-center">
+                <Col md={8}>
                   <FormGroup>
                     <Label for="Type">Categoria</Label>
                     <Select
@@ -131,7 +133,14 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                     />
                   </FormGroup>
                 </Col>
-                <Col md={12}>
+                <Col md={4}>
+                  <Button tag={Link} to="/user/addCategoria" className="mt-3 mx-3" color="primary">
+                    Nova categoria
+                  </Button>
+                </Col>
+              </Row>
+              <Row className="d-flex align-items-center">
+                <Col md={8}>
                   <FormGroup>
                     <Label for="Type">Produto</Label>
                     <Select
@@ -151,18 +160,27 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                     />
                   </FormGroup>
                 </Col>
-                <Col md={12}>
-                  <FormGroup>
+                <Col md={4}>
+                  <Button tag={Link} to="/user/addTipoProduto" className="mt-3 mx-3" color="primary">
+                    Novo tipo de produto
+                  </Button>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={6}>
+                  <FormGroup className="mr-4">
                     <Label for="exapleNumber">Quantidade</Label>
                     <Input type="number" name="amount" id="amount" />
                   </FormGroup>
                 </Col>
-                <Col md={12}>
+                <Col md={6}>
                   <FormGroup>
                     <Label for="exampleDate">Data de validade</Label>
                     <Input type="date" name="date" id="exampleDate" />
                   </FormGroup>
                 </Col>
+              </Row>
+              <Row>
                 <Col md={6}>
                   <FormGroup>
                     <Label for="langKey" style={{ paddingBottom: '0.5rem' }}>
