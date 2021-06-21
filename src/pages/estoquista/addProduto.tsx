@@ -28,7 +28,7 @@ class AddProduto extends React.Component<IAddProdutoProps> {
                 <br></br>
                 <Col md="6">
                   <FormGroup>
-                    <Link to="">
+                    <Link to="/user/addTipoProduto">
                       <Button color="primary">Novo tipo de produto</Button>
                     </Link>
                   </FormGroup>
