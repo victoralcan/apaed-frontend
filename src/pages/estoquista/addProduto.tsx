@@ -36,8 +36,8 @@ class AddProduto extends React.Component<IAddProdutoProps> {
               </Row>
               <br></br>
               <FormGroup>
-                <Label>Nome do produto</Label>
-                <Input placeholder="Digite aqui..."></Input>
+                <Label for="exampleDate">Data de validade</Label>
+                <Input type="date" name="date" id="exampleDate"></Input>
               </FormGroup>
               <br></br>
               <FormGroup>

@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import 'styles/header.scss';
 import { Link } from 'react-router-dom';
-import { Collapse, Nav, Navbar, NavbarToggler } from 'reactstrap';
+import {
+  Collapse,
+  Nav,
+  Navbar,
+  NavbarToggler,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap';
 import { ColorPallet } from '../../model/enum/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGripLines } from '@fortawesome/free-solid-svg-icons';
@@ -38,9 +47,16 @@ function Header(props: IHeaderProps) {
               <Link className="header-option text-center" to="/user/setor" style={{ textDecoration: 'none' }}>
                 <h6 className="text-white">Setor</h6>
               </Link>
-              <Link className="header-option text-center" to="/user/transferir" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Produto</h6>
-              </Link>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav>
+                  <h6 className="text-white">Produto</h6>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>Adicionar Produto</DropdownItem>
+                  <DropdownItem>Editar produto</DropdownItem>
+                  <DropdownItem>Tranferir produto</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
               <Link
                 className="header-option text-center"
                 to="/"
