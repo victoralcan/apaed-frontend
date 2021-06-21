@@ -10,6 +10,7 @@ import { IRootState } from '../../shared/reducers';
 import { getDonorByDocument, reset } from '../../shared/reducers/donor.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
+import { getCategories } from '../../shared/reducers/category.reducer';
 
 interface IAddProdutoProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -33,6 +34,12 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       category: {},
       donor: {},
     };
+  }
+
+  componentDidUpdate(prevProps: Readonly<IAddProdutoProps>) {
+    if (prevProps.donor.id !== this.props.donor.id) {
+      this.props.getCategories();
+    }
   }
 
   changeProductType = (productType) => {
@@ -70,19 +77,11 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
   };
 
   render() {
-    const { donor, getDonorSuccess, getDonorError } = this.props;
+    const { donor, getDonorSuccess, getDonorError, categories } = this.props;
     const tipoProduto = [
       {
         value: 1,
         label: 'Arroz São Joao',
-        key: 1,
-      },
-    ];
-
-    const categorias = [
-      {
-        value: 1,
-        label: 'Arroz Branco parbolizado',
         key: 1,
       },
     ];
@@ -122,10 +121,10 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                         classNamePrefix="select"
                         id="category"
                         name="category"
-                        options={categorias.map((category) => ({
-                          value: category.value,
-                          label: category.label,
-                          key: category.key,
+                        options={categories.map((category) => ({
+                          value: category.id,
+                          label: category.description,
+                          key: category.id,
                         }))}
                         placeholder="Categoria"
                         noOptionsMessage="Selecione uma categoria"
@@ -244,9 +243,12 @@ const mapStateToProps = (store: IRootState) => ({
   donor: store.donor.donor,
   getDonorError: store.donor.getDonorError,
   getDonorSuccess: store.donor.getDonorSuccess,
+  categories: store.category.categories,
 });
+
 const mapDispatchToProps = {
   getDonorByDocument,
+  getCategories,
   reset,
 };
 
