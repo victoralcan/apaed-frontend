@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import authentication, { AuthenticationState } from './authentication';
-import stock, { StockState } from './stock';
+import stock, { StockState } from './stock.reducer';
 
 export interface IRootState {
   readonly authentication: AuthenticationState;

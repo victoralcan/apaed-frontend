@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { faArrowAltCircleRight, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getStock } from '../../shared/reducers/stock';
+import { getStock, setProductToEdit } from '../../shared/reducers/stock.reducer';
 import { IRootState } from '../../shared/reducers';
 
 interface IStockProps extends StateProps, DispatchProps {}
@@ -44,7 +44,7 @@ class Stock extends React.Component<IStockProps> {
                   <td>{product.amount}</td>
                   <td>{new Date(product.expiration_date).toUTCString()}</td>
                   <td>
-                    <Link to="/user/editarProduto">
+                    <Link to="/user/editarProduto" onClick={() => this.props.setProductToEdit(product)}>
                       <Button outline color="secondary">
                         <FontAwesomeIcon icon={faEdit} />
                       </Button>{' '}
@@ -69,6 +69,7 @@ const mapStateToProps = (store: IRootState) => ({
 });
 const mapDispatchToProps = {
   getStock,
+  setProductToEdit,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
