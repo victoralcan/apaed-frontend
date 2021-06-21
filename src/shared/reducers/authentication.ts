@@ -90,13 +90,13 @@ export const login = (username, password) => async (dispatch) => {
   if (token) {
     const bearerToken = `Bearer ${token}`;
     APIUrl.defaults.headers.common.Authorization = bearerToken;
-    localStorage.setItem('jwt_access_token', bearerToken);
+    localStorage.setItem('jwt_access_token_apaed', bearerToken);
   }
   await dispatch(getSession());
 };
 
 export const clearAuthToken = () => {
-  localStorage.removeItem('jwt_access_token');
+  localStorage.removeItem('jwt_access_token_apaed');
   delete APIUrl.defaults.headers.common.Authorization;
 };
 

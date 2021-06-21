@@ -22,7 +22,7 @@ class Auth extends Component<IAuthProps, IAuthState> {
   }
 
   jwtCheck = async () => {
-    const token = localStorage.getItem('jwt_access_token');
+    const token = localStorage.getItem('jwt_access_token_apaed');
     const { user } = this.props;
     if (token && !user.id) {
       APIUrl.defaults.headers.common.Authorization = token;
