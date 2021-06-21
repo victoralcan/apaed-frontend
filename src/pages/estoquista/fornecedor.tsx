@@ -15,7 +15,7 @@ class Fornecedor extends React.Component<IFornecedorProps> {
         <Card className="w-25 shadow-lg">
           <CardHeader className="bg-dark text-white">Fornecedores</CardHeader>
           <CardBody>
-            <Link to="/user/adicionarFornecedor">
+            <Link to="/user/addFornecedor">
               <Button className="mb-4 float-right" color="success">
                 Adicionar
               </Button>

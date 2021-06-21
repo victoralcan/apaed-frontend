@@ -7,7 +7,7 @@ import PageNotFound from '../../shared/error/page-not-found';
 import Estoque from './estoque';
 import Fornecedor from './fornecedor';
 import Setor from './setor';
-import AdicionarFornecedor from './adicionarFornecedor';
+import AddFornecedor from './addFornecedor';
 import VerFornecedor from './verFornecedor';
 import VerSetor from './verSetor';
 import Transferir from './transferir';
@@ -21,7 +21,7 @@ const Routes = ({ match }) => (
     <ErrorBoundaryRoute path={`${match.url}/estoque`} component={Estoque} />
     <ErrorBoundaryRoute path={`${match.url}/fornecedor`} component={Fornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/setor`} component={Setor} />
-    <ErrorBoundaryRoute path={`${match.url}/adicionarFornecedor`} component={AdicionarFornecedor} />
+    <ErrorBoundaryRoute path={`${match.url}/addFornecedor`} component={AddFornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/verFornecedor`} component={VerFornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/verSetor`} component={VerSetor} />
     <ErrorBoundaryRoute path={`${match.url}/transferir`} component={Transferir} />

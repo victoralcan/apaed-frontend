@@ -3,7 +3,7 @@ import React from 'react';
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Form, FormGroup, Label, Input, Card, CardBody, CardHeader, Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Card, CardBody, CardHeader, Button, Col } from 'reactstrap';
 
 interface IAddFornecedorProps extends StateProps, DispatchProps {}
 
@@ -25,6 +25,23 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
                 <Input placeholder="Digite aqui..."></Input>
               </FormGroup>
               <br></br>
+              <FormGroup tag="fieldset" row>
+                <legend className="col-form-label col-sm-8">Esse fornecedor é?</legend>
+                <Col sm={10}>
+                  <FormGroup check>
+                    <Label check>
+                      <Input type="radio" name="radio1" /> Vendedor
+                    </Label>
+                  </FormGroup>
+                  <FormGroup check>
+                    <Label check>
+                      <Input type="radio" name="radio1" /> Doador
+                    </Label>
+                  </FormGroup>
+                </Col>
+              </FormGroup>
+              <br />
+              <br />
               <FormGroup>
                 <Label>CPF/CNPJ</Label>
                 <Input placeholder="Digite aqui..."></Input>
