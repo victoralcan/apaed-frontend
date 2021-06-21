@@ -7,11 +7,11 @@ import Select from 'react-select';
 import { AvField, AvForm, AvRadio, AvRadioGroup } from 'availity-reactstrap-validation';
 import { Button, Card, CardBody, CardHeader, Col, FormGroup, Input, Label, Row } from 'reactstrap';
 import { IRootState } from '../../shared/reducers';
-import { getDonorByDocument, reset } from '../../shared/reducers/donor.reducer';
+import { getDonorByDocument, reset as resetDonor } from '../../shared/reducers/donor.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
-import { getCategories } from '../../shared/reducers/category.reducer';
-import { getProductsByNCM } from '../../shared/reducers/product.reducer';
+import { getCategories, reset as resetCategories } from '../../shared/reducers/category.reducer';
+import { getProductsByNCM, reset as resetProducts } from '../../shared/reducers/product.reducer';
 
 interface IAddProdutoProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -38,7 +38,9 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
   }
 
   componentWillUnmount() {
-    this.props.reset();
+    this.props.resetProducts();
+    this.props.resetCategories();
+    this.props.resetDonor();
   }
 
   componentDidUpdate(prevProps: Readonly<IAddProdutoProps>) {
@@ -93,7 +95,9 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
         // @ts-ignore
         type: 'error',
       }).then(() => this.props.history.push('/user/fornecedor'));
-      this.props.reset();
+      this.props.resetProducts();
+      this.props.resetCategories();
+      this.props.resetDonor();
     }
 
     return (
@@ -249,7 +253,9 @@ const mapDispatchToProps = {
   getDonorByDocument,
   getCategories,
   getProductsByNCM,
-  reset,
+  resetProducts,
+  resetDonor,
+  resetCategories,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
