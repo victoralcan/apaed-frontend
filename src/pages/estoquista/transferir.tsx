@@ -48,7 +48,7 @@ class Transferir extends React.Component<ITransferirProps> {
               <br></br>
               <FormGroup>
                 <Label for="exampleText">Motivo da tranferência</Label>
-                <Input type="textarea" name="text" id="exampletest"></Input>
+                <Input type="textarea" name="text" id="exampleText"></Input>
               </FormGroup>
             </Form>
             <Link to="/user/estoque">

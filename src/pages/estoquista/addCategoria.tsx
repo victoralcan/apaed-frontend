@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Card, CardBody, CardHeader, Button, Col, Row } from 'reactstrap';
 
-interface IAddTipoProdutoProps extends StateProps, DispatchProps {}
+interface ICategoriaProps extends StateProps, DispatchProps {}
 
-class AddTipoProduto extends React.Component<IAddTipoProdutoProps> {
+class Categoria extends React.Component<ICategoriaProps> {
   render() {
     return (
       <div className="d-flex h-150 align-items-center justify-content-center">
         <Card className="w-50 shadow-lg">
-          <CardHeader className="bg-dark text-white">Adicionar tipo produto</CardHeader>
+          <CardHeader className="bg-dark text-white">Adicionar categoria</CardHeader>
           <CardBody>
             <Form>
               <Row form>
@@ -25,14 +25,6 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps> {
                     </Input>
                   </FormGroup>
                 </Col>
-                <br></br>
-                <Col md="6">
-                  <FormGroup>
-                    <Link to="/user/addCategoria">
-                      <Button color="primary">Adicionar categoria</Button>
-                    </Link>
-                  </FormGroup>
-                </Col>
               </Row>
               <br></br>
               <FormGroup>
@@ -41,18 +33,35 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps> {
               </FormGroup>
               <br></br>
               <FormGroup>
-                <Label>Marca</Label>
+                <Label>Código NCM</Label>
                 <Input placeholder="Digite aqui..."></Input>
               </FormGroup>
               <br></br>
+              <FormGroup>
+                <Label for="exampleText">Descrição</Label>
+                <Input type="textarea" name="text" id="exampleText"></Input>
+              </FormGroup>
             </Form>
             <br />
-            <Link to="/user/addProduto">
+            <FormGroup>
+              <Label for="exampleSelect">Unidade de medida</Label>
+              <Input type="select" name="select" id="exampleSelect">
+                <option>Kg</option>
+                <option>Litros</option>
+              </Input>
+            </FormGroup>
+            <br />
+            <FormGroup>
+              <Label for="exapleNumber">Quantidade mínima</Label>
+              <Input type="number" name="numbe" id="exampleNumber"></Input>
+            </FormGroup>
+            <br />
+            <Link to="/user/addTipoProduto">
               <Button className="mb-4 float-right float-down" color="success">
-                Adicionar tipo de produto
+                Adicionar Categoria
               </Button>
             </Link>
-            <Link to="/user/addProduto">
+            <Link to="/user/addTipoProduto">
               <Button className="mb-8 float-left" color="danger">
                 Cancelar
               </Button>
@@ -70,4 +79,4 @@ const mapDispatchToProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTipoProduto);
+export default connect(mapStateToProps, mapDispatchToProps)(Categoria);
