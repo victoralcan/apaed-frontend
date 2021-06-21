@@ -12,6 +12,7 @@ import VerFornecedor from './verFornecedor';
 import VerSetor from './verSetor';
 import Transferir from './transferir';
 import EditarProduto from './editarProduto';
+import AddProduto from './addProduto';
 
 const Routes = ({ match }) => (
   <Switch>
@@ -23,6 +24,7 @@ const Routes = ({ match }) => (
     <ErrorBoundaryRoute path={`${match.url}/verSetor`} component={VerSetor} />
     <ErrorBoundaryRoute path={`${match.url}/transferir`} component={Transferir} />
     <ErrorBoundaryRoute path={`${match.url}/editarProduto`} component={EditarProduto} />
+    <ErrorBoundaryRoute path={`${match.url}/addProduto`} component={AddProduto} />
     <ErrorBoundaryRoute component={PageNotFound} />
   </Switch>
 );
