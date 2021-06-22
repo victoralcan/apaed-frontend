@@ -24,14 +24,9 @@ import { formataData } from '../../shared/utils/formataData';
 import { IDonation } from '../../shared/model/donation.model';
 import { IProductLocalDonation } from '../../shared/model/productLocalDonation.model';
 import { registerNewProductToStock, resetSuccessRegister } from '../../shared/reducers/stock.reducer';
+import { IOption } from '../../shared/model/option.model';
 
 interface IAddProdutoProps extends StateProps, DispatchProps, RouteComponentProps {}
-
-interface IOption {
-  value?: number;
-  label?: string;
-  key?: number;
-}
 
 interface IAddProdutoState {
   productType: IOption;

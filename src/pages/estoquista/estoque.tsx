@@ -8,6 +8,7 @@ import { faArrowAltCircleRight, faEdit } from '@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getStock, setProductToEdit } from '../../shared/reducers/stock.reducer';
 import { IRootState } from '../../shared/reducers';
+import { setToTransferProduct } from '../../shared/reducers/transfer.reducer';
 
 interface IStockProps extends StateProps, DispatchProps {}
 
@@ -44,16 +45,25 @@ class Stock extends React.Component<IStockProps> {
                   <td>{product.amount}</td>
                   <td>{new Date(product.expiration_date).toUTCString()}</td>
                   <td>
-                    <Link to="/user/editarProduto" onClick={() => this.props.setProductToEdit(product)}>
-                      <Button outline color="secondary">
-                        <FontAwesomeIcon icon={faEdit} />
-                      </Button>{' '}
-                    </Link>
-                    <Link to="/user/transferir">
-                      <Button outline color="secondary">
-                        <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                      </Button>{' '}
-                    </Link>
+                    <Button
+                      tag={Link}
+                      to="/user/editarProduto"
+                      onClick={() => this.props.setProductToEdit(product)}
+                      outline
+                      color="secondary"
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </Button>
+                    <Button
+                      className="mx-3"
+                      tag={Link}
+                      to="/user/transferir"
+                      outline
+                      color="secondary"
+                      onClick={() => this.props.setToTransferProduct(product)}
+                    >
+                      <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                    </Button>{' '}
                   </td>
                 </tr>
               ))}
@@ -70,6 +80,7 @@ const mapStateToProps = (store: IRootState) => ({
 const mapDispatchToProps = {
   getStock,
   setProductToEdit,
+  setToTransferProduct,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
