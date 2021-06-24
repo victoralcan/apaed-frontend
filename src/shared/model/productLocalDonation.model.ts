@@ -4,6 +4,7 @@ export interface IProductLocalDonation {
   donation_id?: string;
   local_id?: string;
   product_id?: string;
+  brand?: string;
   ncm_code?: string;
   amount?: number;
   expiration_date?: Date;

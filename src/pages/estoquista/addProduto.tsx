@@ -101,6 +101,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       product_id: String(productType.value),
       donation_id: selectedDonation.id,
       amount,
+      // @ts-ignore
       expiration_date: convertDataInputFormatToDate(expiration_date),
     };
     this.props.registerNewProductToStock(newProductLocalDonation);
@@ -263,7 +264,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                           name="productType"
                           options={products.map((product) => ({
                             value: product.id,
-                            label: product.name,
+                            label: product.name + ' ' + product.brand,
                             key: product.id,
                           }))}
                           placeholder="Tipo do produto"

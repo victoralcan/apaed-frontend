@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getStock, setProductToEdit } from '../../shared/reducers/stock.reducer';
 import { IRootState } from '../../shared/reducers';
 import { setToTransferProduct } from '../../shared/reducers/transfer.reducer';
+import { formataData } from '../../shared/utils/formataData';
 
 interface IStockProps extends StateProps, DispatchProps {}
 
@@ -41,9 +42,9 @@ class Stock extends React.Component<IStockProps> {
                 <tr key={product.product_id}>
                   <th scope="row">{product.id}</th>
                   <td>{product.ncm_code}</td>
-                  <td>{product.name}</td>
+                  <td>{product.name + ' ' + product.brand}</td>
                   <td>{product.amount}</td>
-                  <td>{new Date(product.expiration_date).toUTCString()}</td>
+                  <td>{formataData(new Date(product.expiration_date))}</td>
                   <td>
                     <Button
                       tag={Link}
