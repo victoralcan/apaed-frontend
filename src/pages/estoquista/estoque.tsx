@@ -28,7 +28,6 @@ class Stock extends React.Component<IStockProps> {
         <Table bordered responsive striped>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Codigo NCM</th>
               <th>Nome</th>
               <th>Quantidade</th>
@@ -40,10 +39,9 @@ class Stock extends React.Component<IStockProps> {
             {stock &&
               stock.map((product) => (
                 <tr key={product.product_id}>
-                  <th scope="row">{product.id}</th>
                   <td>{product.ncm_code}</td>
                   <td>{product.name + ' ' + product.brand}</td>
-                  <td>{product.amount}</td>
+                  <td>{product['count(*)']}</td>
                   <td>{formataData(new Date(product.expiration_date))}</td>
                   <td>
                     <Button

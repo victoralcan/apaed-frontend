@@ -46,9 +46,10 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
     event.persist();
     const newTransfer: ITransfer = {
       description: this.state.description,
-      product_local_donation_id: this.props.toTransferProduct.id,
+      product_id: this.props.toTransferProduct.product_id,
       amount,
       destiny_id: String(this.state.destiny.value),
+      expiration_date: this.props.toTransferProduct.expiration_date,
     };
     this.props.makeTransfer(newTransfer);
   };
@@ -91,7 +92,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
               <Row>
                 <Col md={6}>
                   <FormGroup className="mr-4">
-                    <Label for="amount">Quantidade</Label>
+                    <Label for="amount">Quantidade (Max: {toTransferProduct['count(*)']})</Label>
                     <AvField className="form-control" name="amount" id="amount" required />
                   </FormGroup>
                 </Col>
