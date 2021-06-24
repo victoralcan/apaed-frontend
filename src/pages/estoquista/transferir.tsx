@@ -92,7 +92,9 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
               <Row>
                 <Col md={6}>
                   <FormGroup className="mr-4">
-                    <Label for="amount">Quantidade (Max: {toTransferProduct['count(*)']})</Label>
+                    <Label for="amount">
+                      Quantidade (Max: {toTransferProduct['count(*)']}) {toTransferProduct.unity_measurement}
+                    </Label>
                     <AvField className="form-control" name="amount" id="amount" required />
                   </FormGroup>
                 </Col>

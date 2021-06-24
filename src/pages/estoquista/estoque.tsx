@@ -41,7 +41,7 @@ class Stock extends React.Component<IStockProps> {
                 <tr key={product.product_id}>
                   <td>{product.ncm_code}</td>
                   <td>{product.name + ' ' + product.brand}</td>
-                  <td>{product['count(*)']}</td>
+                  <td>{product['count(*)'] + ' ' + product.unity_measurement}</td>
                   <td>{formataData(new Date(product.expiration_date))}</td>
                   <td>
                     <Button
