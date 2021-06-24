@@ -7,6 +7,8 @@ import product, { ProductState } from './product.reducer';
 import donation, { DonationState } from './donation.reducer';
 import transfer, { TransferState } from './transfer.reducer';
 import local, { LocalState } from './local.reducer';
+import type, { TypeState } from './type.reducer';
+import unityMeasurement, { UnityMeasurementState } from './unityMeasurement.reducer';
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -17,6 +19,8 @@ export interface IRootState {
   readonly donation: DonationState;
   readonly transfer: TransferState;
   readonly local: LocalState;
+  readonly type: TypeState;
+  readonly unityMeasurement: UnityMeasurementState;
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -28,6 +32,8 @@ const rootReducer = combineReducers<IRootState>({
   donation,
   transfer,
   local,
+  type,
+  unityMeasurement,
 });
 
 export default rootReducer;

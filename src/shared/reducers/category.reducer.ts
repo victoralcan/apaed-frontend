@@ -5,6 +5,7 @@ import { ICategory } from '../model/category.model';
 export const ACTION_TYPES = {
   GET_CATEGORIES: 'category/GET_CATEGORIES',
   GET_CATEGORY: 'category/GET_CATEGORY',
+  CREATE_CATEGORY: 'category/CREATE_CATEGORY',
   RESET: 'category/RESET',
 };
 
@@ -14,6 +15,8 @@ const initialState = {
   getCategoryError: false,
   getCategoriesSuccess: false,
   getCategoriesError: false,
+  createCategorySuccess: false,
+  createCategoryError: false,
   categories: [] as Array<ICategory>,
   category: {} as ICategory,
 };
@@ -35,6 +38,15 @@ export default (state: CategoryState = initialState, action): CategoryState => {
       return {
         ...state,
         loading: true,
+        getCategoriesSuccess: false,
+        getCategoriesError: false,
+      };
+    case REQUEST(ACTION_TYPES.CREATE_CATEGORY):
+      return {
+        ...state,
+        loading: true,
+        createCategoryError: false,
+        createCategorySuccess: false,
       };
     case FAILURE(ACTION_TYPES.GET_CATEGORY):
       return {
@@ -49,6 +61,13 @@ export default (state: CategoryState = initialState, action): CategoryState => {
         loading: false,
         getCategoriesError: true,
         getCategoriesSuccess: false,
+      };
+    case FAILURE(ACTION_TYPES.CREATE_CATEGORY):
+      return {
+        ...initialState,
+        loading: false,
+        createCategoryError: true,
+        createCategorySuccess: false,
       };
     case SUCCESS(ACTION_TYPES.GET_CATEGORY):
       return {
@@ -66,6 +85,13 @@ export default (state: CategoryState = initialState, action): CategoryState => {
         getCategoriesSuccess: true,
         categories: [...action.payload.data],
       };
+    case SUCCESS(ACTION_TYPES.CREATE_CATEGORY):
+      return {
+        ...state,
+        loading: false,
+        createCategoryError: false,
+        createCategorySuccess: true,
+      };
     case ACTION_TYPES.RESET:
       return {
         ...initialState,
@@ -79,6 +105,13 @@ export const getCategories = () => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.GET_CATEGORIES,
     payload: APIUrl.get('ncm'),
+  });
+};
+
+export const createCategory = (category: ICategory) => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.CREATE_CATEGORY,
+    payload: APIUrl.post('ncm', category),
   });
 };
 
