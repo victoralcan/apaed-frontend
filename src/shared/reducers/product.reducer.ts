@@ -5,6 +5,7 @@ import { IProduct } from '../model/product.model';
 export const ACTION_TYPES = {
   GET_PRODUCTS: 'product/GET_PRODUCTS',
   GET_PRODUCT: 'product/GET_PRODUCT',
+  CREATE_PRODUCT: 'product/CREATE_PRODUCT',
   RESET: 'product/RESET',
 };
 
@@ -14,6 +15,8 @@ const initialState = {
   getProductError: false,
   getProductsSuccess: false,
   getProductsError: false,
+  createProductSuccess: false,
+  createProductError: false,
   products: [] as Array<IProduct>,
   product: {} as IProduct,
 };
@@ -35,20 +38,36 @@ export default (state: ProductState = initialState, action): ProductState => {
       return {
         ...state,
         loading: true,
+        getProductsSuccess: false,
+        getProductsError: false,
+      };
+    case REQUEST(ACTION_TYPES.CREATE_PRODUCT):
+      return {
+        ...state,
+        loading: true,
+        createProductError: false,
+        createProductSuccess: false,
       };
     case FAILURE(ACTION_TYPES.GET_PRODUCT):
       return {
-        ...initialState,
+        ...state,
         loading: false,
         getProductError: true,
         getProductSuccess: false,
       };
     case FAILURE(ACTION_TYPES.GET_PRODUCTS):
       return {
-        ...initialState,
+        ...state,
         loading: false,
         getProductsError: true,
         getProductsSuccess: false,
+      };
+    case FAILURE(ACTION_TYPES.CREATE_PRODUCT):
+      return {
+        ...state,
+        loading: false,
+        createProductError: true,
+        createProductSuccess: false,
       };
     case SUCCESS(ACTION_TYPES.GET_PRODUCT):
       return {
@@ -66,6 +85,13 @@ export default (state: ProductState = initialState, action): ProductState => {
         getProductsSuccess: true,
         products: [...action.payload.data],
       };
+    case SUCCESS(ACTION_TYPES.CREATE_PRODUCT):
+      return {
+        ...state,
+        loading: false,
+        createProductError: false,
+        createProductSuccess: true,
+      };
     case ACTION_TYPES.RESET:
       return {
         ...initialState,
@@ -79,6 +105,13 @@ export const getProductsByNCM = (ncmId: number) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.GET_PRODUCTS,
     payload: APIUrl.get(`products/${ncmId}`),
+  });
+};
+
+export const createProduct = (product: IProduct) => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.CREATE_PRODUCT,
+    payload: APIUrl.post('products', product),
   });
 };
 
