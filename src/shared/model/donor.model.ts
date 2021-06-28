@@ -1,6 +1,7 @@
 export interface IDonor {
   id?: string;
-  name: string;
-  contact_id: number;
-  document: string;
+  name?: string;
+  email?: string;
+  contact_id?: string;
+  document?: string;
 }

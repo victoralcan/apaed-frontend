@@ -62,7 +62,7 @@ class Stock extends React.Component<IStockProps> {
                       onClick={() => this.props.setToTransferProduct(product)}
                     >
                       <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                    </Button>{' '}
+                    </Button>
                   </td>
                 </tr>
               ))}

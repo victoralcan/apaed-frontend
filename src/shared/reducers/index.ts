@@ -9,6 +9,7 @@ import transfer, { TransferState } from './transfer.reducer';
 import local, { LocalState } from './local.reducer';
 import type, { TypeState } from './type.reducer';
 import unityMeasurement, { UnityMeasurementState } from './unityMeasurement.reducer';
+import contact, { ContactState } from './contact.reducer';
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -21,6 +22,7 @@ export interface IRootState {
   readonly local: LocalState;
   readonly type: TypeState;
   readonly unityMeasurement: UnityMeasurementState;
+  readonly contact: ContactState;
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -34,6 +36,7 @@ const rootReducer = combineReducers<IRootState>({
   local,
   type,
   unityMeasurement,
+  contact,
 });
 
 export default rootReducer;
