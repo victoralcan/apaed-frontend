@@ -262,11 +262,13 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
                 </Col>
               </Row>
               <br />
-              <Button className="mb-4 float-right float-down" color="success" type="submit">
-                Adicionar fornecedor/doador
-              </Button>
+              {!toViewDonor.id && (
+                <Button className="mb-4 float-right float-down" color="success" type="submit">
+                  Adicionar fornecedor/doador
+                </Button>
+              )}
               <Button tag={Link} to="/user/fornecedor" className="mb-8 float-left" type="button" color="danger">
-                Cancelar
+                {toViewDonor.id ? 'Voltar' : 'Cancelar'}
               </Button>
             </AvForm>
           </CardBody>

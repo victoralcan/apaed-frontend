@@ -4,6 +4,8 @@ import { ILocal } from '../model/local.model';
 
 export const ACTION_TYPES = {
   GET_LOCALS: 'locals/GET_LOCALS',
+  SET_LOCAL_VIEW: 'locals/SET_LOCAL_VIEW',
+  CREATE_LOCAL: 'locals/CREATE_LOCAL',
   RESET_SUCCESS: 'locals/RESET_REGISTER',
   RESET: 'locals/RESET',
 };
@@ -12,7 +14,10 @@ const initialState = {
   loading: false,
   getLocalsSuccess: false,
   getLocalsError: false,
+  createLocalSuccess: false,
+  createLocalError: false,
   locals: [] as Array<ILocal>,
+  toViewLocal: {} as ILocal,
 };
 
 export type LocalState = Readonly<typeof initialState>;
@@ -22,6 +27,7 @@ export type LocalState = Readonly<typeof initialState>;
 export default (state: LocalState = initialState, action): LocalState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.GET_LOCALS):
+    case REQUEST(ACTION_TYPES.CREATE_LOCAL):
       return {
         ...state,
         loading: true,
@@ -33,6 +39,13 @@ export default (state: LocalState = initialState, action): LocalState => {
         getLocalsError: true,
         getLocalsSuccess: false,
       };
+    case FAILURE(ACTION_TYPES.CREATE_LOCAL):
+      return {
+        ...initialState,
+        loading: false,
+        createLocalError: true,
+        createLocalSuccess: false,
+      };
     case SUCCESS(ACTION_TYPES.GET_LOCALS):
       return {
         ...state,
@@ -41,11 +54,23 @@ export default (state: LocalState = initialState, action): LocalState => {
         getLocalsSuccess: true,
         locals: [...action.payload.data],
       };
+    case SUCCESS(ACTION_TYPES.CREATE_LOCAL):
+      return {
+        ...state,
+        loading: false,
+        createLocalError: false,
+        createLocalSuccess: true,
+      };
     case ACTION_TYPES.RESET_SUCCESS:
       return {
         ...state,
         getLocalsError: false,
         getLocalsSuccess: false,
+      };
+    case ACTION_TYPES.SET_LOCAL_VIEW:
+      return {
+        ...state,
+        toViewLocal: action.payload,
       };
     case ACTION_TYPES.RESET:
       return {
@@ -62,6 +87,18 @@ export const getLocals = () => async (dispatch) => {
     payload: APIUrl.get('locals'),
   });
 };
+
+export const createLocal = (local: ILocal) => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.CREATE_LOCAL,
+    payload: APIUrl.post('locals', local),
+  });
+};
+
+export const setToViewLocal = (local: ILocal) => ({
+  type: ACTION_TYPES.SET_LOCAL_VIEW,
+  payload: local,
+});
 
 export const resetSuccessGetLocals = () => ({
   type: ACTION_TYPES.RESET_SUCCESS,

@@ -10,7 +10,7 @@ interface IVerFornecedorProps extends StateProps, DispatchProps {}
 class VerFornecedor extends React.Component<IVerFornecedorProps> {
   render() {
     return (
-      <div className="d-flex h-150 align-items-center justify-content-center">
+      <div className="d-flex h-100 align-items-center justify-content-center">
         <Card className="w-50 shadow-lg">
           <CardHeader className="bg-dark text-white">Fornecedor</CardHeader>
           <CardBody>

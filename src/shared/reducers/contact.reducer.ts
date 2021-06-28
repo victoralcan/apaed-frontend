@@ -3,6 +3,8 @@ import APIUrl from '../../config/api';
 import { IContact } from '../model/contact.model';
 import { IDonor } from '../model/donor.model';
 import { createDonor } from './donor.reducer';
+import { ILocal } from '../model/local.model';
+import { createLocal } from './local.reducer';
 
 export const ACTION_TYPES = {
   CREATE_CONTACT: 'contact/CREATE_CONTACT',
@@ -68,6 +70,21 @@ export const createContactForFornecedor = (contact: IContact, donor: IDonor) => 
   });
 
   dispatch(createDonor({ ...donor, contact_id: result.value.data.id }));
+};
+
+export const createContactForLocal = (contact: IContact, local: ILocal) => async (dispatch) => {
+  const result = await dispatch({
+    type: ACTION_TYPES.CREATE_CONTACT,
+    payload: APIUrl.post('contacts', contact),
+  });
+
+  const newLocal = {
+    ...local,
+    contact_id: result.value.data.id,
+  };
+  console.log(newLocal);
+
+  dispatch(createLocal({ ...local, contact_id: result.value.data.id }));
 };
 
 export const getContactById = (contactId: string) => async (dispatch) => {

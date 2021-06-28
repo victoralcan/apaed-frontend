@@ -55,12 +55,6 @@ function Header(props: IHeaderProps) {
                   <Link to="/user/addProduto">
                     <DropdownItem>Adicionar Produto</DropdownItem>
                   </Link>
-                  <Link to="/user/editarProduto">
-                    <DropdownItem>Editar produto</DropdownItem>
-                  </Link>
-                  <Link to="/user/transferir">
-                    <DropdownItem>Tranferir produto</DropdownItem>
-                  </Link>
                 </DropdownMenu>
               </UncontrolledDropdown>
               <Link
