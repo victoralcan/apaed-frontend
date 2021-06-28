@@ -2,13 +2,14 @@ import React from 'react';
 
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { IRootState } from '../../shared/reducers';
-import { getDonors } from '../../shared/reducers/donor.reducer';
-interface IFornecedorProps extends StateProps, DispatchProps {}
+import { getDonors, setToViewDonor } from '../../shared/reducers/donor.reducer';
+import { getContactById } from '../../shared/reducers/contact.reducer';
+interface IFornecedorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 class Fornecedor extends React.Component<IFornecedorProps> {
   componentDidMount() {
@@ -31,11 +32,16 @@ class Fornecedor extends React.Component<IFornecedorProps> {
                   <tr key={donor.id}>
                     <th scope="row">{donor.name}</th>
                     <td>
-                      <Link to="/user/verFornecedor">
-                        <Button color="info">
-                          <FontAwesomeIcon icon={faInfo} />
-                        </Button>
-                      </Link>
+                      <Button
+                        onClick={() => {
+                          this.props.setToViewDonor(donor);
+                          this.props.getContactById(donor.contact_id);
+                          this.props.history.push('/user/addFornecedor');
+                        }}
+                        color="info"
+                      >
+                        <FontAwesomeIcon icon={faInfo} />
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -51,8 +57,11 @@ class Fornecedor extends React.Component<IFornecedorProps> {
 const mapStateToProps = (store: IRootState) => ({
   donors: store.donor.donors,
 });
+
 const mapDispatchToProps = {
   getDonors,
+  setToViewDonor,
+  getContactById,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

@@ -6,6 +6,7 @@ export const ACTION_TYPES = {
   GET_DONOR: 'donor/GET_DONOR',
   GET_DONORS: 'donor/GET_DONORS',
   CREATE_DONOR: 'donor/CREATE_DONOR',
+  SET_DONOR_VIEW: 'donor/SET_DONOR_VIEW',
   RESET: 'donor/RESET',
 };
 
@@ -19,6 +20,7 @@ const initialState = {
   createDonorError: false,
   donors: [] as Array<IDonor>,
   donor: {} as IDonor,
+  toViewDonor: {} as IDonor,
 };
 
 export type DonorState = Readonly<typeof initialState>;
@@ -90,6 +92,11 @@ export default (state: DonorState = initialState, action): DonorState => {
         createDonorError: false,
         createDonorSuccess: true,
       };
+    case ACTION_TYPES.SET_DONOR_VIEW:
+      return {
+        ...state,
+        toViewDonor: action.payload,
+      };
     case ACTION_TYPES.RESET:
       return {
         ...initialState,
@@ -119,6 +126,11 @@ export const createDonor = (donor: IDonor) => async (dispatch) => {
     payload: APIUrl.post('donors', donor),
   });
 };
+
+export const setToViewDonor = (donor: IDonor) => ({
+  type: ACTION_TYPES.SET_DONOR_VIEW,
+  payload: donor,
+});
 
 export const reset = () => ({
   type: ACTION_TYPES.RESET,

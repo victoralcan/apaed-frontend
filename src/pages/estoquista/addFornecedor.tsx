@@ -13,7 +13,29 @@ import { createContactForFornecedor, reset as resetContact } from '../../shared/
 
 interface IAddFornecedorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
-class AddFornecedor extends React.Component<IAddFornecedorProps> {
+interface IAddFornecedorState {
+  readOnly: boolean;
+}
+
+class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      readOnly: false,
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.toViewDonor.id) {
+      this.setState({ readOnly: true });
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.resetDonor();
+    this.props.resetContact();
+  }
+
   handleValidSubmit = (
     event,
     { name, email, document, public_place, complement, number, district, city, state, country, zip_code, phone },
@@ -46,7 +68,11 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
       createDonorError,
       loadingContact,
       loadingDonor,
+      toViewDonor,
+      toViewContact,
     } = this.props;
+
+    const { readOnly } = this.state;
 
     if (
       createContactSuccess &&
@@ -71,13 +97,27 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
                 <Col md={6}>
                   <FormGroup>
                     <Label for="name">Nome</Label>
-                    <AvField className="form-control" name="name" id="name" required />
+                    <AvField
+                      className="form-control"
+                      name="name"
+                      id="name"
+                      required
+                      readOnly={readOnly}
+                      value={toViewDonor.name}
+                    />
                   </FormGroup>
                 </Col>
                 <Col md={6}>
                   <FormGroup className="ml-3">
                     <Label for="email">Email</Label>
-                    <AvField className="form-control" name="email" id="email" required />
+                    <AvField
+                      className="form-control"
+                      name="email"
+                      id="email"
+                      required
+                      readOnly={readOnly}
+                      value={toViewDonor.email}
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -85,13 +125,27 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
                 <Col md={4}>
                   <FormGroup>
                     <Label for="document">Documento</Label>
-                    <AvField className="form-control" name="document" id="document" required />
+                    <AvField
+                      className="form-control"
+                      name="document"
+                      id="document"
+                      required
+                      readOnly={readOnly}
+                      value={toViewDonor.document}
+                    />
                   </FormGroup>
                 </Col>
                 <Col md={8}>
                   <FormGroup className="ml-3">
                     <Label for="public_place">Logradouro</Label>
-                    <AvField className="form-control" name="public_place" id="public_place" required />
+                    <AvField
+                      className="form-control"
+                      name="public_place"
+                      id="public_place"
+                      required
+                      value={toViewContact.public_place}
+                      readOnly={readOnly}
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -99,13 +153,27 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
                 <Col md={8}>
                   <FormGroup>
                     <Label for="complement">Complemento</Label>
-                    <AvField className="form-control" name="complement" id="complement" required />
+                    <AvField
+                      className="form-control"
+                      name="complement"
+                      id="complement"
+                      required
+                      readOnly={readOnly}
+                      value={toViewContact.complement}
+                    />
                   </FormGroup>
                 </Col>
                 <Col md={4}>
                   <FormGroup className="ml-3">
                     <Label for="number">Numero</Label>
-                    <AvField className="form-control" name="number" id="number" required />
+                    <AvField
+                      className="form-control"
+                      name="number"
+                      id="number"
+                      required
+                      readOnly={readOnly}
+                      value={toViewContact.number}
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -113,19 +181,40 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
                 <Col md={4}>
                   <FormGroup>
                     <Label for="district">Bairro</Label>
-                    <AvField className="form-control" name="district" id="district" required />
+                    <AvField
+                      className="form-control"
+                      name="district"
+                      id="district"
+                      required
+                      readOnly={readOnly}
+                      value={toViewContact.district}
+                    />
                   </FormGroup>
                 </Col>
                 <Col md={4}>
                   <FormGroup className="ml-3">
                     <Label for="city">Cidade</Label>
-                    <AvField className="form-control" name="city" id="city" required />
+                    <AvField
+                      className="form-control"
+                      name="city"
+                      id="city"
+                      required
+                      readOnly={readOnly}
+                      value={toViewContact.city}
+                    />
                   </FormGroup>
                 </Col>
                 <Col md={4}>
                   <FormGroup className="ml-3">
                     <Label for="state">Estado</Label>
-                    <AvField className="form-control" name="state" id="state" required />
+                    <AvField
+                      className="form-control"
+                      name="state"
+                      id="state"
+                      required
+                      readOnly={readOnly}
+                      value={toViewContact.state}
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -133,19 +222,40 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
                 <Col md={4}>
                   <FormGroup>
                     <Label for="country">País</Label>
-                    <AvField className="form-control" name="country" id="country" required />
+                    <AvField
+                      className="form-control"
+                      name="country"
+                      id="country"
+                      required
+                      readOnly={readOnly}
+                      value={toViewContact.country}
+                    />
                   </FormGroup>
                 </Col>
                 <Col md={4}>
                   <FormGroup className="ml-3">
                     <Label for="zip_code">CEP</Label>
-                    <AvField className="form-control" name="zip_code" id="zip_code" required />
+                    <AvField
+                      className="form-control"
+                      name="zip_code"
+                      id="zip_code"
+                      required
+                      readOnly={readOnly}
+                      value={toViewContact.zip_code}
+                    />
                   </FormGroup>
                 </Col>
                 <Col md={4}>
                   <FormGroup className="ml-3">
                     <Label for="phone">Telefone</Label>
-                    <AvField className="form-control" name="phone" id="phone" required />
+                    <AvField
+                      className="form-control"
+                      name="phone"
+                      id="phone"
+                      required
+                      readOnly={readOnly}
+                      value={toViewContact.phone}
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -172,6 +282,8 @@ const mapStateToProps = (store: IRootState) => ({
   createContactError: store.contact.createContactError,
   loadingContact: store.contact.loading,
   loadingDonor: store.donor.loading,
+  toViewDonor: store.donor.toViewDonor,
+  toViewContact: store.contact.toViewContact,
 });
 
 const mapDispatchToProps = {

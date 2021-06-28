@@ -6,6 +6,7 @@ import { createDonor } from './donor.reducer';
 
 export const ACTION_TYPES = {
   CREATE_CONTACT: 'contact/CREATE_CONTACT',
+  GET_CONTACT: 'contact/GET_CONTACT',
   RESET: 'contact/RESET',
 };
 
@@ -14,6 +15,7 @@ const initialState = {
   createContactSuccess: false,
   createContactError: false,
   contact: {} as IContact,
+  toViewContact: {} as IContact,
 };
 
 export type ContactState = Readonly<typeof initialState>;
@@ -35,6 +37,12 @@ export default (state: ContactState = initialState, action): ContactState => {
         loading: false,
         createContactError: true,
         createContactSuccess: false,
+      };
+    case SUCCESS(ACTION_TYPES.GET_CONTACT):
+      return {
+        ...state,
+        loading: false,
+        toViewContact: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.CREATE_CONTACT):
       return {
@@ -60,6 +68,13 @@ export const createContactForFornecedor = (contact: IContact, donor: IDonor) => 
   });
 
   dispatch(createDonor({ ...donor, contact_id: result.value.data.id }));
+};
+
+export const getContactById = (contactId: string) => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.GET_CONTACT,
+    payload: APIUrl.get(`contacts/${contactId}`),
+  });
 };
 
 export const reset = () => ({
