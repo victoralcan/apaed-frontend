@@ -90,7 +90,9 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
         <Card className="w-50 shadow-lg">
-          <CardHeader className="bg-dark text-white">Adicionar fornecedor/doador</CardHeader>
+          <CardHeader className="bg-dark text-white">
+            {toViewDonor.id ? 'Fornecedor/Doador' : 'Adicionar Fornecedor/Doador'}
+          </CardHeader>
           <CardBody>
             <AvForm id="add-product-form" onValidSubmit={this.handleValidSubmit}>
               <Row>
