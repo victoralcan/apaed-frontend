@@ -4,7 +4,7 @@ import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { faArrowAltCircleRight, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getStock, setProductToEdit } from '../../shared/reducers/stock.reducer';
 import { IRootState } from '../../shared/reducers';
@@ -44,15 +44,6 @@ class Stock extends React.Component<IStockProps> {
                   <td>{product['count(*)'] + ' ' + product.unity_measurement}</td>
                   <td>{formataData(new Date(product.expiration_date))}</td>
                   <td>
-                    <Button
-                      tag={Link}
-                      to="/user/editarProduto"
-                      onClick={() => this.props.setProductToEdit(product)}
-                      outline
-                      color="secondary"
-                    >
-                      <FontAwesomeIcon icon={faEdit} />
-                    </Button>
                     <Button
                       className="mx-3"
                       tag={Link}
