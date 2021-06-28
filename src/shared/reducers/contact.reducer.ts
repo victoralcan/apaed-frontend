@@ -60,8 +60,6 @@ export const createContactForFornecedor = (contact: IContact, donor: IDonor) => 
   });
 
   dispatch(createDonor({ ...donor, contact_id: result.value.data.id }));
-
-  console.log(result.value.data);
 };
 
 export const reset = () => ({

@@ -56,7 +56,6 @@ class AddFornecedor extends React.Component<IAddFornecedorProps> {
       !loadingContact &&
       !loadingDonor
     ) {
-      console.log('Deu Bom');
       this.props.resetContact();
       this.props.resetDonor();
       this.props.history.push('/user/fornecedor');
