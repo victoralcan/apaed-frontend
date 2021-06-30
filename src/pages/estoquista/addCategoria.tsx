@@ -125,7 +125,18 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
                 <Col md={6}>
                   <FormGroup className="mx-4">
                     <Label for="minimal_qntt">Quantidade Minima</Label>
-                    <AvField className="form-control" name="minimal_qntt" id="minimal_qntt" required />
+                    <AvField
+                      className="form-control"
+                      name="minimal_qntt"
+                      id="minimal_qntt"
+                      type="number"
+                      validate={{
+                        required: {
+                          value: true,
+                          errorMessage: 'Esse campo é obrigatório!',
+                        },
+                      }}
+                    />
                   </FormGroup>
                 </Col>
               </Row>

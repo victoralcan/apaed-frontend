@@ -37,26 +37,37 @@ class Stock extends React.Component<IStockProps> {
           </thead>
           <tbody>
             {stock &&
-              stock.map((product) => (
-                <tr key={product.product_id}>
-                  <td>{product.ncm_code}</td>
-                  <td>{product.name + ' ' + product.brand}</td>
-                  <td>{product['count(*)'] + ' ' + product.unity_measurement}</td>
-                  <td>{product.expiration_date ? formataData(new Date(product.expiration_date)) : 'Não Aplicável'}</td>
-                  <td>
-                    <Button
-                      className="mx-3"
-                      tag={Link}
-                      to="/user/transferir"
-                      outline
-                      color="secondary"
-                      onClick={() => this.props.setToTransferProduct(product)}
-                    >
-                      <FontAwesomeIcon icon={faArrowAltCircleRight} />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
+              stock.map((product) => {
+                const differenceQuantity = product.totalAmount - product.minimal_qntt;
+                const classNameQuantity =
+                  differenceQuantity < 60
+                    ? differenceQuantity > 30
+                      ? 'bg-warning text-white'
+                      : 'bg-danger text-white'
+                    : '';
+                return (
+                  <tr key={product.product_id}>
+                    <td>{product.ncm_code}</td>
+                    <td>{product.name + ' ' + product.brand}</td>
+                    <td className={classNameQuantity}>{product['count(*)'] + ' ' + product.unity_measurement}</td>
+                    <td>
+                      {product.expiration_date ? formataData(new Date(product.expiration_date)) : 'Não Aplicável'}
+                    </td>
+                    <td>
+                      <Button
+                        className="mx-3"
+                        tag={Link}
+                        to="/user/transferir"
+                        outline
+                        color="secondary"
+                        onClick={() => this.props.setToTransferProduct(product)}
+                      >
+                        <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </Table>
       </>

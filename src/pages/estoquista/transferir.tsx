@@ -107,7 +107,22 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
                     <Label for="amount">
                       Quantidade (Max: {toTransferProduct['count(*)']}) {toTransferProduct.unity_measurement}
                     </Label>
-                    <AvField className="form-control" name="amount" id="amount" required />
+                    <AvField
+                      className="form-control"
+                      name="amount"
+                      id="amount"
+                      type="number"
+                      validate={{
+                        required: {
+                          value: true,
+                          errorMessage: 'Esse campo é obrigatório!',
+                        },
+                        max: {
+                          value: toTransferProduct['count(*)'],
+                          errorMessage: `O limite de transferência é ${toTransferProduct['count(*)']}`,
+                        },
+                      }}
+                    />
                   </FormGroup>
                 </Col>
                 <Col md={6}>

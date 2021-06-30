@@ -9,4 +9,6 @@ export interface IProductLocalDonation {
   'count(*)'?: number;
   unity_measurement?: string;
   expiration_date?: Date;
+  minimal_qntt?: number;
+  totalAmount?: number;
 }
