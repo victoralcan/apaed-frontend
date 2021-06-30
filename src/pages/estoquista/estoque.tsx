@@ -22,9 +22,7 @@ class Stock extends React.Component<IStockProps> {
     const { stock } = this.props;
     return (
       <>
-        <div className="d-flex h-25 align-items-end">
-          <Button className="mb-4">Pesquisar</Button>
-        </div>
+        <div className="d-flex h-25 align-items-end" />
         <Table bordered responsive striped>
           <thead>
             <tr>
