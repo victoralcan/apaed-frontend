@@ -42,7 +42,7 @@ class Stock extends React.Component<IStockProps> {
                   <td>{product.ncm_code}</td>
                   <td>{product.name + ' ' + product.brand}</td>
                   <td>{product['count(*)'] + ' ' + product.unity_measurement}</td>
-                  <td>{formataData(new Date(product.expiration_date))}</td>
+                  <td>{product.expiration_date ? formataData(new Date(product.expiration_date)) : 'Não Aplicável'}</td>
                   <td>
                     <Button
                       className="mx-3"

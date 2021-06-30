@@ -57,6 +57,18 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
   render() {
     const { toTransferProduct, locals, user, makeTransferSuccess, makeTransferError } = this.props;
     const localsWithoutSelf = locals.filter((local) => local.id !== user.local_id);
+
+    if (!makeTransferSuccess && makeTransferError) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Transferência não pode ser realizada! Por favor, tente novamente!',
+        // @ts-ignore
+        type: 'error',
+      }).then(() => this.props.history.push('/user/estoque'));
+      this.props.resetSuccessTransfer();
+    }
+
     if (!makeTransferError && makeTransferSuccess) {
       const MySwal = withReactContent(Swal);
       MySwal.fire({

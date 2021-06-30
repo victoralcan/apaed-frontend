@@ -4,13 +4,13 @@ import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import Select from 'react-select';
-import { AvField, AvForm, AvRadio, AvRadioGroup } from 'availity-reactstrap-validation';
+import { AvField, AvForm, AvRadio, AvRadioGroup, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
 import { Button, Card, CardBody, CardHeader, Col, FormGroup, Input, Label, Row } from 'reactstrap';
 import { IRootState } from '../../shared/reducers';
 import { getDonorByDocument, reset as resetDonor } from '../../shared/reducers/donor.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
-import { getCategories, reset as resetCategories } from '../../shared/reducers/category.reducer';
+import { getCategories, getCategoryById, reset as resetCategories } from '../../shared/reducers/category.reducer';
 import { getProductsByNCM, reset as resetProducts } from '../../shared/reducers/product.reducer';
 import { convertToDataInputFormat } from '../../shared/utils/convertToDataInputFormat';
 import { convertDataInputFormatToDate } from '../../shared/utils/convertDataInputFormatToDate';
@@ -34,6 +34,7 @@ interface IAddProdutoState {
   donation: IOption;
   expiration_date?: string;
   registerMore: boolean;
+  hasExpirationDate: boolean;
 }
 
 class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
@@ -45,6 +46,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       donation: {},
       expiration_date: convertToDataInputFormat(new Date()),
       registerMore: false,
+      hasExpirationDate: true,
     };
   }
 
@@ -72,6 +74,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
   loadProductType = (category) => {
     if (category) {
       this.props.getProductsByNCM(category.value);
+      this.props.getCategoryById(category.value);
       this.setState({
         category,
         productType: {},
@@ -95,14 +98,14 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
 
   handleValidSubmit = (event, { amount }) => {
     event.persist();
-    const { productType, expiration_date } = this.state;
+    const { productType, expiration_date, hasExpirationDate } = this.state;
     const { selectedDonation } = this.props;
     const newProductLocalDonation: IProductLocalDonation = {
       product_id: String(productType.value),
       donation_id: selectedDonation.id,
       amount,
       // @ts-ignore
-      expiration_date: convertDataInputFormatToDate(expiration_date),
+      expiration_date: hasExpirationDate ? convertDataInputFormatToDate(expiration_date) : undefined,
     };
     this.props.registerNewProductToStock(newProductLocalDonation);
   };
@@ -135,6 +138,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       loadingDonation,
       registerNewProductToStockError,
       registerNewProductToStockSuccess,
+      category,
     } = this.props;
     if (!getDonorSuccess && getDonorError) {
       const MySwal = withReactContent(Swal);
@@ -283,26 +287,49 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                   <Row>
                     <Col md={6}>
                       <FormGroup className="mr-4">
-                        <Label for="amount">Quantidade</Label>
-                        <AvField className="form-control" name="amount" id="amount" required />
-                      </FormGroup>
-                    </Col>
-                    <Col md={6}>
-                      <FormGroup>
-                        <Label for="expiration_date">Data de validade</Label>
-                        <Input
-                          type="date"
-                          name="expiration_date"
-                          id="date"
-                          value={this.state.expiration_date}
-                          onChange={(event) =>
-                            this.setState({
-                              expiration_date: event.target.value,
-                            })
-                          }
+                        <Label for="amount">Quantidade ({category.unity_measurement})</Label>
+                        <AvField
+                          className="form-control"
+                          name="amount"
+                          id="amount"
+                          type="number"
+                          validate={{
+                            required: {
+                              value: true,
+                              errorMessage: 'Esse campo é obrigatório!',
+                            },
+                          }}
                         />
                       </FormGroup>
                     </Col>
+                    <Col md={6}>
+                      {this.state.hasExpirationDate && (
+                        <FormGroup>
+                          <Label for="expiration_date">Data de validade</Label>
+                          <Input
+                            type="date"
+                            name="expiration_date"
+                            id="date"
+                            value={this.state.expiration_date}
+                            onChange={(event) =>
+                              this.setState({
+                                expiration_date: event.target.value,
+                              })
+                            }
+                          />
+                        </FormGroup>
+                      )}
+                    </Col>
+                    <Row>
+                      <Label for="expiration_date">Tem data de validade?</Label>&nbsp;
+                      <AvCheckboxGroup name="hasExpirationDate">
+                        <AvCheckbox
+                          value={this.state.hasExpirationDate}
+                          checked={this.state.hasExpirationDate}
+                          onChange={(event) => this.setState({ hasExpirationDate: event?.target?.checked ?? false })}
+                        />
+                      </AvCheckboxGroup>
+                    </Row>
                   </Row>
                   <br />
                   <Button className="mb-4 float-right float-down" color="success" type="submit">
@@ -349,6 +376,7 @@ const mapStateToProps = (store: IRootState) => ({
   getDonorError: store.donor.getDonorError,
   getDonorSuccess: store.donor.getDonorSuccess,
   categories: store.category.categories,
+  category: store.category.category,
   products: store.product.products,
   donationsForUser: store.donation.donationsForUser,
   getDonationsForUserSuccess: store.donation.getDonationsForUserSuccess,
@@ -363,6 +391,7 @@ const mapDispatchToProps = {
   getCategories,
   getProductsByNCM,
   getDonationsForUser,
+  getCategoryById,
   createNewDonation,
   setDonation,
   registerNewProductToStock,
