@@ -10,6 +10,8 @@ import { IContact } from '../../shared/model/contact.model';
 import { ILocal } from '../../shared/model/local.model';
 import { createLocal, reset as resetLocal } from '../../shared/reducers/local.reducer';
 import { createContactForLocal, reset as resetContact } from '../../shared/reducers/contact.reducer';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 interface IVerSetorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -71,10 +73,28 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       createContactError,
     } = this.props;
 
+    if (!createLocalSuccess && createLocalError) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Erro ao criar o setor! Por favor, tente novamente!',
+        // @ts-ignore
+        type: 'error',
+      });
+    }
+
     if (createContactSuccess && !createContactError && !createLocalError && createLocalSuccess) {
-      this.props.resetContact();
-      this.props.resetLocal();
-      this.props.history.push('/user/setor');
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Setor Cadastrado',
+        text: 'Setor cadastrado com sucesso!',
+        // @ts-ignore
+        type: 'success',
+      }).then(() => {
+        this.props.resetContact();
+        this.props.resetLocal();
+        this.props.history.push('/user/setor');
+      });
     }
 
     return (

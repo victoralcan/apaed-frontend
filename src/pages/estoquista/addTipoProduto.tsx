@@ -54,6 +54,16 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
   render() {
     const { categories, createProductSuccess, createProductError, loading } = this.props;
 
+    if (!createProductSuccess && createProductError) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Erro ao criar o tipo de produto! Por favor, tente novamente!',
+        // @ts-ignore
+        type: 'error',
+      });
+    }
+
     if (createProductSuccess && !createProductError && !loading) {
       const MySwal = withReactContent(Swal);
       MySwal.fire({

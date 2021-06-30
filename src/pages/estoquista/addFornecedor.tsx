@@ -10,6 +10,8 @@ import { createDonor, reset as resetDonor } from '../../shared/reducers/donor.re
 import { IDonor } from '../../shared/model/donor.model';
 import { IContact } from '../../shared/model/contact.model';
 import { createContactForFornecedor, reset as resetContact } from '../../shared/reducers/contact.reducer';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 interface IAddFornecedorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -74,6 +76,16 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
 
     const { readOnly } = this.state;
 
+    if (!createDonorSuccess && createDonorError) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Erro ao criar o fornecedor/doador! Por favor, tente novamente!',
+        // @ts-ignore
+        type: 'error',
+      });
+    }
+
     if (
       createContactSuccess &&
       !createContactError &&
@@ -82,9 +94,17 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
       !loadingContact &&
       !loadingDonor
     ) {
-      this.props.resetContact();
-      this.props.resetDonor();
-      this.props.history.push('/user/fornecedor');
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Fornecedor/Doador Cadastrado',
+        text: 'Fornecedor/Doador cadastrado com sucesso!',
+        // @ts-ignore
+        type: 'success',
+      }).then(() => {
+        this.props.resetContact();
+        this.props.resetDonor();
+        this.props.history.push('/user/fornecedor');
+      });
     }
 
     return (
