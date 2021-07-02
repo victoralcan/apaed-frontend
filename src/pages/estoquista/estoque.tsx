@@ -36,13 +36,17 @@ class Stock extends React.Component<IStockProps> {
           <tbody>
             {stock &&
               stock.map((product) => {
+                console.log(product.name);
                 const differenceQuantity = product.totalAmount - product.minimal_qntt;
+                console.log(product.totalAmount);
+                console.log(product.minimal_qntt);
+                console.log(differenceQuantity);
                 const classNameQuantity =
                   differenceQuantity < 60
                     ? differenceQuantity > 30
                       ? 'bg-warning text-white'
                       : 'bg-danger text-white'
-                    : '';
+                    : 'bg-success text-white';
                 return (
                   <tr key={product.product_id}>
                     <td>{product.ncm_code}</td>

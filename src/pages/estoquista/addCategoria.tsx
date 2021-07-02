@@ -111,7 +111,13 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
                 <Col md={6}>
                   <FormGroup className="mx-4">
                     <Label for="ncm_code">Codigo NCM</Label>
-                    <AvField className="form-control" name="ncm_code" id="ncm_code" required />
+                    <AvField
+                      className="form-control"
+                      name="ncm_code"
+                      id="ncm_code"
+                      required
+                      errorMessage="Esse campo é obrigatório!"
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -119,7 +125,13 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
                 <Col md={6}>
                   <FormGroup>
                     <Label for="name">Nome</Label>
-                    <AvField className="form-control" name="name" id="name" required />
+                    <AvField
+                      className="form-control"
+                      name="name"
+                      id="name"
+                      required
+                      errorMessage="Esse campo é obrigatório!"
+                    />
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -144,7 +156,13 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
                 <Col md={12}>
                   <FormGroup className="mr-4">
                     <Label for="long_description">Descrição</Label>
-                    <AvField className="form-control" name="long_description" id="long_description" required />
+                    <AvField
+                      className="form-control"
+                      name="long_description"
+                      id="long_description"
+                      required
+                      errorMessage="Esse campo é obrigatório!"
+                    />
                   </FormGroup>
                 </Col>
               </Row>

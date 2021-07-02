@@ -227,7 +227,14 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                     <Col md={12}>
                       <FormGroup>
                         <Label for="Type">Fornecedor/Doador</Label>
-                        <AvField className="form-control" name="document" id="donor" readOnly value={donor.name} />
+                        <AvField
+                          className="form-control"
+                          name="document"
+                          id="donor"
+                          readOnly
+                          value={donor.name}
+                          errorMessage="Esse campo é obrigatório!"
+                        />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -354,7 +361,14 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                   <Col md={6}>
                     <FormGroup>
                       <Label for="Type">Pesquise pelo fornecedor/doador</Label>
-                      <AvField className="form-control" name="document" id="donor" placeholder="Digite o documento" />
+                      <AvField
+                        className="form-control"
+                        name="document"
+                        id="donor"
+                        placeholder="Digite o documento"
+                        required
+                        errorMessage="Esse campo é obrigatório!"
+                      />
                     </FormGroup>
                   </Col>
                 </Row>

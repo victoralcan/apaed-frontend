@@ -106,7 +106,13 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
                 <Col md={6}>
                   <FormGroup className="mx-4">
                     <Label for="name">Nome</Label>
-                    <AvField className="form-control" name="name" id="name" required />
+                    <AvField
+                      className="form-control"
+                      name="name"
+                      id="name"
+                      required
+                      errorMessage="Esse campo é obrigatório!"
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -114,7 +120,13 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
                 <Col md={6}>
                   <FormGroup>
                     <Label for="brand">Marca</Label>
-                    <AvField className="form-control" name="brand" id="brand" required />
+                    <AvField
+                      className="form-control"
+                      name="brand"
+                      id="brand"
+                      required
+                      errorMessage="Esse campo é obrigatório!"
+                    />
                   </FormGroup>
                 </Col>
               </Row>

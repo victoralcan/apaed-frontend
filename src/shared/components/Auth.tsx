@@ -2,7 +2,7 @@ import React, { Component, ComponentProps } from 'react';
 import { connect } from 'react-redux';
 import { IRootState } from '../reducers';
 import APIUrl from '../../config/api';
-import { getSession } from '../reducers/authentication';
+import { clearAuthToken, getSession } from '../reducers/authentication';
 
 export interface IAuthState {
   waitAuthCheck: boolean;
@@ -16,9 +16,11 @@ class Auth extends Component<IAuthProps, IAuthState> {
   };
 
   componentDidMount() {
-    return Promise.all([this.jwtCheck()]).then(() => {
-      this.setState({ waitAuthCheck: false });
-    });
+    return Promise.all([this.jwtCheck()])
+      .then(() => {
+        this.setState({ waitAuthCheck: false });
+      })
+      .catch(() => this.props.clearAuthToken());
   }
 
   jwtCheck = async () => {
@@ -43,6 +45,7 @@ const mapStateToProps = (store: IRootState) => ({
 
 const mapDispatchToProps = {
   getSession,
+  clearAuthToken,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

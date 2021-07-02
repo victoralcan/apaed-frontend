@@ -114,6 +114,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewLocal.name}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -127,6 +128,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewLocal.document}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -142,6 +144,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       value={toViewContact.public_place}
                       readOnly={readOnly}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -157,6 +160,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewContact.complement}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -170,6 +174,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewContact.number}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -185,6 +190,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewContact.district}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -198,6 +204,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewContact.city}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -211,6 +218,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewContact.state}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -226,6 +234,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewContact.country}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -239,6 +248,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewContact.zip_code}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
@@ -252,6 +262,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                       required
                       readOnly={readOnly}
                       value={toViewContact.phone}
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>

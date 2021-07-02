@@ -44,6 +44,9 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
 
   handleValidSubmit = (event, { amount }) => {
     event.persist();
+    if (this.state.description.length === 0) {
+      return;
+    }
     const newTransfer: ITransfer = {
       description: this.state.description,
       product_id: this.props.toTransferProduct.product_id,
@@ -155,6 +158,8 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
                       id="description"
                       value={this.state.description}
                       onChange={(event) => this.setState({ description: event.target.value })}
+                      required
+                      errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
                 </Col>
