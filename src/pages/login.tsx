@@ -76,7 +76,7 @@ class Login extends React.Component<ILoginProps> {
                       label="Senha"
                       placeholder="Senha"
                       required
-                      errorMessage="Erro Senha"
+                      errorMessage="A senha é obrigatória!"
                     />
                   </Col>
                 </Row>
