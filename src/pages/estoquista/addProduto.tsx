@@ -140,6 +140,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       registerNewProductToStockSuccess,
       category,
     } = this.props;
+
     if (!getDonorSuccess && getDonorError) {
       const MySwal = withReactContent(Swal);
       MySwal.fire({

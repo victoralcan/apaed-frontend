@@ -7,6 +7,7 @@ export const ACTION_TYPES = {
   GET_SESSION: 'authentication/GET_SESSION',
   LOGOUT: 'authentication/LOGOUT',
   CLEAR_AUTH: 'authentication/CLEAR_AUTH',
+  RESET: 'authentication/RESET',
 };
 
 const initialState = {
@@ -69,6 +70,10 @@ export default (state: AuthenticationState = initialState, action): Authenticati
         loading: false,
         isAuthenticated: false,
       };
+    case ACTION_TYPES.RESET:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }
@@ -113,3 +118,7 @@ export const clearAuthentication = () => (dispatch) => {
     type: ACTION_TYPES.CLEAR_AUTH,
   });
 };
+
+export const reset = () => ({
+  type: ACTION_TYPES.RESET,
+});

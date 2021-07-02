@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 import { Button, Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 import { AvField, AvForm } from 'availity-reactstrap-validation';
 import { Redirect } from 'react-router-dom';
-import { login } from '../shared/reducers/authentication';
+import { login, reset } from '../shared/reducers/authentication';
 import { IRootState } from '../shared/reducers';
 import { AUTHORITIES } from '../config/constants';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 interface ILoginProps extends StateProps, DispatchProps {}
 
@@ -18,6 +20,18 @@ class Login extends React.Component<ILoginProps> {
   };
 
   render() {
+    const { loginError, loginSuccess, loading } = this.props;
+
+    if (!loginSuccess && loginError && !loading) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Nome de usuário ou senha incorretos!',
+        // @ts-ignore
+        type: 'error',
+      }).then(() => this.props.reset());
+    }
+
     return (
       <>
         {this.props.isAuthenticated ? (
@@ -82,9 +96,13 @@ class Login extends React.Component<ILoginProps> {
 const mapStateToProps = (store: IRootState) => ({
   isAuthenticated: store.authentication.isAuthenticated,
   user: store.authentication.account,
+  loginSuccess: store.authentication.loginSuccess,
+  loginError: store.authentication.loginError,
+  loading: store.authentication.loading,
 });
 const mapDispatchToProps = {
   login,
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
