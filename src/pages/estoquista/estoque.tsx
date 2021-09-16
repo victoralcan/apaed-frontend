@@ -36,11 +36,7 @@ class Stock extends React.Component<IStockProps> {
           <tbody>
             {stock &&
               stock.map((product) => {
-                console.log(product.name);
                 const differenceQuantity = product.totalAmount - product.minimal_qntt;
-                console.log(product.totalAmount);
-                console.log(product.minimal_qntt);
-                console.log(differenceQuantity);
                 const classNameQuantity =
                   differenceQuantity < 60
                     ? differenceQuantity > 30
@@ -51,7 +47,7 @@ class Stock extends React.Component<IStockProps> {
                   <tr key={product.product_id}>
                     <td>{product.ncm_code}</td>
                     <td>{product.name + ' ' + product.brand}</td>
-                    <td className={classNameQuantity}>{product['count(*)'] + ' ' + product.unity_measurement}</td>
+                    <td className={classNameQuantity}>{product.count + ' ' + product.unity_measurement}</td>
                     <td>
                       {product.expiration_date ? formataData(new Date(product.expiration_date)) : 'Não Aplicável'}
                     </td>
@@ -62,7 +58,7 @@ class Stock extends React.Component<IStockProps> {
                         to="/user/transferir"
                         outline
                         color="secondary"
-                        onClick={() => this.props.setToTransferProduct(product)}
+                        onClick={() => this.props.setToTransferProduct(product, product.count)}
                       >
                         <FontAwesomeIcon icon={faArrowAltCircleRight} />
                       </Button>

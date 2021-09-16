@@ -35,7 +35,7 @@ class Login extends React.Component<ILoginProps> {
     return (
       <>
         {this.props.isAuthenticated ? (
-          this.props.user.roles[0] === AUTHORITIES.USER ? (
+          this.props.user.role.name === AUTHORITIES.USER ? (
             <Redirect to="/user/estoque" />
           ) : (
             <Redirect to="/admin/estoque" />

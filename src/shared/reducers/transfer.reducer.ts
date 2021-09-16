@@ -1,7 +1,7 @@
 import { FAILURE, REQUEST, SUCCESS } from './action-type.util';
 import APIUrl from '../../config/api';
-import { IProductLocalDonation } from '../model/productLocalDonation.model';
-import { ITransfer } from '../model/transfer.model';
+import { IProductLocalDonation, IProductLocalDonationGet } from '../model/productLocalDonation.model';
+import { ITransferPostPut } from '../model/transfer.model';
 
 export const ACTION_TYPES = {
   MAKE_TRANSFER: 'transfer/MAKE_TRANSFER',
@@ -14,7 +14,8 @@ const initialState = {
   loading: false,
   makeTransferSuccess: false,
   makeTransferError: false,
-  toTransferProduct: {} as IProductLocalDonation,
+  toTransferProduct: {} as IProductLocalDonationGet,
+  amount: 0,
 };
 
 export type TransferState = Readonly<typeof initialState>;
@@ -46,6 +47,7 @@ export default (state: TransferState = initialState, action): TransferState => {
       return {
         ...state,
         toTransferProduct: action.payload,
+        amount: action.amount,
       };
     case ACTION_TYPES.RESET_SUCCESS:
       return {
@@ -53,6 +55,7 @@ export default (state: TransferState = initialState, action): TransferState => {
         makeTransferError: false,
         makeTransferSuccess: false,
         toTransferProduct: {},
+        amount: 0,
       };
     case ACTION_TYPES.RESET:
       return {
@@ -63,17 +66,21 @@ export default (state: TransferState = initialState, action): TransferState => {
   }
 };
 
-export const makeTransfer = (transfer: ITransfer) => async (dispatch) => {
+export const makeTransfer = (transfer: ITransferPostPut) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.MAKE_TRANSFER,
     payload: APIUrl.post('transfer', transfer),
   });
 };
 
-export const setToTransferProduct = (product: IProductLocalDonation) => ({
-  type: ACTION_TYPES.SET_TRANSFER_PRODUCT,
-  payload: product,
-});
+export const setToTransferProduct = (product: IProductLocalDonation, amount: number) => async (dispatch) => {
+  const { data: fetchedProduct } = await APIUrl.get(`stock/${product.id}`);
+  await dispatch({
+    type: ACTION_TYPES.SET_TRANSFER_PRODUCT,
+    payload: fetchedProduct,
+    amount,
+  });
+};
 
 export const resetSuccessTransfer = () => ({
   type: ACTION_TYPES.RESET_SUCCESS,

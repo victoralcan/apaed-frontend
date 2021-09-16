@@ -36,7 +36,7 @@ function Header(props: IHeaderProps) {
       </NavbarToggler>
       <Collapse isOpen={isOpen} navbar className="w-100">
         <Nav className="d-flex w-100" navbar>
-          {props.user.roles[0] === AUTHORITIES.USER ? (
+          {props.user.role.name === AUTHORITIES.USER ? (
             <>
               <Link className="header-option text-center" to="/user/estoque" style={{ textDecoration: 'none' }}>
                 <h6 className="text-white">Estoque</h6>

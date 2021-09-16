@@ -69,7 +69,7 @@ export const createContactForFornecedor = (contact: IContact, donor: IDonor) => 
     payload: APIUrl.post('contacts', contact),
   });
 
-  dispatch(createDonor({ ...donor, contact_id: result.value.data.id }));
+  dispatch(createDonor({ ...donor, contact_id: result.value.data.id, active: true }));
 };
 
 export const createContactForLocal = (contact: IContact, local: ILocal) => async (dispatch) => {
@@ -78,13 +78,7 @@ export const createContactForLocal = (contact: IContact, local: ILocal) => async
     payload: APIUrl.post('contacts', contact),
   });
 
-  const newLocal = {
-    ...local,
-    contact_id: result.value.data.id,
-  };
-  console.log(newLocal);
-
-  dispatch(createLocal({ ...local, contact_id: result.value.data.id }));
+  dispatch(createLocal({ ...local, contact_id: result.value.data.id, active: true }));
 };
 
 export const getContactById = (contactId: string) => async (dispatch) => {

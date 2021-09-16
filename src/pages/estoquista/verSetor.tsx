@@ -8,7 +8,7 @@ import { AvField, AvForm } from 'availity-reactstrap-validation';
 import { IRootState } from '../../shared/reducers';
 import { IContact } from '../../shared/model/contact.model';
 import { ILocal } from '../../shared/model/local.model';
-import { createLocal, reset as resetLocal } from '../../shared/reducers/local.reducer';
+import { reset as resetLocal } from '../../shared/reducers/local.reducer';
 import { createContactForLocal, reset as resetContact } from '../../shared/reducers/contact.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
@@ -46,6 +46,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
     const newLocal: ILocal = {
       name,
       document,
+      active: true,
     };
     const newContact: IContact = {
       public_place,
@@ -57,6 +58,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       country,
       zip_code,
       phone,
+      active: true,
     };
     this.props.createContactForLocal(newContact, newLocal);
   };
@@ -294,7 +296,6 @@ const mapStateToProps = (store: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  createLocal,
   createContactForLocal,
   resetContact,
   resetLocal,

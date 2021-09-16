@@ -47,6 +47,7 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
       name,
       brand,
       ncm_id: String(selectedCategory.value),
+      active: true,
     };
     this.props.createProduct(newProduct);
   };

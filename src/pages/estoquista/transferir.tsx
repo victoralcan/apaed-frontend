@@ -8,7 +8,7 @@ import { AvField, AvForm } from 'availity-reactstrap-validation';
 import { Button, Card, CardBody, CardHeader, Col, FormGroup, Input, Label, Row } from 'reactstrap';
 import { IRootState } from '../../shared/reducers';
 import { makeTransfer, resetSuccessTransfer } from '../../shared/reducers/transfer.reducer';
-import { ITransfer } from '../../shared/model/transfer.model';
+import { ITransferPostPut } from '../../shared/model/transfer.model';
 import { getLocals } from '../../shared/reducers/local.reducer';
 import { IOption } from '../../shared/model/option.model';
 import withReactContent from 'sweetalert2-react-content';
@@ -47,12 +47,13 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
     if (this.state.description.length === 0) {
       return;
     }
-    const newTransfer: ITransfer = {
+    const newTransfer: ITransferPostPut = {
       description: this.state.description,
       product_id: this.props.toTransferProduct.product_id,
-      amount,
+      amount: Number(amount),
       destiny_id: String(this.state.destiny.value),
       expiration_date: this.props.toTransferProduct.expiration_date,
+      active: true,
     };
     this.props.makeTransfer(newTransfer);
   };
@@ -92,7 +93,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
                 <Col md={12}>
                   <FormGroup row>
                     <Label for="exampleEmail">Codigo NCM</Label>
-                    <Input readOnly name="ncm_code" value={toTransferProduct.ncm_code} />
+                    <Input readOnly name="ncm_code" value={toTransferProduct.product?.ncm?.ncm_code} />
                   </FormGroup>
                 </Col>
               </Row>
@@ -100,7 +101,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
                 <Col md={12}>
                   <FormGroup row>
                     <Label for="exampleEmail">Nome</Label>
-                    <Input readOnly name="name" value={toTransferProduct.name} />
+                    <Input readOnly name="name" value={toTransferProduct.product?.name} />
                   </FormGroup>
                 </Col>
               </Row>
@@ -108,7 +109,8 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
                 <Col md={6}>
                   <FormGroup className="mr-4">
                     <Label for="amount">
-                      Quantidade (Max: {toTransferProduct['count(*)']}) {toTransferProduct.unity_measurement}
+                      Quantidade (Max: {this.props.amount}){' '}
+                      {toTransferProduct.product?.ncm?.unity_measurement?.unity_measurement}
                     </Label>
                     <AvField
                       className="form-control"
@@ -121,8 +123,8 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
                           errorMessage: 'Esse campo é obrigatório!',
                         },
                         max: {
-                          value: toTransferProduct['count(*)'],
-                          errorMessage: `O limite de transferência é ${toTransferProduct['count(*)']}`,
+                          value: this.props.amount,
+                          errorMessage: `O limite de transferência é ${this.props.amount}`,
                         },
                       }}
                     />
@@ -185,6 +187,7 @@ const mapStateToProps = (store: IRootState) => ({
   user: store.authentication.account,
   makeTransferSuccess: store.transfer.makeTransferSuccess,
   makeTransferError: store.transfer.makeTransferError,
+  amount: store.transfer.amount,
 });
 
 const mapDispatchToProps = {

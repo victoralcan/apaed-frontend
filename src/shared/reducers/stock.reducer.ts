@@ -1,6 +1,10 @@
 import { FAILURE, REQUEST, SUCCESS } from './action-type.util';
 import APIUrl from '../../config/api';
-import { IProductLocalDonation } from '../model/productLocalDonation.model';
+import {
+  IProductLocalDonation,
+  IProductLocalDonationGet,
+  IProductLocalDonationPostPut,
+} from '../model/productLocalDonation.model';
 
 export const ACTION_TYPES = {
   GET_STOCK: 'stock/GET_STOCK',
@@ -88,14 +92,14 @@ export const getStock = () => async (dispatch) => {
   });
 };
 
-export const registerNewProductToStock = (product: IProductLocalDonation) => async (dispatch) => {
+export const registerNewProductToStock = (product: IProductLocalDonationPostPut) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.REGISTER_NEW_PRODUCT_TO_STOCK,
     payload: APIUrl.post('stock', product),
   });
 };
 
-export const setProductToEdit = (product: IProductLocalDonation) => async (dispatch) => {
+export const setProductToEdit = (product: IProductLocalDonationGet) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.EDIT_PRODUCT,
     payload: product,

@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { getCategories, getCategoryById, reset as resetCategories } from '../../shared/reducers/category.reducer';
 import { getProductsByNCM, reset as resetProducts } from '../../shared/reducers/product.reducer';
 import { convertToDataInputFormat } from '../../shared/utils/convertToDataInputFormat';
-import { convertDataInputFormatToDate } from '../../shared/utils/convertDataInputFormatToDate';
+import { convertDataInputFormatToDateServerFormat } from '../../shared/utils/convertDataInputFormatToDate';
 import {
   createNewDonation,
   getDonationsForUser,
@@ -22,7 +22,7 @@ import {
 } from '../../shared/reducers/donation.reducer';
 import { formataData } from '../../shared/utils/formataData';
 import { IDonation } from '../../shared/model/donation.model';
-import { IProductLocalDonation } from '../../shared/model/productLocalDonation.model';
+import { IProductLocalDonationPostPut } from '../../shared/model/productLocalDonation.model';
 import { registerNewProductToStock, resetSuccessRegister } from '../../shared/reducers/stock.reducer';
 import { IOption } from '../../shared/model/option.model';
 
@@ -100,12 +100,13 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
     event.persist();
     const { productType, expiration_date, hasExpirationDate } = this.state;
     const { selectedDonation } = this.props;
-    const newProductLocalDonation: IProductLocalDonation = {
+    const newProductLocalDonation: IProductLocalDonationPostPut = {
       product_id: String(productType.value),
       donation_id: selectedDonation.id,
       amount,
       // @ts-ignore
-      expiration_date: hasExpirationDate ? convertDataInputFormatToDate(expiration_date) : undefined,
+      expiration_date: hasExpirationDate ? convertDataInputFormatToDateServerFormat(expiration_date) : undefined,
+      active: true,
     };
     this.props.registerNewProductToStock(newProductLocalDonation);
   };
@@ -118,9 +119,10 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
     }
 
     const newDonation: IDonation = {
-      donation_date: new Date(),
+      donation_date: new Date().toISOString(),
       type,
       donor_id: this.props.donor.id,
+      active: true,
     };
     this.props.createNewDonation(newDonation);
   };
@@ -295,7 +297,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                   <Row>
                     <Col md={6}>
                       <FormGroup className="mr-4">
-                        <Label for="amount">Quantidade ({category.unity_measurement})</Label>
+                        <Label for="amount">Quantidade ({category?.unity_measurement?.unity_measurement})</Label>
                         <AvField
                           className="form-control"
                           name="amount"

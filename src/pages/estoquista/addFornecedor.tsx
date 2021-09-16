@@ -6,7 +6,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, FormGroup, Label, Row } from 'reactstrap';
 import { AvField, AvForm } from 'availity-reactstrap-validation';
 import { IRootState } from '../../shared/reducers';
-import { createDonor, reset as resetDonor } from '../../shared/reducers/donor.reducer';
+import { reset as resetDonor } from '../../shared/reducers/donor.reducer';
 import { IDonor } from '../../shared/model/donor.model';
 import { IContact } from '../../shared/model/contact.model';
 import { createContactForFornecedor, reset as resetContact } from '../../shared/reducers/contact.reducer';
@@ -47,6 +47,7 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
       name,
       email,
       document,
+      active: true,
     };
     const newContact: IContact = {
       public_place,
@@ -58,6 +59,7 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
       country,
       zip_code,
       phone,
+      active: true,
     };
     this.props.createContactForFornecedor(newContact, newDonor);
   };
@@ -323,7 +325,6 @@ const mapStateToProps = (store: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  createDonor,
   createContactForFornecedor,
   resetContact,
   resetDonor,

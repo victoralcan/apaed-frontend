@@ -62,6 +62,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
       description: name,
       unity_measurement_id: String(selectedUnityMeasurement.value),
       type_id: String(selectedType.value),
+      active: true,
     };
     this.props.createCategory(newCategory);
   };

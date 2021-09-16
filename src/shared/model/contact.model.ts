@@ -9,4 +9,7 @@ export interface IContact {
   country?: string;
   zip_code?: string;
   phone?: string;
+  active?: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
