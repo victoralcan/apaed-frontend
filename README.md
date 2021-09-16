@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Como Rodar
+
+Para rodar o projeto, digite `yarn` na raiz do projeto para instalar as dependências. Após, apenas digite `yarn start` para iniciar o projeto.
+
 ## Available Scripts
 
 In the project directory, you can run:
