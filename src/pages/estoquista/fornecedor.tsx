@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
@@ -23,9 +23,6 @@ class Fornecedor extends React.Component<IFornecedorProps> {
         <Card className="w-25 shadow-lg">
           <CardHeader className="bg-dark text-white">Fornecedores</CardHeader>
           <CardBody>
-            <Button tag={Link} to="/user/addFornecedor" className="mb-4 float-right" color="success">
-              Adicionar
-            </Button>
             <Table hover>
               <tbody>
                 {donors.map((donor) => (

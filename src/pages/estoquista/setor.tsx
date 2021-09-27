@@ -3,7 +3,7 @@ import React from 'react';
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { IRootState } from '../../shared/reducers';
@@ -23,9 +23,6 @@ class Setor extends React.Component<ISetorProps> {
         <Card className="w-25 shadow-lg">
           <CardHeader className="bg-dark text-white">Setores</CardHeader>
           <CardBody>
-            <Button tag={Link} to="/user/verSetor" className="mb-4 float-right" color="success">
-              Adicionar
-            </Button>
             <Table hover>
               <tbody>
                 {locals.map((local) => (

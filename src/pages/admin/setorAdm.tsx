@@ -2,66 +2,49 @@ import React from 'react';
 
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
-interface ISetorProps extends StateProps, DispatchProps {}
+import { IRootState } from '../../shared/reducers';
+import { getLocals, setToViewLocal } from '../../shared/reducers/local.reducer';
+import { getContactById } from '../../shared/reducers/contact.reducer';
+interface ISetorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 class Setor extends React.Component<ISetorProps> {
+  componentDidMount() {
+    this.props.getLocals();
+  }
+
   render() {
+    const { locals } = this.props;
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
         <Card className="w-25 shadow-lg">
           <CardHeader className="bg-dark text-white">Setores</CardHeader>
           <CardBody>
-            <Link to="/admin/adicionarSetor">
-              <Button className="mb-4 float-right" color="success">
-                Adicionar
-              </Button>
-            </Link>
+            <Button tag={Link} to="/admin/verSetor" className="mb-4 float-right" color="success">
+              Adicionar
+            </Button>
             <Table hover>
               <tbody>
-                <tr>
-                  <th scope="row">Cozinha</th>
-                  <td>
-                    <Button color="info">
-                      <FontAwesomeIcon icon={faInfo} />
-                    </Button>{' '}
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Panificação</th>
-                  <td>
-                    <Button color="info">
-                      <FontAwesomeIcon icon={faInfo} />
-                    </Button>{' '}
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Limpeza</th>
-                  <td>
-                    <Button color="info">
-                      <FontAwesomeIcon icon={faInfo} />
-                    </Button>{' '}
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Casa carinho</th>
-                  <td>
-                    <Button color="info">
-                      <FontAwesomeIcon icon={faInfo} />
-                    </Button>{' '}
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Bezerra de menezes</th>
-                  <td>
-                    <Button color="info">
-                      <FontAwesomeIcon icon={faInfo} />
-                    </Button>{' '}
-                  </td>
-                </tr>
+                {locals.map((local) => (
+                  <tr key={local.id}>
+                    <th scope="row">{local.name}</th>
+                    <td>
+                      <Button
+                        onClick={() => {
+                          this.props.setToViewLocal(local);
+                          this.props.getContactById(local.contact_id);
+                          this.props.history.push('/admin/verSetor');
+                        }}
+                        color="info"
+                      >
+                        <FontAwesomeIcon icon={faInfo} />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </Table>
           </CardBody>
@@ -71,10 +54,17 @@ class Setor extends React.Component<ISetorProps> {
   }
 }
 
-const mapStateToProps = () => ({});
-const mapDispatchToProps = {};
+const mapStateToProps = (store: IRootState) => ({
+  locals: store.local.locals,
+});
+const mapDispatchToProps = {
+  getLocals,
+  setToViewLocal,
+  getContactById,
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
+// @ts-ignore
 export default connect(mapStateToProps, mapDispatchToProps)(Setor);
