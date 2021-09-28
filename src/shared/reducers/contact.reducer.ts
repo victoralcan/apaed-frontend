@@ -2,13 +2,14 @@ import { FAILURE, REQUEST, SUCCESS } from './action-type.util';
 import APIUrl from '../../config/api';
 import { IContact } from '../model/contact.model';
 import { IDonor } from '../model/donor.model';
-import { createDonor } from './donor.reducer';
+import { createDonor, updateDonor } from './donor.reducer';
 import { ILocal } from '../model/local.model';
 import { createLocal } from './local.reducer';
 
 export const ACTION_TYPES = {
   CREATE_CONTACT: 'contact/CREATE_CONTACT',
   GET_CONTACT: 'contact/GET_CONTACT',
+  UPDATE_CONTACT: 'contact/UPDATE_CONTACT',
   RESET: 'contact/RESET',
 };
 
@@ -16,6 +17,8 @@ const initialState = {
   loading: false,
   createContactSuccess: false,
   createContactError: false,
+  updateContactSuccess: false,
+  updateContactError: false,
   contact: {} as IContact,
   toViewContact: {} as IContact,
 };
@@ -33,12 +36,26 @@ export default (state: ContactState = initialState, action): ContactState => {
         createContactError: false,
         createContactSuccess: false,
       };
+    case REQUEST(ACTION_TYPES.UPDATE_CONTACT):
+      return {
+        ...state,
+        loading: true,
+        updateContactError: false,
+        updateContactSuccess: false,
+      };
     case FAILURE(ACTION_TYPES.CREATE_CONTACT):
       return {
         ...state,
         loading: false,
         createContactError: true,
         createContactSuccess: false,
+      };
+    case FAILURE(ACTION_TYPES.UPDATE_CONTACT):
+      return {
+        ...state,
+        loading: false,
+        updateContactError: true,
+        updateContactSuccess: false,
       };
     case SUCCESS(ACTION_TYPES.GET_CONTACT):
       return {
@@ -53,6 +70,13 @@ export default (state: ContactState = initialState, action): ContactState => {
         createContactError: false,
         createContactSuccess: true,
         contact: action.payload.data,
+      };
+    case SUCCESS(ACTION_TYPES.UPDATE_CONTACT):
+      return {
+        ...state,
+        loading: false,
+        updateContactError: false,
+        updateContactSuccess: true,
       };
     case ACTION_TYPES.RESET:
       return {
@@ -79,6 +103,15 @@ export const createContactForLocal = (contact: IContact, local: ILocal) => async
   });
 
   dispatch(createLocal({ ...local, contact_id: result.value.data.id, active: true }));
+};
+
+export const updateContactForFornecedor = (contact: IContact, donor: IDonor) => async (dispatch) => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_CONTACT,
+    payload: APIUrl.put('contacts', contact),
+  });
+
+  dispatch(updateDonor({ ...donor, contact_id: result.value.data.id, active: true }));
 };
 
 export const getContactById = (contactId: string) => async (dispatch) => {

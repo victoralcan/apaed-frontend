@@ -9,7 +9,11 @@ import { IRootState } from '../../shared/reducers';
 import { reset as resetDonor } from '../../shared/reducers/donor.reducer';
 import { IDonor } from '../../shared/model/donor.model';
 import { IContact } from '../../shared/model/contact.model';
-import { createContactForFornecedor, reset as resetContact } from '../../shared/reducers/contact.reducer';
+import {
+  createContactForFornecedor,
+  reset as resetContact,
+  updateContactForFornecedor,
+} from '../../shared/reducers/contact.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import { AUTHORITIES } from '../../config/constants';
@@ -29,7 +33,7 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
   }
 
   componentDidMount() {
-    if (this.props.toViewDonor.id) {
+    if (this.props.user.role.name === AUTHORITIES.USER) {
       this.setState({ readOnly: true });
     }
   }
@@ -44,33 +48,62 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
     { name, email, document, public_place, complement, number, district, city, state, country, zip_code, phone },
   ) => {
     event.persist();
-    const newDonor: IDonor = {
-      name,
-      email,
-      document,
-      active: true,
-    };
-    const newContact: IContact = {
-      public_place,
-      complement,
-      number,
-      district,
-      city,
-      state,
-      country,
-      zip_code,
-      phone,
-      active: true,
-    };
-    this.props.createContactForFornecedor(newContact, newDonor);
+    const { toViewDonor, toViewContact } = this.props;
+    if (toViewDonor.id) {
+      const updatedDonor: IDonor = {
+        id: toViewDonor.id,
+        name,
+        email,
+        document,
+        active: true,
+      };
+      const updatedContact: IContact = {
+        id: toViewContact.id,
+        public_place,
+        complement,
+        number,
+        district,
+        city,
+        state,
+        country,
+        zip_code,
+        phone,
+        active: true,
+      };
+      this.props.updateContactForFornecedor(updatedContact, updatedDonor);
+    } else {
+      const newDonor: IDonor = {
+        name,
+        email,
+        document,
+        active: true,
+      };
+      const newContact: IContact = {
+        public_place,
+        complement,
+        number,
+        district,
+        city,
+        state,
+        country,
+        zip_code,
+        phone,
+        active: true,
+      };
+      this.props.createContactForFornecedor(newContact, newDonor);
+    }
   };
 
   render() {
     const {
       createContactSuccess,
       createContactError,
+      updateContactSuccess,
+      updateContactError,
       createDonorSuccess,
       createDonorError,
+      updateDonorSuccess,
+      updateDonorError,
       loadingContact,
       loadingDonor,
       toViewDonor,
@@ -85,6 +118,16 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao criar o fornecedor/doador! Por favor, tente novamente!',
+        // @ts-ignore
+        type: 'error',
+      });
+    }
+
+    if (!updateDonorSuccess && updateDonorError) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Erro ao atualizar o fornecedor/doador! Por favor, tente novamente!',
         // @ts-ignore
         type: 'error',
       });
@@ -111,6 +154,27 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
       });
     }
 
+    if (
+      updateContactSuccess &&
+      !updateContactError &&
+      !updateDonorError &&
+      updateDonorSuccess &&
+      !loadingContact &&
+      !loadingDonor
+    ) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Fornecedor/Doador Atualizado',
+        text: 'Fornecedor/Doador atualizado com sucesso!',
+        // @ts-ignore
+        type: 'success',
+      }).then(() => {
+        this.props.resetContact();
+        this.props.resetDonor();
+        this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/fornecedor`);
+      });
+    }
+
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
         <Card className="w-50 shadow-lg">
@@ -118,7 +182,7 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
             {toViewDonor.id ? 'Fornecedor/Doador' : 'Adicionar Fornecedor/Doador'}
           </CardHeader>
           <CardBody>
-            <AvForm id="add-product-form" onValidSubmit={this.handleValidSubmit}>
+            <AvForm id="add-fornecedor-form" onValidSubmit={this.handleValidSubmit}>
               <Row>
                 <Col md={6}>
                   <FormGroup>
@@ -303,6 +367,11 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                   Adicionar fornecedor/doador
                 </Button>
               )}
+              {toViewDonor.id && user.role.name === AUTHORITIES.ADMIN && (
+                <Button className="mb-4 float-right float-down" color="success" type="submit">
+                  Confirmar Alterações
+                </Button>
+              )}
               <Button
                 tag={Link}
                 to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/fornecedor`}
@@ -324,8 +393,12 @@ const mapStateToProps = (store: IRootState) => ({
   contact: store.contact.contact,
   createDonorSuccess: store.donor.createDonorSuccess,
   createDonorError: store.donor.createDonorError,
+  updateDonorSuccess: store.donor.updateDonorSuccess,
+  updateDonorError: store.donor.updateDonorError,
   createContactSuccess: store.contact.createContactSuccess,
   createContactError: store.contact.createContactError,
+  updateContactSuccess: store.contact.updateContactSuccess,
+  updateContactError: store.contact.updateContactError,
   loadingContact: store.contact.loading,
   loadingDonor: store.donor.loading,
   toViewDonor: store.donor.toViewDonor,
@@ -335,6 +408,7 @@ const mapStateToProps = (store: IRootState) => ({
 
 const mapDispatchToProps = {
   createContactForFornecedor,
+  updateContactForFornecedor,
   resetContact,
   resetDonor,
 };

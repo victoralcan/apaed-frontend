@@ -7,6 +7,7 @@ export const ACTION_TYPES = {
   GET_DONORS: 'donor/GET_DONORS',
   CREATE_DONOR: 'donor/CREATE_DONOR',
   SET_DONOR_VIEW: 'donor/SET_DONOR_VIEW',
+  UPDATE_DONOR: 'donor/UPDATE_DONOR',
   RESET: 'donor/RESET',
 };
 
@@ -18,6 +19,8 @@ const initialState = {
   getDonorsError: false,
   createDonorSuccess: false,
   createDonorError: false,
+  updateDonorSuccess: false,
+  updateDonorError: false,
   donors: [] as Array<IDonor>,
   donor: {} as IDonor,
   toViewDonor: {} as IDonor,
@@ -48,6 +51,13 @@ export default (state: DonorState = initialState, action): DonorState => {
         createDonorSuccess: false,
         createDonorError: false,
       };
+    case REQUEST(ACTION_TYPES.UPDATE_DONOR):
+      return {
+        ...state,
+        loading: true,
+        updateDonorError: false,
+        updateDonorSuccess: false,
+      };
     case FAILURE(ACTION_TYPES.GET_DONOR):
       return {
         ...state,
@@ -68,6 +78,13 @@ export default (state: DonorState = initialState, action): DonorState => {
         loading: false,
         createDonorError: true,
         createDonorSuccess: false,
+      };
+    case FAILURE(ACTION_TYPES.UPDATE_DONOR):
+      return {
+        ...state,
+        loading: false,
+        updateDonorError: true,
+        updateDonorSuccess: false,
       };
     case SUCCESS(ACTION_TYPES.GET_DONOR):
       return {
@@ -91,6 +108,13 @@ export default (state: DonorState = initialState, action): DonorState => {
         loading: false,
         createDonorError: false,
         createDonorSuccess: true,
+      };
+    case SUCCESS(ACTION_TYPES.UPDATE_DONOR):
+      return {
+        ...state,
+        loading: false,
+        updateDonorError: false,
+        updateDonorSuccess: true,
       };
     case ACTION_TYPES.SET_DONOR_VIEW:
       return {
@@ -124,6 +148,13 @@ export const createDonor = (donor: IDonor) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.CREATE_DONOR,
     payload: APIUrl.post('donors', donor),
+  });
+};
+
+export const updateDonor = (donor: IDonor) => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.UPDATE_DONOR,
+    payload: APIUrl.put('donors', donor),
   });
 };
 
