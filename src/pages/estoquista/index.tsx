@@ -7,13 +7,13 @@ import PageNotFound from '../../shared/error/page-not-found';
 import Estoque from './estoque';
 import Fornecedor from '../shared/fornecedor';
 import Setor from '../shared/setor';
-import AddFornecedor from './addFornecedor';
+import AddFornecedor from '../shared/formFornecedor';
 import VerSetor from '../shared/formSetor';
 import Transferir from './transferir';
 import EditarProduto from './editarProduto';
 import AddProduto from './addProduto';
-import AddTipoProduto from './addTipoProduto';
-import AddCategoria from './addCategoria';
+import AddTipoProduto from '../shared/addTipoProduto';
+import AddCategoria from '../shared/addCategoria';
 
 const Routes = ({ match }) => (
   <Switch>

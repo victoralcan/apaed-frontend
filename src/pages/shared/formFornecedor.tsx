@@ -6,7 +6,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, FormGroup, Label, Row } from 'reactstrap';
 import { AvField, AvForm } from 'availity-reactstrap-validation';
 import { IRootState } from '../../shared/reducers';
-import { createDonor, reset as resetDonor } from '../../shared/reducers/donor.reducer';
+import { reset as resetDonor } from '../../shared/reducers/donor.reducer';
 import { IDonor } from '../../shared/model/donor.model';
 import { IContact } from '../../shared/model/contact.model';
 import { createContactForFornecedor, reset as resetContact } from '../../shared/reducers/contact.reducer';
@@ -20,7 +20,7 @@ interface IAddFornecedorState {
   readOnly: boolean;
 }
 
-class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorState> {
+class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,6 +48,7 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
       name,
       email,
       document,
+      active: true,
     };
     const newContact: IContact = {
       public_place,
@@ -59,6 +60,7 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
       country,
       zip_code,
       phone,
+      active: true,
     };
     this.props.createContactForFornecedor(newContact, newDonor);
   };
@@ -105,7 +107,7 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
       }).then(() => {
         this.props.resetContact();
         this.props.resetDonor();
-        this.props.history.push('/admin/fornecedor');
+        this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/fornecedor`);
       });
     }
 
@@ -332,7 +334,6 @@ const mapStateToProps = (store: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  createDonor,
   createContactForFornecedor,
   resetContact,
   resetDonor,
@@ -342,4 +343,4 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 // @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(AddFornecedor);
+export default connect(mapStateToProps, mapDispatchToProps)(FormFornecedor);
