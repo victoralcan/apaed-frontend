@@ -2,7 +2,7 @@ import { IDonation } from './donation.model';
 import { ILocal } from './local.model';
 import { IProduct } from './product.model';
 
-export interface IProductLocalDonation {
+export interface IStock {
   id?: string;
   name?: string;
   donation_id?: string;

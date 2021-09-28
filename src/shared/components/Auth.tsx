@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { IRootState } from '../reducers';
 import APIUrl from '../../config/api';
 import { clearAuthToken, getSession } from '../reducers/authentication';
+import history from '../../config/history';
 
 export interface IAuthState {
   waitAuthCheck: boolean;
@@ -30,7 +31,7 @@ class Auth extends Component<IAuthProps, IAuthState> {
       APIUrl.defaults.headers.common.Authorization = token;
       await this.props.getSession();
     } else {
-      window.location.href = window.location.host;
+      history.push('/');
     }
   };
 

@@ -1,10 +1,6 @@
 import { FAILURE, REQUEST, SUCCESS } from './action-type.util';
 import APIUrl from '../../config/api';
-import {
-  IProductLocalDonation,
-  IProductLocalDonationGet,
-  IProductLocalDonationPostPut,
-} from '../model/productLocalDonation.model';
+import { IStock, IProductLocalDonationGet, IProductLocalDonationPostPut } from '../model/productLocalDonation.model';
 
 export const ACTION_TYPES = {
   GET_STOCK: 'stock/GET_STOCK',
@@ -20,8 +16,8 @@ const initialState = {
   getStockError: false,
   registerNewProductToStockSuccess: false,
   registerNewProductToStockError: false,
-  stock: [] as Array<IProductLocalDonation>,
-  toEditProduct: {} as IProductLocalDonation,
+  stock: [] as Array<IStock>,
+  toEditProduct: {} as IStock,
 };
 
 export type StockState = Readonly<typeof initialState>;

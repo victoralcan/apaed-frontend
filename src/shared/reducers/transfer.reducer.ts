@@ -1,6 +1,6 @@
 import { FAILURE, REQUEST, SUCCESS } from './action-type.util';
 import APIUrl from '../../config/api';
-import { IProductLocalDonation, IProductLocalDonationGet } from '../model/productLocalDonation.model';
+import { IStock, IProductLocalDonationGet } from '../model/productLocalDonation.model';
 import { ITransferPostPut } from '../model/transfer.model';
 
 export const ACTION_TYPES = {
@@ -73,7 +73,7 @@ export const makeTransfer = (transfer: ITransferPostPut) => async (dispatch) => 
   });
 };
 
-export const setToTransferProduct = (product: IProductLocalDonation, amount: number) => async (dispatch) => {
+export const setToTransferProduct = (product: IStock, amount: number) => async (dispatch) => {
   const { data: fetchedProduct } = await APIUrl.get(`stock/${product.id}`);
   await dispatch({
     type: ACTION_TYPES.SET_TRANSFER_PRODUCT,

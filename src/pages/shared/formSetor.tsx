@@ -12,6 +12,7 @@ import { reset as resetLocal } from '../../shared/reducers/local.reducer';
 import { createContactForLocal, reset as resetContact } from '../../shared/reducers/contact.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
+import { AUTHORITIES } from '../../config/constants';
 
 interface IVerSetorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -19,7 +20,7 @@ interface IVerSetorState {
   readOnly: boolean;
 }
 
-class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
+class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +29,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
   }
 
   componentDidMount() {
-    if (this.props.toViewLocal.id) {
+    if (this.props.user.role.name === AUTHORITIES.USER) {
       this.setState({ readOnly: true });
     }
   }
@@ -73,6 +74,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       createLocalError,
       createContactSuccess,
       createContactError,
+      user,
     } = this.props;
 
     if (!createLocalSuccess && createLocalError) {
@@ -95,7 +97,7 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       }).then(() => {
         this.props.resetContact();
         this.props.resetLocal();
-        this.props.history.push('/user/setor');
+        this.props.history.push('/admin/setor');
       });
     }
 
@@ -275,7 +277,12 @@ class VerSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                   Adicionar setor
                 </Button>
               )}
-              <Button tag={Link} to="/user/setor" className="mb-4 float-left" color="danger">
+              <Button
+                tag={Link}
+                to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/setor`}
+                className="mb-4 float-left"
+                color="danger"
+              >
                 Voltar
               </Button>
             </AvForm>
@@ -293,6 +300,7 @@ const mapStateToProps = (store: IRootState) => ({
   createLocalError: store.local.createLocalError,
   createContactSuccess: store.contact.createContactSuccess,
   createContactError: store.contact.createContactError,
+  user: store.authentication.account,
 });
 
 const mapDispatchToProps = {
@@ -305,4 +313,4 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 // @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(VerSetor);
+export default connect(mapStateToProps, mapDispatchToProps)(FormSetor);

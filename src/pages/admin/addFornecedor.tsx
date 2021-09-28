@@ -12,6 +12,7 @@ import { IContact } from '../../shared/model/contact.model';
 import { createContactForFornecedor, reset as resetContact } from '../../shared/reducers/contact.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
+import { AUTHORITIES } from '../../config/constants';
 
 interface IAddFornecedorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -72,6 +73,7 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
       loadingDonor,
       toViewDonor,
       toViewContact,
+      user,
     } = this.props;
 
     const { readOnly } = this.state;
@@ -299,7 +301,13 @@ class AddFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorS
                   Adicionar fornecedor/doador
                 </Button>
               )}
-              <Button tag={Link} to="/admin/fornecedor" className="mb-8 float-left" type="button" color="danger">
+              <Button
+                tag={Link}
+                to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/fornecedor`}
+                className="mb-8 float-left"
+                type="button"
+                color="danger"
+              >
                 {toViewDonor.id ? 'Voltar' : 'Cancelar'}
               </Button>
             </AvForm>
@@ -320,6 +328,7 @@ const mapStateToProps = (store: IRootState) => ({
   loadingDonor: store.donor.loading,
   toViewDonor: store.donor.toViewDonor,
   toViewContact: store.contact.toViewContact,
+  user: store.authentication.account,
 });
 
 const mapDispatchToProps = {

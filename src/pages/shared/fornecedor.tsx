@@ -2,41 +2,49 @@ import React from 'react';
 
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
-import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { IRootState } from '../../shared/reducers';
-import { getLocals, setToViewLocal } from '../../shared/reducers/local.reducer';
+import { getDonors, setToViewDonor } from '../../shared/reducers/donor.reducer';
 import { getContactById } from '../../shared/reducers/contact.reducer';
-interface ISetorProps extends StateProps, DispatchProps, RouteComponentProps {}
+import { AUTHORITIES } from '../../config/constants';
+interface IFornecedorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
-class Setor extends React.Component<ISetorProps> {
+class Fornecedor extends React.Component<IFornecedorProps> {
   componentDidMount() {
-    this.props.getLocals();
+    this.props.getDonors();
   }
 
   render() {
-    const { locals } = this.props;
+    const { donors, user } = this.props;
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
         <Card className="w-25 shadow-lg">
-          <CardHeader className="bg-dark text-white">Setores</CardHeader>
+          <CardHeader className="bg-dark text-white">Fornecedores</CardHeader>
           <CardBody>
-            <Button tag={Link} to="/admin/verSetor" className="mb-4 float-right" color="success">
+            <Button
+              tag={Link}
+              to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/addFornecedor`}
+              className="mb-4 float-right"
+              color="success"
+            >
               Adicionar
             </Button>
             <Table hover>
               <tbody>
-                {locals.map((local) => (
-                  <tr key={local.id}>
-                    <th scope="row">{local.name}</th>
+                {donors.map((donor) => (
+                  <tr key={donor.id}>
+                    <th scope="row">{donor.name}</th>
                     <td>
                       <Button
                         onClick={() => {
-                          this.props.setToViewLocal(local);
-                          this.props.getContactById(local.contact_id);
-                          this.props.history.push('/admin/verSetor');
+                          this.props.setToViewDonor(donor);
+                          this.props.getContactById(donor.contact_id);
+                          this.props.history.push(
+                            `/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/viewFornecedor`,
+                          );
                         }}
                         color="info"
                       >
@@ -55,11 +63,13 @@ class Setor extends React.Component<ISetorProps> {
 }
 
 const mapStateToProps = (store: IRootState) => ({
-  locals: store.local.locals,
+  donors: store.donor.donors,
+  user: store.authentication.account,
 });
+
 const mapDispatchToProps = {
-  getLocals,
-  setToViewLocal,
+  getDonors,
+  setToViewDonor,
   getContactById,
 };
 
@@ -67,4 +77,4 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 // @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(Setor);
+export default connect(mapStateToProps, mapDispatchToProps)(Fornecedor);

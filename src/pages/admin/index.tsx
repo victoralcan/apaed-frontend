@@ -4,21 +4,21 @@ import ErrorBoundaryRoute from '../../shared/error/error-boundary-route';
 
 import { Switch } from 'react-router-dom';
 import PageNotFound from '../../shared/error/page-not-found';
-import FornecedorAdm from './fornecedorAdm';
-import SetorAdm from './setorAdm';
-import AdicionarSetor from './adicionarSetor';
+import FornecedorAdm from '../shared/fornecedor';
 import Estoque from 'pages/estoquista/estoque';
 import addFornecedor from 'pages/admin/addFornecedor';
-import verSetor from 'pages/estoquista/verSetor';
+import FormSetor from 'pages/shared/formSetor';
+import Setor from 'pages/shared/setor';
 
 const Routes = ({ match }) => (
   <Switch>
     <ErrorBoundaryRoute path={`${match.url}/estoque`} component={Estoque} />
     <ErrorBoundaryRoute path={`${match.url}/fornecedor`} component={FornecedorAdm} />
     <ErrorBoundaryRoute path={`${match.url}/addFornecedor`} component={addFornecedor} />
-    <ErrorBoundaryRoute path={`${match.url}/setor`} component={SetorAdm} />
-    <ErrorBoundaryRoute path={`${match.url}/verSetor`} component={verSetor} />
-    <ErrorBoundaryRoute path={`${match.url}/adicionarSetor`} component={AdicionarSetor} />
+    <ErrorBoundaryRoute path={`${match.url}/viewFornecedor`} component={addFornecedor} />
+    <ErrorBoundaryRoute path={`${match.url}/setor`} component={Setor} />
+    <ErrorBoundaryRoute path={`${match.url}/viewSetor`} component={FormSetor} />
+    <ErrorBoundaryRoute path={`${match.url}/addSetor`} component={FormSetor} />
     <ErrorBoundaryRoute component={PageNotFound} />
   </Switch>
 );
