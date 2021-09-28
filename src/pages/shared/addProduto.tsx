@@ -25,6 +25,7 @@ import { IDonation } from '../../shared/model/donation.model';
 import { IProductLocalDonationPostPut } from '../../shared/model/productLocalDonation.model';
 import { registerNewProductToStock, resetSuccessRegister } from '../../shared/reducers/stock.reducer';
 import { IOption } from '../../shared/model/option.model';
+import { AUTHORITIES } from '../../config/constants';
 
 interface IAddProdutoProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -141,6 +142,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       registerNewProductToStockError,
       registerNewProductToStockSuccess,
       category,
+      user,
     } = this.props;
 
     if (!getDonorSuccess && getDonorError) {
@@ -150,7 +152,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
         text: 'Fornecedor/doador não encontrado com o documento informado!',
         // @ts-ignore
         type: 'error',
-      }).then(() => this.props.history.push('/user/fornecedor'));
+      }).then(() => this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/fornecedor`));
       this.props.resetProducts();
       this.props.resetCategories();
       this.props.resetDonor();
@@ -165,11 +167,11 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
         // @ts-ignore
         type: 'success',
       }).then(() => {
-        // Limpar formulario
+        // TODO Limpar formulario
         if (this.state.registerMore) {
           this.setState({ registerMore: false });
         } else {
-          this.props.history.push('/user/estoque');
+          this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`);
         }
       });
       this.props.resetSuccessRegister();
@@ -262,7 +264,12 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                       </FormGroup>
                     </Col>
                     <Col md={4}>
-                      <Button tag={Link} to="/user/addCategoria" className="mt-3 mx-3" color="primary">
+                      <Button
+                        tag={Link}
+                        to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/addCategoria`}
+                        className="mt-3 mx-3"
+                        color="primary"
+                      >
                         Nova categoria
                       </Button>
                     </Col>
@@ -289,7 +296,12 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                       </FormGroup>
                     </Col>
                     <Col md={4}>
-                      <Button tag={Link} to="/user/addTipoProduto" className="mt-3 mx-3" color="primary">
+                      <Button
+                        tag={Link}
+                        to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/addTipoProduto`}
+                        className="mt-3 mx-3"
+                        color="primary"
+                      >
                         Novo tipo de produto
                       </Button>
                     </Col>
@@ -353,7 +365,13 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                   >
                     Adicionar mais produtos
                   </Button>
-                  <Button tag={Link} to="/user/estoque" className="mb-8 float-left" type="button" color="danger">
+                  <Button
+                    tag={Link}
+                    to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`}
+                    className="mb-8 float-left"
+                    type="button"
+                    color="danger"
+                  >
                     Cancelar
                   </Button>
                 </AvForm>
@@ -401,6 +419,7 @@ const mapStateToProps = (store: IRootState) => ({
   loadingDonation: store.donation.loading,
   registerNewProductToStockSuccess: store.stock.registerNewProductToStockSuccess,
   registerNewProductToStockError: store.stock.registerNewProductToStockError,
+  user: store.authentication.account,
 });
 
 const mapDispatchToProps = {

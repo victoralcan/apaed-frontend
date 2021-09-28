@@ -13,6 +13,7 @@ import Setor from 'pages/shared/setor';
 const Routes = ({ match }) => (
   <Switch>
     <ErrorBoundaryRoute path={`${match.url}/estoque`} component={Estoque} />
+    <ErrorBoundaryRoute path={`${match.url}/addProduto`} component={Estoque} />
     <ErrorBoundaryRoute path={`${match.url}/fornecedor`} component={FornecedorAdm} />
     <ErrorBoundaryRoute path={`${match.url}/addFornecedor`} component={FormFornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/viewFornecedor`} component={FormFornecedor} />
