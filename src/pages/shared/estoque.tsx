@@ -10,6 +10,7 @@ import { getStock, setProductToEdit } from '../../shared/reducers/stock.reducer'
 import { IRootState } from '../../shared/reducers';
 import { setToTransferProduct } from '../../shared/reducers/transfer.reducer';
 import { formataData } from '../../shared/utils/formataData';
+import { AUTHORITIES } from '../../config/constants';
 
 interface IStockProps extends StateProps, DispatchProps {}
 
@@ -19,7 +20,7 @@ class Stock extends React.Component<IStockProps> {
   }
 
   render() {
-    const { stock } = this.props;
+    const { stock, user } = this.props;
     return (
       <>
         <div className="d-flex h-25 align-items-end" />
@@ -55,7 +56,7 @@ class Stock extends React.Component<IStockProps> {
                       <Button
                         className="mx-3"
                         tag={Link}
-                        to="/user/transferir"
+                        to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/transferir`}
                         outline
                         color="secondary"
                         onClick={() => this.props.setToTransferProduct(product, product.count)}
@@ -75,6 +76,7 @@ class Stock extends React.Component<IStockProps> {
 
 const mapStateToProps = (store: IRootState) => ({
   stock: store.stock.stock,
+  user: store.authentication.account,
 });
 const mapDispatchToProps = {
   getStock,

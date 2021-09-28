@@ -4,12 +4,12 @@ import ErrorBoundaryRoute from '../../shared/error/error-boundary-route';
 
 import { Switch } from 'react-router-dom';
 import PageNotFound from '../../shared/error/page-not-found';
-import Estoque from './estoque';
+import Estoque from '../shared/estoque';
 import Fornecedor from '../shared/fornecedor';
 import Setor from '../shared/setor';
 import AddFornecedor from '../shared/formFornecedor';
 import VerSetor from '../shared/formSetor';
-import Transferir from './transferir';
+import Transferir from '../shared/transferir';
 import AddProduto from '../shared/addProduto';
 import AddTipoProduto from '../shared/addTipoProduto';
 import AddCategoria from '../shared/addCategoria';

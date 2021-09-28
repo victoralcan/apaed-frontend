@@ -13,6 +13,7 @@ import { getLocals } from '../../shared/reducers/local.reducer';
 import { IOption } from '../../shared/model/option.model';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
+import { AUTHORITIES } from '../../config/constants';
 
 interface ITransferirProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -69,7 +70,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
         text: 'Transferência não pode ser realizada! Por favor, tente novamente!',
         // @ts-ignore
         type: 'error',
-      }).then(() => this.props.history.push('/user/estoque'));
+      }).then(() => this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`));
       this.props.resetSuccessTransfer();
     }
 
@@ -80,7 +81,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
         text: 'A sua transferência foi realizada com sucesso!',
         // @ts-ignore
         type: 'success',
-      }).then(() => this.props.history.push('/user/estoque'));
+      }).then(() => this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`));
       this.props.resetSuccessTransfer();
     }
     return (
@@ -170,7 +171,13 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
               <Button className="mb-4 float-right float-down" color="success" type="submit">
                 Transferir produto
               </Button>
-              <Button tag={Link} to="/user/estoque" className="mb-8 float-left" type="button" color="danger">
+              <Button
+                tag={Link}
+                to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`}
+                className="mb-8 float-left"
+                type="button"
+                color="danger"
+              >
                 Cancelar
               </Button>
             </AvForm>
