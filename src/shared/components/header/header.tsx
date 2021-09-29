@@ -77,6 +77,9 @@ function Header(props: IHeaderProps) {
               <Link className="header-option text-center" to="/admin/setor" style={{ textDecoration: 'none' }}>
                 <h6 className="text-white">Setor</h6>
               </Link>
+              <Link className="header-option text-center" to="/admin/transfers" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Transferências</h6>
+              </Link>
               <Link
                 className="header-option text-center"
                 to="/"

@@ -1,11 +1,12 @@
 import { FAILURE, REQUEST, SUCCESS } from './action-type.util';
 import APIUrl from '../../config/api';
 import { IStock, IProductLocalDonationGet } from '../model/productLocalDonation.model';
-import { ITransferPostPut } from '../model/transfer.model';
+import { ITransferGet, ITransferPostPut } from '../model/transfer.model';
 
 export const ACTION_TYPES = {
   MAKE_TRANSFER: 'transfer/MAKE_TRANSFER',
   SET_TRANSFER_PRODUCT: 'transfer/SET_TRANSFER_PRODUCT',
+  GET_TRANSFERS: 'transfer/GET_TRANSFERS',
   RESET_SUCCESS: 'transfer/RESET_REGISTER',
   RESET: 'transfer/RESET',
 };
@@ -15,6 +16,7 @@ const initialState = {
   makeTransferSuccess: false,
   makeTransferError: false,
   toTransferProduct: {} as IProductLocalDonationGet,
+  transfers: [] as Array<ITransferGet>,
   amount: 0,
 };
 
@@ -29,6 +31,11 @@ export default (state: TransferState = initialState, action): TransferState => {
         ...state,
         loading: true,
       };
+    case REQUEST(ACTION_TYPES.GET_TRANSFERS):
+      return {
+        ...state,
+        loading: true,
+      };
     case FAILURE(ACTION_TYPES.MAKE_TRANSFER):
       return {
         ...initialState,
@@ -36,12 +43,23 @@ export default (state: TransferState = initialState, action): TransferState => {
         makeTransferError: true,
         makeTransferSuccess: false,
       };
+    case FAILURE(ACTION_TYPES.GET_TRANSFERS):
+      return {
+        ...state,
+        loading: false,
+      };
     case SUCCESS(ACTION_TYPES.MAKE_TRANSFER):
       return {
         ...state,
         loading: false,
         makeTransferError: false,
         makeTransferSuccess: true,
+      };
+    case SUCCESS(ACTION_TYPES.GET_TRANSFERS):
+      return {
+        ...state,
+        loading: false,
+        transfers: action.payload.data,
       };
     case ACTION_TYPES.SET_TRANSFER_PRODUCT:
       return {
@@ -64,6 +82,13 @@ export default (state: TransferState = initialState, action): TransferState => {
     default:
       return state;
   }
+};
+
+export const getTransfers = () => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.GET_TRANSFERS,
+    payload: APIUrl.get('transfer'),
+  });
 };
 
 export const makeTransfer = (transfer: ITransferPostPut) => async (dispatch) => {
