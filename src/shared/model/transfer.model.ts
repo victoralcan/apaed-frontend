@@ -11,7 +11,7 @@ export interface ITransferGet {
   product_name?: string;
   product_brand?: string;
   product_ncm_code?: string;
-  total_amount_tranfered?: number;
+  total_amount_transfered?: number;
   active?: boolean;
   created_at?: string;
   updated_at?: string;
