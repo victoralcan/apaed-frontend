@@ -43,7 +43,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
     }
   };
 
-  handleValidSubmit = (event, { amount }) => {
+  handleValidSubmit = (event, { total_amount_transfered }) => {
     event.persist();
     if (this.state.description.length === 0) {
       return;
@@ -51,7 +51,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
     const newTransfer: ITransferPostPut = {
       description: this.state.description,
       product_id: this.props.toTransferProduct.product_id,
-      total_amount_transfered: Number(amount),
+      total_amount_transfered: Number(total_amount_transfered),
       destiny_id: String(this.state.destiny.value),
       expiration_date: this.props.toTransferProduct.expiration_date,
       active: true,
@@ -118,8 +118,8 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
                     </Label>
                     <AvField
                       className="form-control"
-                      name="amount"
-                      id="amount"
+                      name="total_amount_transfered"
+                      id="total_amount_transfered"
                       type="number"
                       validate={{
                         required: {

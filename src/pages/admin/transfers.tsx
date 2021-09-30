@@ -25,6 +25,14 @@ function Transfers(props: ITransfersProps): JSX.Element {
             Header: 'Marca',
             accessor: 'product_brand',
           },
+          {
+            Header: 'Quantidade',
+            accessor: 'total_amount_transfered',
+          },
+          {
+            Header: 'Destino',
+            accessor: 'destiny.name',
+          },
         ],
       },
     ],
@@ -37,12 +45,14 @@ function Transfers(props: ITransfersProps): JSX.Element {
   }, []);
 
   return (
-    <Table
-      columns={columns}
-      data={props.transfers}
-      filterCriteria="productLocalDonation.product.name"
-      filterBy="nome do produto"
-    />
+    <div className="m-3">
+      <Table
+        columns={columns}
+        data={props.transfers}
+        filterCriteria="productLocalDonation.product.name"
+        filterBy="nome do produto"
+      />
+    </div>
   );
 }
 
