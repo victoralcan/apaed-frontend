@@ -1,5 +1,4 @@
 import { ILocal } from './local.model';
-import { IProductLocalDonationGet } from './productLocalDonation.model';
 
 export interface ITransferGet {
   id?: string;
@@ -7,10 +6,12 @@ export interface ITransferGet {
   origin?: ILocal;
   destiny_id?: string;
   destiny?: ILocal;
-  product_local_donation_id?: string;
-  productLocalDonation: IProductLocalDonationGet;
   transfer_date?: string;
   description?: string;
+  product_name?: string;
+  product_brand?: string;
+  product_ncm_code?: string;
+  total_amount_tranfered?: number;
   active?: boolean;
   created_at?: string;
   updated_at?: string;
@@ -21,9 +22,12 @@ export interface ITransferPostPut {
   destiny_id?: string;
   destiny?: ILocal;
   product_id?: string;
+  product_name?: string;
+  product_brand?: string;
+  product_ncm_code?: string;
+  total_amount_transfered?: number;
   transfer_date?: string;
   description?: string;
-  amount?: number;
   expiration_date?: string;
   active?: boolean;
   created_at?: string;

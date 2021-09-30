@@ -19,11 +19,11 @@ function Transfers(props: ITransfersProps): JSX.Element {
           },
           {
             Header: 'Nome',
-            accessor: 'productLocalDonation.product.name',
+            accessor: 'product_name',
           },
           {
             Header: 'Marca',
-            accessor: 'productLocalDonation.product.brand',
+            accessor: 'product_brand',
           },
         ],
       },
@@ -33,6 +33,7 @@ function Transfers(props: ITransfersProps): JSX.Element {
 
   useEffect(() => {
     props.getTransfers();
+    // eslint-disable-next-line
   }, []);
 
   return (

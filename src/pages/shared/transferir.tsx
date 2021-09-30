@@ -51,10 +51,13 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
     const newTransfer: ITransferPostPut = {
       description: this.state.description,
       product_id: this.props.toTransferProduct.product_id,
-      amount: Number(amount),
+      total_amount_transfered: Number(amount),
       destiny_id: String(this.state.destiny.value),
       expiration_date: this.props.toTransferProduct.expiration_date,
       active: true,
+      product_name: this.props.toTransferProduct.product.name,
+      product_brand: this.props.toTransferProduct.product.brand,
+      product_ncm_code: this.props.toTransferProduct.product.ncm.ncm_code,
     };
     this.props.makeTransfer(newTransfer);
   };
