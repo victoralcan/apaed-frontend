@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import Table from '../../shared/components/Table';
 import { getTransfers } from '../../shared/reducers/transfer.reducer';
+import { formataData } from '../../shared/utils/formataData';
 
 interface ITransfersProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -33,6 +34,12 @@ function Transfers(props: ITransfersProps): JSX.Element {
             Header: 'Destino',
             accessor: 'destiny.name',
           },
+          {
+            Header: 'Data',
+            accessor: 'transfer_date',
+            // eslint-disable-next-line react/display-name
+            Cell: ({ cell: { value } }) => <span>{formataData(new Date(`${value}T00:00:00`))}</span>,
+          },
         ],
       },
     ],
@@ -46,12 +53,7 @@ function Transfers(props: ITransfersProps): JSX.Element {
 
   return (
     <div className="m-3">
-      <Table
-        columns={columns}
-        data={props.transfers}
-        filterCriteria="productLocalDonation.product.name"
-        filterBy="nome do produto"
-      />
+      <Table columns={columns} data={props.transfers} filterCriteria="product_name" filterBy="nome do produto" />
     </div>
   );
 }
