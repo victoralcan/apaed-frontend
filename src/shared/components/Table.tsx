@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { useTable, useFilters, useSortBy, usePagination } from 'react-table';
 
-export default function Table({ columns, data, filterCriteria, filterBy }) {
+export default function Table({
+  columns,
+  data,
+  filterCriteria,
+  filterBy,
+  fetchData,
+  loading,
+  pageCount: controlledPageCount,
+  totalCount,
+  currentPage,
+}) {
   const [filterInput, setFilterInput] = useState('');
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -24,12 +34,18 @@ export default function Table({ columns, data, filterCriteria, filterBy }) {
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: currentPage },
+      manualPagination: true,
+      pageCount: controlledPageCount,
     },
     useFilters,
     useSortBy,
     usePagination,
   );
+
+  React.useEffect(() => {
+    fetchData({ pageIndex, pageSize });
+  }, [fetchData, pageIndex, pageSize]);
 
   const handleFilterChange = (e) => {
     const value = e.target.value || undefined;
@@ -72,6 +88,18 @@ export default function Table({ columns, data, filterCriteria, filterBy }) {
               </tr>
             );
           })}
+          <tr>
+            {loading ? (
+              // Use our custom loading state to show a loading indicator
+              // @ts-ignore
+              <td colSpan="10000">Loading...</td>
+            ) : (
+              // @ts-ignore
+              <td colSpan="10000">
+                Mostrando {page.length} de {totalCount} resultados
+              </td>
+            )}
+          </tr>
         </tbody>
       </table>
       <div className="pagination d-flex">

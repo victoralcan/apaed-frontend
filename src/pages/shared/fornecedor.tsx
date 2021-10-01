@@ -14,7 +14,7 @@ interface IFornecedorProps extends StateProps, DispatchProps, RouteComponentProp
 
 class Fornecedor extends React.Component<IFornecedorProps> {
   componentDidMount() {
-    this.props.getDonors();
+    this.props.getDonors(0, 10);
   }
 
   render() {

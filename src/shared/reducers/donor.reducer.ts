@@ -130,10 +130,10 @@ export default (state: DonorState = initialState, action): DonorState => {
   }
 };
 
-export const getDonors = () => async (dispatch) => {
+export const getDonors = (skip: number, take: number) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.GET_DONORS,
-    payload: APIUrl.get('donors'),
+    payload: APIUrl.get(`donors?skip=${skip}&take=${take}`),
   });
 };
 

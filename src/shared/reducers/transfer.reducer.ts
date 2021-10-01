@@ -17,6 +17,7 @@ const initialState = {
   makeTransferError: false,
   toTransferProduct: {} as IProductLocalDonationGet,
   transfers: [] as Array<ITransferGet>,
+  totalCount: 0,
   amount: 0,
 };
 
@@ -59,7 +60,8 @@ export default (state: TransferState = initialState, action): TransferState => {
       return {
         ...state,
         loading: false,
-        transfers: action.payload.data,
+        transfers: action.payload.data[0],
+        totalCount: action.payload.data[1],
       };
     case ACTION_TYPES.SET_TRANSFER_PRODUCT:
       return {
@@ -84,10 +86,10 @@ export default (state: TransferState = initialState, action): TransferState => {
   }
 };
 
-export const getTransfers = () => async (dispatch) => {
+export const getTransfers = (skip: number, take: number) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.GET_TRANSFERS,
-    payload: APIUrl.get('transfer'),
+    payload: APIUrl.get(`transfer?skip=${skip}&take=${take}`),
   });
 };
 

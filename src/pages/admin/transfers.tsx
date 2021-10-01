@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IRootState } from '../../shared/reducers';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
@@ -46,20 +46,43 @@ function Transfers(props: ITransfersProps): JSX.Element {
     [],
   );
 
-  useEffect(() => {
-    props.getTransfers();
+  const fetchIdRef = React.useRef(0);
+  const [tablePageSize, setTablePageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
+    const fetchId = ++fetchIdRef.current;
+    if (fetchId === fetchIdRef.current) {
+      setTablePageSize(pageSize);
+      setCurrentPage(pageIndex);
+      const skip = pageIndex * pageSize;
+      const take = pageSize;
+      props.getTransfers(skip, take);
+    }
     // eslint-disable-next-line
   }, []);
 
   return (
     <div className="m-3">
-      <Table columns={columns} data={props.transfers} filterCriteria="product_name" filterBy="nome do produto" />
+      <Table
+        columns={columns}
+        data={props.transfers}
+        filterCriteria="product_name"
+        filterBy="nome do produto"
+        fetchData={fetchData}
+        loading={props.loading}
+        pageCount={Math.ceil(props.totalCount / tablePageSize)}
+        totalCount={props.totalCount}
+        currentPage={currentPage}
+      />
     </div>
   );
 }
 
 const mapStateToProps = (store: IRootState) => ({
   transfers: store.transfer.transfers,
+  loading: store.transfer.loading,
+  totalCount: store.transfer.totalCount,
 });
 const mapDispatchToProps = {
   getTransfers,
