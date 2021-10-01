@@ -9,6 +9,7 @@ export const ACTION_TYPES = {
   SET_DONOR_VIEW: 'donor/SET_DONOR_VIEW',
   UPDATE_DONOR: 'donor/UPDATE_DONOR',
   RESET: 'donor/RESET',
+  DELETE_DONOR: 'donor/DELETE_DONOR',
 };
 
 const initialState = {
@@ -21,6 +22,8 @@ const initialState = {
   createDonorError: false,
   updateDonorSuccess: false,
   updateDonorError: false,
+  deleteDonorSuccess: false,
+  deleteDonorError: false,
   donors: [] as Array<IDonor>,
   donor: {} as IDonor,
   toViewDonor: {} as IDonor,
@@ -59,6 +62,13 @@ export default (state: DonorState = initialState, action): DonorState => {
         updateDonorError: false,
         updateDonorSuccess: false,
       };
+    case REQUEST(ACTION_TYPES.DELETE_DONOR):
+      return {
+        ...state,
+        loading: true,
+        deleteDonorError: false,
+        deleteDonorSuccess: false,
+      };
     case FAILURE(ACTION_TYPES.GET_DONOR):
       return {
         ...state,
@@ -86,6 +96,13 @@ export default (state: DonorState = initialState, action): DonorState => {
         loading: false,
         updateDonorError: true,
         updateDonorSuccess: false,
+      };
+    case FAILURE(ACTION_TYPES.DELETE_DONOR):
+      return {
+        ...state,
+        loading: false,
+        deleteDonorError: true,
+        deleteDonorSuccess: false,
       };
     case SUCCESS(ACTION_TYPES.GET_DONOR):
       return {
@@ -117,6 +134,13 @@ export default (state: DonorState = initialState, action): DonorState => {
         loading: false,
         updateDonorError: false,
         updateDonorSuccess: true,
+      };
+    case SUCCESS(ACTION_TYPES.DELETE_DONOR):
+      return {
+        ...state,
+        loading: false,
+        deleteDonorError: false,
+        deleteDonorSuccess: true,
       };
     case ACTION_TYPES.SET_DONOR_VIEW:
       return {
@@ -157,6 +181,13 @@ export const updateDonor = (donor: IDonor) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.UPDATE_DONOR,
     payload: APIUrl.put('donors', donor),
+  });
+};
+
+export const deleteDonor = (donor_id: string) => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.UPDATE_DONOR,
+    payload: APIUrl.delete(`donors/${donor_id}`),
   });
 };
 

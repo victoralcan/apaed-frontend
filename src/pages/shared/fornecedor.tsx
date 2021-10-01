@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfo } from '@fortawesome/free-solid-svg-icons';
+import { faInfo, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IRootState } from '../../shared/reducers';
-import { getDonors, setToViewDonor } from '../../shared/reducers/donor.reducer';
+import { getDonors, setToViewDonor, deleteDonor } from '../../shared/reducers/donor.reducer';
 import { getContactById } from '../../shared/reducers/contact.reducer';
 import { AUTHORITIES } from '../../config/constants';
 interface IFornecedorProps extends StateProps, DispatchProps, RouteComponentProps {}
@@ -50,6 +50,15 @@ class Fornecedor extends React.Component<IFornecedorProps> {
                       >
                         <FontAwesomeIcon icon={faInfo} />
                       </Button>
+                      <Button
+                        onClick={() => {
+                          this.props.deleteDonor(donor.id);
+                          this.props.getDonors(0, 10);
+                        }}
+                        color="trash"
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -71,6 +80,7 @@ const mapDispatchToProps = {
   getDonors,
   setToViewDonor,
   getContactById,
+  deleteDonor,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
