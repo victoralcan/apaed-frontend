@@ -6,6 +6,7 @@ export const ACTION_TYPES = {
   GET_LOCALS: 'locals/GET_LOCALS',
   SET_LOCAL_VIEW: 'locals/SET_LOCAL_VIEW',
   CREATE_LOCAL: 'locals/CREATE_LOCAL',
+  UPDATE_LOCAL: 'locals/UPDATE_DONOR',
   RESET_SUCCESS: 'locals/RESET_REGISTER',
   RESET: 'locals/RESET',
   DELETE_LOCAL: 'locals/DELETE',
@@ -17,6 +18,8 @@ const initialState = {
   getLocalsError: false,
   createLocalSuccess: false,
   createLocalError: false,
+  updateLocalSuccess: false,
+  updateLocalError: false,
   deleteLocalSuccess: false,
   deleteLocalError: false,
   locals: [] as Array<ILocal>,
@@ -35,6 +38,13 @@ export default (state: LocalState = initialState, action): LocalState => {
         ...state,
         loading: true,
       };
+    case REQUEST(ACTION_TYPES.UPDATE_LOCAL):
+      return {
+        ...state,
+        loading: true,
+        updateLocalError: false,
+        updateLocalSuccess: false,
+      };
     case FAILURE(ACTION_TYPES.GET_LOCALS):
       return {
         ...initialState,
@@ -48,6 +58,13 @@ export default (state: LocalState = initialState, action): LocalState => {
         loading: false,
         createLocalError: true,
         createLocalSuccess: false,
+      };
+    case FAILURE(ACTION_TYPES.UPDATE_LOCAL):
+      return {
+        ...initialState,
+        loading: false,
+        updateLocalError: true,
+        updateLocalSuccess: false,
       };
     case FAILURE(ACTION_TYPES.DELETE_LOCAL):
       return {
@@ -70,6 +87,13 @@ export default (state: LocalState = initialState, action): LocalState => {
         loading: false,
         createLocalError: false,
         createLocalSuccess: true,
+      };
+    case SUCCESS(ACTION_TYPES.UPDATE_LOCAL):
+      return {
+        ...state,
+        loading: false,
+        updateLocalError: false,
+        updateLocalSuccess: true,
       };
     case SUCCESS(ACTION_TYPES.DELETE_LOCAL):
       return {
@@ -109,6 +133,13 @@ export const createLocal = (local: ILocal) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.CREATE_LOCAL,
     payload: APIUrl.post('locals', local),
+  });
+};
+
+export const updateLocal = (local: ILocal) => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.UPDATE_LOCAL,
+    payload: APIUrl.put('locals', local),
   });
 };
 

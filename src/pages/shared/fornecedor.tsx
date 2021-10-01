@@ -50,6 +50,7 @@ class Fornecedor extends React.Component<IFornecedorProps> {
                       >
                         <FontAwesomeIcon icon={faInfo} />
                       </Button>
+
                       <Button
                         onClick={() => {
                           this.props.deleteDonor(donor.id);

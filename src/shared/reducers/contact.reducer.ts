@@ -4,7 +4,7 @@ import { IContact } from '../model/contact.model';
 import { IDonor } from '../model/donor.model';
 import { createDonor, updateDonor } from './donor.reducer';
 import { ILocal } from '../model/local.model';
-import { createLocal } from './local.reducer';
+import { createLocal, updateLocal } from './local.reducer';
 
 export const ACTION_TYPES = {
   CREATE_CONTACT: 'contact/CREATE_CONTACT',
@@ -112,6 +112,15 @@ export const updateContactForFornecedor = (contact: IContact, donor: IDonor) => 
   });
 
   dispatch(updateDonor({ ...donor, contact_id: result.value.data.id, active: true }));
+};
+
+export const updateContactForLocal = (contact: IContact, local: ILocal) => async (dispatch) => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_CONTACT,
+    payload: APIUrl.put('contacts', contact),
+  });
+
+  dispatch(updateLocal({ ...local, contact_id: result.value.data.id, active: true }));
 };
 
 export const getContactById = (contactId: string) => async (dispatch) => {

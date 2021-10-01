@@ -9,7 +9,11 @@ import { IRootState } from '../../shared/reducers';
 import { IContact } from '../../shared/model/contact.model';
 import { ILocal } from '../../shared/model/local.model';
 import { reset as resetLocal } from '../../shared/reducers/local.reducer';
-import { createContactForLocal, reset as resetContact } from '../../shared/reducers/contact.reducer';
+import {
+  createContactForLocal,
+  updateContactForLocal,
+  reset as resetContact,
+} from '../../shared/reducers/contact.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import { AUTHORITIES } from '../../config/constants';
@@ -44,24 +48,48 @@ class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
     { name, document, public_place, complement, number, district, city, state, country, zip_code, phone },
   ) => {
     event.persist();
-    const newLocal: ILocal = {
-      name,
-      document,
-      active: true,
-    };
-    const newContact: IContact = {
-      public_place,
-      complement,
-      number,
-      district,
-      city,
-      state,
-      country,
-      zip_code,
-      phone,
-      active: true,
-    };
-    this.props.createContactForLocal(newContact, newLocal);
+    const { toViewLocal, toViewContact } = this.props;
+    if (toViewLocal.id) {
+      const updatedLocal: ILocal = {
+        id: toViewLocal.id,
+        name,
+        document,
+        active: true,
+      };
+      const updatedContact: IContact = {
+        id: toViewContact.id,
+        public_place,
+        complement,
+        number,
+        district,
+        city,
+        state,
+        country,
+        zip_code,
+        phone,
+        active: true,
+      };
+      this.props.updateContactForLocal(updatedContact, updatedLocal);
+    } else {
+      const newLocal: ILocal = {
+        name,
+        document,
+        active: true,
+      };
+      const newContact: IContact = {
+        public_place,
+        complement,
+        number,
+        district,
+        city,
+        state,
+        country,
+        zip_code,
+        phone,
+        active: true,
+      };
+      this.props.createContactForLocal(newContact, newLocal);
+    }
   };
 
   render() {
@@ -72,8 +100,14 @@ class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       toViewContact,
       createLocalSuccess,
       createLocalError,
+      updateLocalSuccess,
+      updateLocalError,
       createContactSuccess,
       createContactError,
+      updateContactSuccess,
+      updateContactError,
+      loadingContact,
+      loadingLocal,
       user,
     } = this.props;
 
@@ -82,6 +116,16 @@ class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao criar o setor! Por favor, tente novamente!',
+        // @ts-ignore
+        type: 'error',
+      });
+    }
+
+    if (!updateLocalSuccess && updateLocalError) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Erro ao atualizar o setor! Por favor, tente novamente!',
         // @ts-ignore
         type: 'error',
       });
@@ -98,6 +142,27 @@ class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
         this.props.resetContact();
         this.props.resetLocal();
         this.props.history.push('/admin/setor');
+      });
+    }
+
+    if (
+      updateContactSuccess &&
+      !updateContactError &&
+      !updateLocalError &&
+      updateLocalSuccess &&
+      !loadingContact &&
+      !loadingLocal
+    ) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Setor Atualizado',
+        text: 'Setor atualizado com sucesso!',
+        // @ts-ignore
+        type: 'success',
+      }).then(() => {
+        this.props.resetContact();
+        this.props.resetLocal();
+        this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/setor`);
       });
     }
 
@@ -277,13 +342,18 @@ class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
                   Adicionar setor
                 </Button>
               )}
+              {toViewLocal.id && user.role.name === AUTHORITIES.ADMIN && (
+                <Button className="mb-4 float-right float-down" color="success" type="submit">
+                  Confirmar Alterações
+                </Button>
+              )}
               <Button
                 tag={Link}
                 to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/setor`}
                 className="mb-4 float-left"
                 color="danger"
               >
-                Voltar
+                {toViewLocal.id ? 'Voltar' : 'Cancelar'}
               </Button>
             </AvForm>
           </CardBody>
@@ -298,13 +368,20 @@ const mapStateToProps = (store: IRootState) => ({
   toViewContact: store.contact.toViewContact,
   createLocalSuccess: store.local.createLocalSuccess,
   createLocalError: store.local.createLocalError,
+  updateLocalSuccess: store.local.updateLocalSuccess,
+  updateLocalError: store.local.updateLocalError,
   createContactSuccess: store.contact.createContactSuccess,
   createContactError: store.contact.createContactError,
+  updateContactSuccess: store.contact.updateContactSuccess,
+  updateContactError: store.contact.updateContactError,
+  loadingContact: store.contact.loading,
+  loadingLocal: store.local.loading,
   user: store.authentication.account,
 });
 
 const mapDispatchToProps = {
   createContactForLocal,
+  updateContactForLocal,
   resetContact,
   resetLocal,
 };
