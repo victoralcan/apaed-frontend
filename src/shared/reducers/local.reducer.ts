@@ -8,6 +8,7 @@ export const ACTION_TYPES = {
   CREATE_LOCAL: 'locals/CREATE_LOCAL',
   RESET_SUCCESS: 'locals/RESET_REGISTER',
   RESET: 'locals/RESET',
+  DELETE_LOCAL: 'locals/DELETE',
 };
 
 const initialState = {
@@ -16,6 +17,8 @@ const initialState = {
   getLocalsError: false,
   createLocalSuccess: false,
   createLocalError: false,
+  deleteLocalSuccess: false,
+  deleteLocalError: false,
   locals: [] as Array<ILocal>,
   toViewLocal: {} as ILocal,
 };
@@ -46,6 +49,13 @@ export default (state: LocalState = initialState, action): LocalState => {
         createLocalError: true,
         createLocalSuccess: false,
       };
+    case FAILURE(ACTION_TYPES.DELETE_LOCAL):
+      return {
+        ...initialState,
+        loading: false,
+        deleteLocalError: true,
+        deleteLocalSuccess: false,
+      };
     case SUCCESS(ACTION_TYPES.GET_LOCALS):
       return {
         ...state,
@@ -60,6 +70,13 @@ export default (state: LocalState = initialState, action): LocalState => {
         loading: false,
         createLocalError: false,
         createLocalSuccess: true,
+      };
+    case SUCCESS(ACTION_TYPES.DELETE_LOCAL):
+      return {
+        ...state,
+        loading: false,
+        deleteLocalError: false,
+        deleteLocalSuccess: true,
       };
     case ACTION_TYPES.RESET_SUCCESS:
       return {
@@ -92,6 +109,13 @@ export const createLocal = (local: ILocal) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.CREATE_LOCAL,
     payload: APIUrl.post('locals', local),
+  });
+};
+
+export const deleteLocal = (local_id: string) => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.DELETE_LOCAL,
+    payload: APIUrl.delete(`locals/${local_id}`),
   });
 };
 

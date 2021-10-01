@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Card, CardHeader, CardBody, Button, Table } from 'reactstrap';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfo } from '@fortawesome/free-solid-svg-icons';
+import { faInfo, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IRootState } from '../../shared/reducers';
-import { getLocals, setToViewLocal } from '../../shared/reducers/local.reducer';
+import { getLocals, setToViewLocal, deleteLocal } from '../../shared/reducers/local.reducer';
 import { getContactById } from '../../shared/reducers/contact.reducer';
 import { AUTHORITIES } from '../../config/constants';
 interface ISetorProps extends StateProps, DispatchProps, RouteComponentProps {}
@@ -47,6 +47,16 @@ class Setor extends React.Component<ISetorProps> {
                       >
                         <FontAwesomeIcon icon={faInfo} />
                       </Button>
+
+                      <Button
+                        onClick={() => {
+                          this.props.deleteLocal(local.id);
+                          this.props.getLocals();
+                        }}
+                        color="trash"
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -67,6 +77,7 @@ const mapDispatchToProps = {
   getLocals,
   setToViewLocal,
   getContactById,
+  deleteLocal,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
