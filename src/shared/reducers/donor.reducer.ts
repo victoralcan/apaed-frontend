@@ -24,6 +24,7 @@ const initialState = {
   donors: [] as Array<IDonor>,
   donor: {} as IDonor,
   toViewDonor: {} as IDonor,
+  totalCount: 0,
 };
 
 export type DonorState = Readonly<typeof initialState>;
@@ -100,7 +101,8 @@ export default (state: DonorState = initialState, action): DonorState => {
         loading: false,
         getDonorsError: false,
         getDonorsSuccess: true,
-        donors: [...action.payload.data],
+        donors: [...action.payload.data[0]],
+        totalCount: action.payload.data[1],
       };
     case SUCCESS(ACTION_TYPES.CREATE_DONOR):
       return {
