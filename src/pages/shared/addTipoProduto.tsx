@@ -29,7 +29,7 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
   }
 
   componentDidMount() {
-    this.props.getCategories();
+    this.props.getCategories(0, 1000000);
   }
 
   handleCategoryChange = (category) => {

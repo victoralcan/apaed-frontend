@@ -22,6 +22,7 @@ function Fornecedor(props: IFornecedorProps): JSX.Element {
 
   useEffect(() => {
     props.getDonors(0, 10);
+    // eslint-disable-next-line
   }, []);
 
   const fetchData = React.useCallback(({ pageSize, pageIndex }) => {

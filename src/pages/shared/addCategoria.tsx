@@ -11,9 +11,10 @@ import { getTypes } from '../../shared/reducers/type.reducer';
 import { IOption } from '../../shared/model/option.model';
 import { getUnitsMeasure } from '../../shared/reducers/unityMeasurement.reducer';
 import { ICategory } from '../../shared/model/category.model';
-import { createCategory, reset } from '../../shared/reducers/category.reducer';
+import { createCategory, reset, updateCategory } from '../../shared/reducers/category.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
+import { AUTHORITIES } from '../../config/constants';
 
 interface ICategoriaProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -36,6 +37,28 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
     this.props.getUnitsMeasure();
   }
 
+  componentDidUpdate(prevProps: Readonly<ICategoriaProps>, prevState: Readonly<ICategoriaState>) {
+    const { toViewCategory } = this.props;
+    if (toViewCategory.id && !prevState.selectedType.value) {
+      this.setState({
+        selectedType: {
+          value: toViewCategory.type.id,
+          key: toViewCategory.type.id,
+          label: toViewCategory.type.type,
+        },
+        selectedUnityMeasurement: {
+          value: toViewCategory.unity_measurement.id,
+          key: toViewCategory.unity_measurement.id,
+          label: toViewCategory.unity_measurement.unity_measurement,
+        },
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.reset();
+  }
+
   handleTypeChange = (type) => {
     if (type) {
       this.setState({
@@ -55,20 +78,45 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
   handleValidSubmit = (event, { ncm_code, name, minimal_qntt, long_description }) => {
     event.persist();
     const { selectedUnityMeasurement, selectedType } = this.state;
-    const newCategory: ICategory = {
-      ncm_code,
-      minimal_qntt,
-      long_description,
-      description: name,
-      unity_measurement_id: String(selectedUnityMeasurement.value),
-      type_id: String(selectedType.value),
-      active: true,
-    };
-    this.props.createCategory(newCategory);
+    const { toViewCategory } = this.props;
+    if (toViewCategory.id) {
+      const updatedCategory: ICategory = {
+        id: toViewCategory.id,
+        ncm_code,
+        description: name,
+        minimal_qntt,
+        long_description,
+        unity_measurement_id: String(selectedUnityMeasurement.value),
+        type_id: String(selectedType.value),
+        active: true,
+      };
+      this.props.updateCategory(updatedCategory);
+    } else {
+      const newCategory: ICategory = {
+        ncm_code,
+        minimal_qntt,
+        long_description,
+        description: name,
+        unity_measurement_id: String(selectedUnityMeasurement.value),
+        type_id: String(selectedType.value),
+        active: true,
+      };
+      this.props.createCategory(newCategory);
+    }
   };
 
   render() {
-    const { types, unitsMeasure, createCategoryError, createCategorySuccess, loading } = this.props;
+    const {
+      types,
+      unitsMeasure,
+      createCategoryError,
+      createCategorySuccess,
+      updateCategoryError,
+      updateCategorySuccess,
+      loading,
+      toViewCategory,
+      user,
+    } = this.props;
 
     if (createCategorySuccess && !createCategoryError && !loading) {
       const MySwal = withReactContent(Swal);
@@ -78,15 +126,48 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
         // @ts-ignore
         type: 'success',
       }).then(() => {
-        this.props.history.push('/user/estoque');
+        this.props.reset();
+        this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin/categories' : 'user/addProduto'}`);
       });
-      this.props.reset();
+    }
+
+    if (!createCategorySuccess && createCategoryError && !loading) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Erro ao criar categoria! Por favor, tente novamente!',
+        // @ts-ignore
+        type: 'error',
+      });
+    }
+
+    if (updateCategorySuccess && !updateCategoryError && !loading) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Categoria Atualizada!',
+        text: 'Categoria Atualizada com sucesso!',
+        // @ts-ignore
+        type: 'success',
+      }).then(() => {
+        this.props.reset();
+        this.props.history.push('/admin/categories');
+      });
+    }
+
+    if (!updateCategorySuccess && updateCategoryError && !loading) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Erro ao atualizar categoria! Por favor, tente novamente!',
+        // @ts-ignore
+        type: 'error',
+      });
     }
 
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
         <Card className="w-50 shadow-lg">
-          <CardHeader className="bg-dark text-white">Adicionar categoria</CardHeader>
+          <CardHeader className="bg-dark text-white">Categoria</CardHeader>
           <CardBody>
             <AvForm id="add-category-form" onValidSubmit={this.handleValidSubmit}>
               <Row className="d-flex align-items-center">
@@ -116,6 +197,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
                       className="form-control"
                       name="ncm_code"
                       id="ncm_code"
+                      value={toViewCategory.ncm_code}
                       required
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -130,6 +212,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
                       className="form-control"
                       name="name"
                       id="name"
+                      value={toViewCategory.description}
                       required
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -143,6 +226,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
                       name="minimal_qntt"
                       id="minimal_qntt"
                       type="number"
+                      value={toViewCategory.minimal_qntt}
                       validate={{
                         required: {
                           value: true,
@@ -161,6 +245,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
                       className="form-control"
                       name="long_description"
                       id="long_description"
+                      value={toViewCategory.long_description}
                       required
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -190,9 +275,15 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
               </Row>
               <br />
               <Button type="submit" className="mb-4 float-right float-down" color="success">
-                Adicionar Categoria
+                {toViewCategory.id ? 'Atualizar Categoria' : 'Adicionar Categoria'}
               </Button>
-              <Button tag={Link} to="/user/addTipoProduto" type="button" className="mb-8 float-left" color="danger">
+              <Button
+                tag={Link}
+                to={`${user.role.name === AUTHORITIES.ADMIN ? '/admin/categories' : '/user/addProduto'}`}
+                type="button"
+                className="mb-8 float-left"
+                color="danger"
+              >
                 Cancelar
               </Button>
             </AvForm>
@@ -209,11 +300,16 @@ const mapStateToProps = (store: IRootState) => ({
   loading: store.category.loading,
   createCategorySuccess: store.category.createCategorySuccess,
   createCategoryError: store.category.createCategoryError,
+  updateCategorySuccess: store.category.updateCategorySuccess,
+  updateCategoryError: store.category.updateCategoryError,
+  user: store.authentication.account,
+  toViewCategory: store.category.toViewCategory,
 });
 const mapDispatchToProps = {
   getTypes,
   getUnitsMeasure,
   createCategory,
+  updateCategory,
   reset,
 };
 

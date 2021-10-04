@@ -11,6 +11,9 @@ import FormSetor from 'pages/shared/formSetor';
 import Setor from 'pages/shared/setor';
 import Transferir from '../shared/transferir';
 import Transfers from './transfers';
+import Categoria from './categoria';
+import ViewCategoria from '../shared/addCategoria';
+import AddTipoProduto from '../shared/addTipoProduto';
 
 const Routes = ({ match }) => (
   <Switch>
@@ -24,6 +27,9 @@ const Routes = ({ match }) => (
     <ErrorBoundaryRoute path={`${match.url}/viewSetor`} component={FormSetor} />
     <ErrorBoundaryRoute path={`${match.url}/addSetor`} component={FormSetor} />
     <ErrorBoundaryRoute path={`${match.url}/transfers`} component={Transfers} />
+    <ErrorBoundaryRoute path={`${match.url}/categories`} component={Categoria} />
+    <ErrorBoundaryRoute path={`${match.url}/viewCategoria`} component={ViewCategoria} />
+    <ErrorBoundaryRoute path={`${match.url}/viewProducts`} component={AddTipoProduto} />
     <ErrorBoundaryRoute component={PageNotFound} />
   </Switch>
 );
