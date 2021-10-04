@@ -19,6 +19,10 @@ function Transfers(props: ITransfersProps): JSX.Element {
             accessor: 'description',
           },
           {
+            Header: 'Código NCM',
+            accessor: 'product_ncm_code',
+          },
+          {
             Header: 'Nome',
             accessor: 'product_name',
           },
@@ -67,8 +71,8 @@ function Transfers(props: ITransfersProps): JSX.Element {
       <Table
         columns={columns}
         data={props.transfers}
-        filterCriteria="product_name"
-        filterBy="nome do produto"
+        filterCriteria="product_ncm_code"
+        filterBy="código NCM"
         fetchData={fetchData}
         loading={props.loading}
         pageCount={Math.ceil(props.totalCount / tablePageSize)}
