@@ -32,7 +32,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
   }
 
   componentDidMount() {
-    this.props.getLocals();
+    this.props.getLocals(0, 1000000);
   }
 
   setSelectedDestiny = (destiny) => {

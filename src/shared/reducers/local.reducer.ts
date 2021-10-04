@@ -24,6 +24,7 @@ const initialState = {
   deleteLocalError: false,
   locals: [] as Array<ILocal>,
   toViewLocal: {} as ILocal,
+  totalCount: 0,
 };
 
 export type LocalState = Readonly<typeof initialState>;
@@ -79,7 +80,8 @@ export default (state: LocalState = initialState, action): LocalState => {
         loading: false,
         getLocalsError: false,
         getLocalsSuccess: true,
-        locals: [...action.payload.data],
+        locals: [...action.payload.data[0]],
+        totalCount: action.payload.data[1],
       };
     case SUCCESS(ACTION_TYPES.CREATE_LOCAL):
       return {
@@ -122,10 +124,10 @@ export default (state: LocalState = initialState, action): LocalState => {
   }
 };
 
-export const getLocals = () => async (dispatch) => {
+export const getLocals = (skip: number, take: number) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.GET_LOCALS,
-    payload: APIUrl.get('locals'),
+    payload: APIUrl.get(`locals?skip=${skip}&take=${take}`),
   });
 };
 
