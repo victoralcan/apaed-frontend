@@ -78,6 +78,7 @@ function Transfers(props: ITransfersProps): JSX.Element {
         pageCount={Math.ceil(props.totalCount / tablePageSize)}
         totalCount={props.totalCount}
         currentPage={currentPage}
+        canGoToPage={true}
       />
     </div>
   );

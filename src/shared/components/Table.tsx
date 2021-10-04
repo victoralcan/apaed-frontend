@@ -11,6 +11,7 @@ export default function Table({
   pageCount: controlledPageCount,
   totalCount,
   currentPage,
+  canGoToPage,
 }) {
   const [filterInput, setFilterInput] = useState('');
   // Use the state and functions returned from useTable to build your UI
@@ -123,19 +124,21 @@ export default function Table({
             {pageIndex + 1} de {pageOptions.length}
           </span>{' '}
         </span>
-        <span className="flex-grow-1">
-          Ir para Página:{' '}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(page);
-            }}
-            style={{ width: '100px' }}
-            className="mx-2 my-0 p-0"
-          />
-        </span>{' '}
+        {canGoToPage && (
+          <span className="flex-grow-1">
+            Ir para Página:{' '}
+            <input
+              type="number"
+              defaultValue={pageIndex + 1}
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                gotoPage(page);
+              }}
+              style={{ width: '100px' }}
+              className="mx-2 my-0 p-0"
+            />
+          </span>
+        )}
         <select
           value={pageSize}
           onChange={(e) => {
