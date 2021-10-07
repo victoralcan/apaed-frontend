@@ -7,14 +7,16 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IRootState } from '../../shared/reducers';
-import { getLocals, setToViewLocal, deleteLocal } from '../../shared/reducers/local.reducer';
+import { getLocals, setToViewLocal, deleteLocal, reset } from '../../shared/reducers/local.reducer';
 import { getContactById } from '../../shared/reducers/contact.reducer';
 import { AUTHORITIES } from '../../config/constants';
 import Table from '../../shared/components/Table';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 interface ISetorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 function Setor(props: ISetorProps) {
-  const { locals, user, loading, totalCount } = props;
+  const { locals, user, loading, totalCount, deleteLocalError, deleteLocalSuccess } = props;
   const fetchIdRef = React.useRef(0);
   const [tablePageSize, setTablePageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
@@ -63,8 +65,39 @@ function Setor(props: ISetorProps) {
 
               <Button
                 onClick={() => {
-                  props.deleteLocal(local.id);
-                  props.getLocals(0, 10);
+                  Swal.fire({
+                    title: 'Deseja deletar o setor?',
+                    confirmButtonText: 'Deletar',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancelar',
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                      props.deleteLocal(local.id);
+                      // Swal.fire('Saved!', '', 'success')
+                      if (deleteLocalSuccess && !deleteLocalError && !loading) {
+                        const MySwal = withReactContent(Swal);
+                        MySwal.fire({
+                          title: 'Setor deletado!',
+                          text: 'Setor deletado com sucesso!',
+                          // @ts-ignore
+                          type: 'success',
+                        }).then(() => {
+                          // props.getLocals(0, 10);
+                          props.reset();
+                          props.history.push('/admin/setor');
+                        });
+                      }
+                    } else if (!deleteLocalSuccess && deleteLocalError && !loading) {
+                      const MySwal = withReactContent(Swal);
+                      MySwal.fire({
+                        title: 'Erro!',
+                        text: 'Erro ao deletar setor! Por favor, tente novamente!',
+                        // @ts-ignore
+                        type: 'error',
+                      });
+                    }
+                  });
                 }}
                 color="trash"
               >
@@ -110,6 +143,8 @@ const mapStateToProps = (store: IRootState) => ({
   user: store.authentication.account,
   loading: store.local.loading,
   totalCount: store.local.totalCount,
+  deleteLocalSuccess: store.local.deleteLocalSuccess,
+  deleteLocalError: store.local.deleteLocalError,
 });
 
 const mapDispatchToProps = {
@@ -117,6 +152,7 @@ const mapDispatchToProps = {
   setToViewLocal,
   getContactById,
   deleteLocal,
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

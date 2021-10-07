@@ -150,6 +150,7 @@ export const deleteLocal = (local_id: string) => async (dispatch) => {
     type: ACTION_TYPES.DELETE_LOCAL,
     payload: APIUrl.delete(`locals/${local_id}`),
   });
+  dispatch(getLocals(0, 10));
 };
 
 export const setToViewLocal = (local: ILocal) => ({
