@@ -63,7 +63,6 @@ function Categoria(props: ICategoriaProps) {
               <Button
                 onClick={() => {
                   props.deleteCategory(category.id);
-                  props.getCategories(0, 10);
                 }}
                 color="trash"
               >
@@ -89,7 +88,7 @@ function Categoria(props: ICategoriaProps) {
           <Table
             columns={columns}
             data={categories}
-            filterCriteria="name"
+            filterCriteria="description"
             filterBy="descrição"
             fetchData={fetchData}
             loading={loading}

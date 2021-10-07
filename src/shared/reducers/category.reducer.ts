@@ -191,6 +191,7 @@ export const deleteCategory = (category_id: string) => async (dispatch) => {
     type: ACTION_TYPES.DELETE_CATEGORY,
     payload: APIUrl.delete(`ncm/${category_id}`),
   });
+  dispatch(getCategories(0, 10));
 };
 
 export const setToViewCategory = (category: ICategory) => ({

@@ -2,26 +2,25 @@ import React, { useEffect, useState } from 'react';
 
 import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader } from 'reactstrap';
-import { IRootState } from '../../shared/reducers';
-import { deleteDonor, getDonors, setToViewDonor } from '../../shared/reducers/donor.reducer';
-import { AUTHORITIES } from '../../config/constants';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IRootState } from '../../shared/reducers';
+import { AUTHORITIES } from '../../config/constants';
 import Table from '../../shared/components/Table';
-import { getContactById } from '../../shared/reducers/contact.reducer';
+import { getProducts, deleteProduct, setToViewProduct } from '../../shared/reducers/product.reducer';
 
-interface IFornecedorProps extends StateProps, DispatchProps, RouteComponentProps {}
+interface IProdutoProps extends StateProps, DispatchProps, RouteComponentProps {}
 
-function Fornecedor(props: IFornecedorProps): JSX.Element {
-  const { donors, user, loading, totalCount } = props;
+function Produto(props: IProdutoProps) {
+  const { products, user, loading, totalCount } = props;
   const fetchIdRef = React.useRef(0);
   const [tablePageSize, setTablePageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    props.getDonors(0, 10);
+    props.getProducts(0, 10);
     // eslint-disable-next-line
   }, []);
 
@@ -32,30 +31,33 @@ function Fornecedor(props: IFornecedorProps): JSX.Element {
       setCurrentPage(pageIndex);
       const skip = pageIndex * pageSize;
       const take = pageSize;
-      props.getDonors(skip, take);
+      props.getProducts(skip, take);
     }
     // eslint-disable-next-line
   }, []);
 
   const columns = [
     {
-      Header: 'Doador/Fornecedor',
+      Header: 'Produtos',
       columns: [
         {
           Header: 'Nome',
           accessor: 'name',
         },
         {
+          Header: 'Marca',
+          accessor: 'brand',
+        },
+        {
           Header: 'Opções',
           accessor: (originalRow) => originalRow,
           // eslint-disable-next-line react/display-name
-          Cell: ({ cell: { value: donor } }) => (
+          Cell: ({ cell: { value: product } }) => (
             <>
               <Button
                 onClick={() => {
-                  props.setToViewDonor(donor);
-                  props.getContactById(donor.contact_id);
-                  props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/viewFornecedor`);
+                  props.setToViewProduct(product);
+                  props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/viewProduto`);
                 }}
                 color="info"
               >
@@ -64,7 +66,7 @@ function Fornecedor(props: IFornecedorProps): JSX.Element {
 
               <Button
                 onClick={() => {
-                  props.deleteDonor(donor.id);
+                  props.deleteProduct(product.id);
                 }}
                 color="trash"
               >
@@ -80,19 +82,16 @@ function Fornecedor(props: IFornecedorProps): JSX.Element {
   return (
     <div className="d-flex h-100 align-items-center justify-content-center">
       <Card className="w-25 shadow-lg">
-        <CardHeader className="bg-dark text-white">Fornecedores</CardHeader>
+        <CardHeader className="bg-dark text-white">Produtos</CardHeader>
         <CardBody>
-          <Button
-            tag={Link}
-            to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/addFornecedor`}
-            className="mb-4 float-right"
-            color="success"
-          >
-            Adicionar
-          </Button>
+          {user.role.name === AUTHORITIES.ADMIN && (
+            <Button tag={Link} to="/admin/viewProduto" className="mb-4 float-right" color="success">
+              Adicionar
+            </Button>
+          )}
           <Table
             columns={columns}
-            data={donors}
+            data={products}
             filterCriteria="name"
             filterBy="nome"
             fetchData={fetchData}
@@ -109,21 +108,20 @@ function Fornecedor(props: IFornecedorProps): JSX.Element {
 }
 
 const mapStateToProps = (store: IRootState) => ({
-  donors: store.donor.donors,
+  products: store.product.products,
   user: store.authentication.account,
-  loading: store.donor.loading,
-  totalCount: store.donor.totalCount,
+  loading: store.product.loading,
+  totalCount: store.product.totalCount,
 });
 
 const mapDispatchToProps = {
-  getDonors,
-  setToViewDonor,
-  getContactById,
-  deleteDonor,
+  getProducts,
+  setToViewProduct,
+  deleteProduct,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 // @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(Fornecedor);
+export default connect(mapStateToProps, mapDispatchToProps)(Produto);

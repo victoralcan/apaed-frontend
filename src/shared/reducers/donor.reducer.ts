@@ -189,6 +189,7 @@ export const deleteDonor = (donor_id: string) => async (dispatch) => {
     type: ACTION_TYPES.UPDATE_DONOR,
     payload: APIUrl.delete(`donors/${donor_id}`),
   });
+  dispatch(getDonors(0, 10));
 };
 
 export const setToViewDonor = (donor: IDonor) => ({

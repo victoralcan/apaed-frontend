@@ -14,6 +14,7 @@ import Transfers from './transfers';
 import Categoria from './categoria';
 import ViewCategoria from '../shared/addCategoria';
 import AddTipoProduto from '../shared/addTipoProduto';
+import Products from './produto';
 
 const Routes = ({ match }) => (
   <Switch>
@@ -29,7 +30,8 @@ const Routes = ({ match }) => (
     <ErrorBoundaryRoute path={`${match.url}/transfers`} component={Transfers} />
     <ErrorBoundaryRoute path={`${match.url}/categories`} component={Categoria} />
     <ErrorBoundaryRoute path={`${match.url}/viewCategoria`} component={ViewCategoria} />
-    <ErrorBoundaryRoute path={`${match.url}/viewProducts`} component={AddTipoProduto} />
+    <ErrorBoundaryRoute path={`${match.url}/products`} component={Products} />
+    <ErrorBoundaryRoute path={`${match.url}/viewProduto`} component={AddTipoProduto} />
     <ErrorBoundaryRoute component={PageNotFound} />
   </Switch>
 );

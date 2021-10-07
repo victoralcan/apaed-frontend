@@ -10,9 +10,10 @@ import Select from 'react-select';
 import { getCategories } from '../../shared/reducers/category.reducer';
 import { IOption } from '../../shared/model/option.model';
 import { IProduct } from '../../shared/model/product.model';
-import { createProduct, reset } from '../../shared/reducers/product.reducer';
+import { createProduct, reset, updateProduct } from '../../shared/reducers/product.reducer';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
+import { AUTHORITIES } from '../../config/constants';
 
 interface IAddTipoProdutoProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -32,6 +33,23 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
     this.props.getCategories(0, 1000000);
   }
 
+  componentDidUpdate(prevProps: Readonly<IAddTipoProdutoProps>, prevState: Readonly<IAddTipoProdutoState>) {
+    const { toViewProduct } = this.props;
+    if (!prevState.selectedCategory.value && toViewProduct.id) {
+      this.setState({
+        selectedCategory: {
+          key: toViewProduct.ncm.id,
+          value: toViewProduct.ncm.id,
+          label: toViewProduct.ncm.description,
+        },
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.reset();
+  }
+
   handleCategoryChange = (category) => {
     if (category) {
       this.setState({
@@ -43,23 +61,54 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
   handleValidSubmit = (event, { name, brand }) => {
     event.persist();
     const { selectedCategory } = this.state;
-    const newProduct: IProduct = {
-      name,
-      brand,
-      ncm_id: String(selectedCategory.value),
-      active: true,
-    };
-    this.props.createProduct(newProduct);
+    const { toViewProduct } = this.props;
+    if (toViewProduct.id) {
+      const updatedProduct: IProduct = {
+        id: toViewProduct.id,
+        name,
+        brand,
+        ncm_id: String(selectedCategory.value),
+        active: true,
+      };
+      this.props.updateProduct(updatedProduct);
+    } else {
+      const newProduct: IProduct = {
+        name,
+        brand,
+        ncm_id: String(selectedCategory.value),
+        active: true,
+      };
+      this.props.createProduct(newProduct);
+    }
   };
 
   render() {
-    const { categories, createProductSuccess, createProductError, loading } = this.props;
+    const {
+      categories,
+      createProductSuccess,
+      createProductError,
+      loading,
+      user,
+      toViewProduct,
+      updateProductError,
+      updateProductSuccess,
+    } = this.props;
 
-    if (!createProductSuccess && createProductError) {
+    if (!createProductSuccess && createProductError && !loading) {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao criar o tipo de produto! Por favor, tente novamente!',
+        // @ts-ignore
+        type: 'error',
+      });
+    }
+
+    if (!updateProductSuccess && updateProductError && !loading) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Erro!',
+        text: 'Erro ao atualizar o tipo de produto! Por favor, tente novamente!',
         // @ts-ignore
         type: 'error',
       });
@@ -73,7 +122,20 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
         // @ts-ignore
         type: 'success',
       }).then(() => {
-        this.props.history.push('/user/addProduto');
+        this.props.history.push(`${user.role.name === AUTHORITIES.ADMIN ? '/admin/products' : '/user/addProduto'}`);
+      });
+      this.props.reset();
+    }
+
+    if (updateProductSuccess && !updateProductError && !loading) {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: 'Tipo de produto Atualizado',
+        text: 'Tipo de produto atualizado com sucesso!',
+        // @ts-ignore
+        type: 'success',
+      }).then(() => {
+        this.props.history.push(`${user.role.name === AUTHORITIES.ADMIN ? '/admin/products' : '/user/addProduto'}`);
       });
       this.props.reset();
     }
@@ -81,7 +143,7 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
         <Card className="w-50 shadow-lg">
-          <CardHeader className="bg-dark text-white">Adicionar tipo produto</CardHeader>
+          <CardHeader className="bg-dark text-white">Tipo produto</CardHeader>
           <CardBody>
             <AvForm id="add-category-form" onValidSubmit={this.handleValidSubmit}>
               <Row className="d-flex align-items-center">
@@ -112,6 +174,7 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
                       name="name"
                       id="name"
                       required
+                      value={toViewProduct.name}
                       errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
@@ -125,6 +188,7 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
                       className="form-control"
                       name="brand"
                       id="brand"
+                      value={toViewProduct.brand}
                       required
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -133,9 +197,15 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
               </Row>
               <br />
               <Button type="submit" className="mb-4 float-right float-down" color="success">
-                Adicionar tipo de produto
+                {toViewProduct.id ? 'Atualizar tipo de produto' : 'Adicionar tipo de produto'}
               </Button>
-              <Button tag={Link} to="/user/addProduto" type="button" className="mb-8 float-left" color="danger">
+              <Button
+                tag={Link}
+                to={`${user.role.name === AUTHORITIES.ADMIN ? '/admin/products' : '/user/addProduto'}`}
+                type="button"
+                className="mb-8 float-left"
+                color="danger"
+              >
                 Cancelar
               </Button>
             </AvForm>
@@ -151,11 +221,16 @@ const mapStateToProps = (store: IRootState) => ({
   categories: store.category.categories,
   createProductSuccess: store.product.createProductSuccess,
   createProductError: store.product.createProductError,
+  updateProductSuccess: store.product.updateProductSuccess,
+  updateProductError: store.product.updateProductError,
   loading: store.product.loading,
+  toViewProduct: store.product.toViewProduct,
+  user: store.authentication.account,
 });
 const mapDispatchToProps = {
   getCategories,
   createProduct,
+  updateProduct,
   reset,
 };
 
