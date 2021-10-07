@@ -5,17 +5,19 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader } from 'reactstrap';
 import { IRootState } from '../../shared/reducers';
-import { deleteDonor, getDonors, setToViewDonor } from '../../shared/reducers/donor.reducer';
+import { deleteDonor, getDonors, setToViewDonor, reset } from '../../shared/reducers/donor.reducer';
 import { AUTHORITIES } from '../../config/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Table from '../../shared/components/Table';
 import { getContactById } from '../../shared/reducers/contact.reducer';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 interface IFornecedorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 function Fornecedor(props: IFornecedorProps): JSX.Element {
-  const { donors, user, loading, totalCount } = props;
+  const { donors, user, loading, totalCount, deleteDonorError, deleteDonorSuccess } = props;
   const fetchIdRef = React.useRef(0);
   const [tablePageSize, setTablePageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
@@ -64,7 +66,36 @@ function Fornecedor(props: IFornecedorProps): JSX.Element {
 
               <Button
                 onClick={() => {
-                  props.deleteDonor(donor.id);
+                  Swal.fire({
+                    title: 'Deseja deletar o Fornecedor?',
+                    confirmButtonText: 'Deletar',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancelar',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      props.deleteDonor(donor.id);
+                      if (deleteDonorSuccess && !deleteDonorError && !loading) {
+                        const MySwal = withReactContent(Swal);
+                        MySwal.fire({
+                          title: 'Fornecedor deletado!',
+                          text: 'Fornecedor deletado com sucesso!',
+                          // @ts-ignore
+                          type: 'success',
+                        }).then(() => {
+                          props.reset();
+                          props.history.push('/admin/fornecedor');
+                        });
+                      }
+                    } else if (!deleteDonorSuccess && deleteDonorError && !loading) {
+                      const MySwal = withReactContent(Swal);
+                      MySwal.fire({
+                        title: 'Erro!',
+                        text: 'Erro ao deletar fornecedor! Por favor, tente novamente!',
+                        // @ts-ignore
+                        type: 'error',
+                      });
+                    }
+                  });
                 }}
                 color="trash"
               >
@@ -113,6 +144,8 @@ const mapStateToProps = (store: IRootState) => ({
   user: store.authentication.account,
   loading: store.donor.loading,
   totalCount: store.donor.totalCount,
+  deleteDonorError: store.donor.deleteDonorError,
+  deleteDonorSuccess: store.donor.deleteDonorSuccess,
 });
 
 const mapDispatchToProps = {
@@ -120,6 +153,7 @@ const mapDispatchToProps = {
   setToViewDonor,
   getContactById,
   deleteDonor,
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

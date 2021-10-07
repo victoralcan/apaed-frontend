@@ -9,12 +9,14 @@ import { faInfo, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IRootState } from '../../shared/reducers';
 import { AUTHORITIES } from '../../config/constants';
 import Table from '../../shared/components/Table';
-import { getProducts, deleteProduct, setToViewProduct } from '../../shared/reducers/product.reducer';
+import { getProducts, deleteProduct, setToViewProduct, reset } from '../../shared/reducers/product.reducer';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 interface IProdutoProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 function Produto(props: IProdutoProps) {
-  const { products, user, loading, totalCount } = props;
+  const { products, user, loading, totalCount, deleteProductError, deleteProductSuccess } = props;
   const fetchIdRef = React.useRef(0);
   const [tablePageSize, setTablePageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
@@ -66,7 +68,36 @@ function Produto(props: IProdutoProps) {
 
               <Button
                 onClick={() => {
-                  props.deleteProduct(product.id);
+                  Swal.fire({
+                    title: 'Deseja deletar o setor?',
+                    confirmButtonText: 'Deletar',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancelar',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      props.deleteProduct(product.id);
+                      if (deleteProductSuccess && !deleteProductError && !loading) {
+                        const MySwal = withReactContent(Swal);
+                        MySwal.fire({
+                          title: 'Produto deletado!',
+                          text: 'Produto deletado com sucesso!',
+                          // @ts-ignore
+                          type: 'success',
+                        }).then(() => {
+                          props.reset();
+                          props.history.push('/admin/products');
+                        });
+                      }
+                    } else if (!deleteProductSuccess && deleteProductError && !loading) {
+                      const MySwal = withReactContent(Swal);
+                      MySwal.fire({
+                        title: 'Erro!',
+                        text: 'Erro ao deletar produto! Por favor, tente novamente!',
+                        // @ts-ignore
+                        type: 'error',
+                      });
+                    }
+                  });
                 }}
                 color="trash"
               >
@@ -112,12 +143,15 @@ const mapStateToProps = (store: IRootState) => ({
   user: store.authentication.account,
   loading: store.product.loading,
   totalCount: store.product.totalCount,
+  deleteProductError: store.product.deleteProductError,
+  deleteProductSuccess: store.product.deleteProductSuccess,
 });
 
 const mapDispatchToProps = {
   getProducts,
   setToViewProduct,
   deleteProduct,
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
