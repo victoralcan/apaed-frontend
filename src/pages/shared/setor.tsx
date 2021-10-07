@@ -71,10 +71,8 @@ function Setor(props: ISetorProps) {
                     showCancelButton: true,
                     cancelButtonText: 'Cancelar',
                   }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                       props.deleteLocal(local.id);
-                      // Swal.fire('Saved!', '', 'success')
                       if (deleteLocalSuccess && !deleteLocalError && !loading) {
                         const MySwal = withReactContent(Swal);
                         MySwal.fire({
@@ -83,7 +81,6 @@ function Setor(props: ISetorProps) {
                           // @ts-ignore
                           type: 'success',
                         }).then(() => {
-                          // props.getLocals(0, 10);
                           props.reset();
                           props.history.push('/admin/setor');
                         });

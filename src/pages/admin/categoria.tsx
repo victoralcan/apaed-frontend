@@ -9,12 +9,14 @@ import { faInfo, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IRootState } from '../../shared/reducers';
 import { AUTHORITIES } from '../../config/constants';
 import Table from '../../shared/components/Table';
-import { deleteCategory, getCategories, setToViewCategory } from '../../shared/reducers/category.reducer';
+import { deleteCategory, getCategories, setToViewCategory, reset } from '../../shared/reducers/category.reducer';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 interface ICategoriaProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 function Categoria(props: ICategoriaProps) {
-  const { categories, user, loading, totalCount } = props;
+  const { categories, user, loading, totalCount, deleteCategoryError, deleteCategorySuccess } = props;
   const fetchIdRef = React.useRef(0);
   const [tablePageSize, setTablePageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
@@ -62,7 +64,36 @@ function Categoria(props: ICategoriaProps) {
 
               <Button
                 onClick={() => {
-                  props.deleteCategory(category.id);
+                  Swal.fire({
+                    title: 'Deseja deletar a categoria?',
+                    confirmButtonText: 'Deletar',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancelar',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      props.deleteCategory(category.id);
+                      if (deleteCategorySuccess && !deleteCategoryError && !loading) {
+                        const MySwal = withReactContent(Swal);
+                        MySwal.fire({
+                          title: 'Categoria deletado!',
+                          text: 'Categoria deletado com sucesso!',
+                          // @ts-ignore
+                          type: 'success',
+                        }).then(() => {
+                          props.reset();
+                          props.history.push('/admin/categories');
+                        });
+                      }
+                    } else if (!deleteCategorySuccess && deleteCategoryError && !loading) {
+                      const MySwal = withReactContent(Swal);
+                      MySwal.fire({
+                        title: 'Erro!',
+                        text: 'Erro ao deletar categoria! Por favor, tente novamente!',
+                        // @ts-ignore
+                        type: 'error',
+                      });
+                    }
+                  });
                 }}
                 color="trash"
               >
@@ -108,12 +139,15 @@ const mapStateToProps = (store: IRootState) => ({
   user: store.authentication.account,
   loading: store.category.loading,
   totalCount: store.category.totalCount,
+  deleteCategoryError: store.category.deleteCategoryError,
+  deleteCategorySuccess: store.category.deleteCategorySuccess,
 });
 
 const mapDispatchToProps = {
   getCategories,
   setToViewCategory,
   deleteCategory,
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
