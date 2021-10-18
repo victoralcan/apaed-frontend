@@ -113,14 +113,16 @@ function Fornecedor(props: IFornecedorProps): JSX.Element {
       <Card className="w-25 shadow-lg">
         <CardHeader className="bg-dark text-white">Fornecedores</CardHeader>
         <CardBody>
-          <Button
-            tag={Link}
-            to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/addFornecedor`}
-            className="mb-4 float-right"
-            color="success"
-          >
-            Adicionar
-          </Button>
+          {user.role.name === AUTHORITIES.ADMIN && (
+            <Button
+              tag={Link}
+              to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/addFornecedor`}
+              className="mb-4 float-right"
+              color="success"
+            >
+              Adicionar
+            </Button>
+          )}
           <Table
             columns={columns}
             data={donors}
