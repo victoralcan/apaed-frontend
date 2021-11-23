@@ -79,8 +79,7 @@ function Fornecedor(props: IFornecedorProps): JSX.Element {
                         MySwal.fire({
                           title: 'Fornecedor deletado!',
                           text: 'Fornecedor deletado com sucesso!',
-                          // @ts-ignore
-                          type: 'success',
+                          icon: 'success',
                         }).then(() => {
                           props.reset();
                           props.history.push('/admin/fornecedor');
@@ -91,8 +90,7 @@ function Fornecedor(props: IFornecedorProps): JSX.Element {
                       MySwal.fire({
                         title: 'Erro!',
                         text: 'Erro ao deletar fornecedor! Por favor, tente novamente!',
-                        // @ts-ignore
-                        type: 'error',
+                        icon: 'error',
                       });
                     }
                   });

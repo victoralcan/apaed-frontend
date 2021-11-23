@@ -116,8 +116,7 @@ class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao criar o setor! Por favor, tente novamente!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       });
     }
 
@@ -126,8 +125,7 @@ class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao atualizar o setor! Por favor, tente novamente!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       });
     }
 
@@ -136,8 +134,7 @@ class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       MySwal.fire({
         title: 'Setor Cadastrado',
         text: 'Setor cadastrado com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => {
         this.props.resetContact();
         this.props.resetLocal();
@@ -157,8 +154,7 @@ class FormSetor extends React.Component<IVerSetorProps, IVerSetorState> {
       MySwal.fire({
         title: 'Setor Atualizado',
         text: 'Setor atualizado com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => {
         this.props.resetContact();
         this.props.resetLocal();

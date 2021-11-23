@@ -150,8 +150,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       MySwal.fire({
         title: 'Não encontrado!',
         text: 'Fornecedor/doador não encontrado com o documento informado!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       }).then(() => this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/fornecedor`));
       this.props.resetProducts();
       this.props.resetCategories();
@@ -164,12 +163,17 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       MySwal.fire({
         title: 'Produto Cadastrado',
         text: 'Produto cadastrado com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => {
-        // TODO Limpar formulario
         if (this.state.registerMore) {
-          this.setState({ registerMore: false });
+          this.setState({
+            productType: {},
+            category: {},
+            donation: {},
+            expiration_date: convertToDataInputFormat(new Date()),
+            registerMore: false,
+            hasExpirationDate: true,
+          });
         } else {
           this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`);
         }

@@ -99,8 +99,7 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao criar o tipo de produto! Por favor, tente novamente!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       });
     }
 
@@ -109,8 +108,7 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao atualizar o tipo de produto! Por favor, tente novamente!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       });
     }
 
@@ -119,8 +117,7 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
       MySwal.fire({
         title: 'Tipo de produto Cadastrado',
         text: 'Tipo de produto cadastrado com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => {
         this.props.history.push(`${user.role.name === AUTHORITIES.ADMIN ? '/admin/products' : '/user/addProduto'}`);
       });
@@ -132,8 +129,7 @@ class AddTipoProduto extends React.Component<IAddTipoProdutoProps, IAddTipoProdu
       MySwal.fire({
         title: 'Tipo de produto Atualizado',
         text: 'Tipo de produto atualizado com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => {
         this.props.history.push(`${user.role.name === AUTHORITIES.ADMIN ? '/admin/products' : '/user/addProduto'}`);
       });

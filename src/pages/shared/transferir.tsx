@@ -71,8 +71,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
       MySwal.fire({
         title: 'Erro!',
         text: 'Transferência não pode ser realizada! Por favor, tente novamente!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       }).then(() => this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`));
       this.props.resetSuccessTransfer();
     }
@@ -82,8 +81,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
       MySwal.fire({
         title: 'Transfêrencia Realizada!',
         text: 'A sua transferência foi realizada com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`));
       this.props.resetSuccessTransfer();
     }

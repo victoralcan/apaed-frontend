@@ -77,8 +77,7 @@ function Categoria(props: ICategoriaProps) {
                         MySwal.fire({
                           title: 'Categoria deletado!',
                           text: 'Categoria deletado com sucesso!',
-                          // @ts-ignore
-                          type: 'success',
+                          icon: 'success',
                         }).then(() => {
                           props.reset();
                           props.history.push('/admin/categories');
@@ -89,8 +88,7 @@ function Categoria(props: ICategoriaProps) {
                       MySwal.fire({
                         title: 'Erro!',
                         text: 'Erro ao deletar categoria! Por favor, tente novamente!',
-                        // @ts-ignore
-                        type: 'error',
+                        icon: 'error',
                       });
                     }
                   });

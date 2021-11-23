@@ -27,8 +27,7 @@ class Login extends React.Component<ILoginProps> {
       MySwal.fire({
         title: 'Erro!',
         text: 'Nome de usuário ou senha incorretos!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       }).then(() => this.props.reset());
     }
 

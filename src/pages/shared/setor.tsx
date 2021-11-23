@@ -78,8 +78,7 @@ function Setor(props: ISetorProps) {
                         MySwal.fire({
                           title: 'Setor deletado!',
                           text: 'Setor deletado com sucesso!',
-                          // @ts-ignore
-                          type: 'success',
+                          icon: 'success',
                         }).then(() => {
                           props.reset();
                           props.history.push('/admin/setor');
@@ -90,8 +89,7 @@ function Setor(props: ISetorProps) {
                       MySwal.fire({
                         title: 'Erro!',
                         text: 'Erro ao deletar setor! Por favor, tente novamente!',
-                        // @ts-ignore
-                        type: 'error',
+                        icon: 'error',
                       });
                     }
                   });

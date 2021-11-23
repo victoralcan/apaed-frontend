@@ -16,7 +16,7 @@ interface IStockProps extends StateProps, DispatchProps {}
 
 class Stock extends React.Component<IStockProps> {
   componentDidMount() {
-    this.props.getStock();
+    this.props.getStock(0, 10);
   }
 
   render() {

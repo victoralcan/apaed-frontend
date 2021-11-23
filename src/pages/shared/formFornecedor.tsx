@@ -118,8 +118,7 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao criar o fornecedor/doador! Por favor, tente novamente!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       });
     }
 
@@ -128,8 +127,7 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao atualizar o fornecedor/doador! Por favor, tente novamente!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       });
     }
 
@@ -145,8 +143,7 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
       MySwal.fire({
         title: 'Fornecedor/Doador Cadastrado',
         text: 'Fornecedor/Doador cadastrado com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => {
         this.props.resetContact();
         this.props.resetDonor();
@@ -166,8 +163,7 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
       MySwal.fire({
         title: 'Fornecedor/Doador Atualizado',
         text: 'Fornecedor/Doador atualizado com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => {
         this.props.resetContact();
         this.props.resetDonor();

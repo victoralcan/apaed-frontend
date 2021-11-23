@@ -81,10 +81,10 @@ export default (state: StockState = initialState, action): StockState => {
   }
 };
 
-export const getStock = () => async (dispatch) => {
+export const getStock = (skip: number, take: number) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.GET_STOCK,
-    payload: APIUrl.get('stock'),
+    payload: APIUrl.get(`stock?skip=${skip}&take=${take}`),
   });
 };
 

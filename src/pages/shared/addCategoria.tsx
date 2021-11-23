@@ -123,8 +123,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
       MySwal.fire({
         title: 'Categoria Cadastrada',
         text: 'Categoria Cadastrada com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => {
         this.props.reset();
         this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin/categories' : 'user/addProduto'}`);
@@ -136,8 +135,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao criar categoria! Por favor, tente novamente!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       });
     }
 
@@ -146,8 +144,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
       MySwal.fire({
         title: 'Categoria Atualizada!',
         text: 'Categoria Atualizada com sucesso!',
-        // @ts-ignore
-        type: 'success',
+        icon: 'success',
       }).then(() => {
         this.props.reset();
         this.props.history.push('/admin/categories');
@@ -159,8 +156,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
       MySwal.fire({
         title: 'Erro!',
         text: 'Erro ao atualizar categoria! Por favor, tente novamente!',
-        // @ts-ignore
-        type: 'error',
+        icon: 'error',
       });
     }
 

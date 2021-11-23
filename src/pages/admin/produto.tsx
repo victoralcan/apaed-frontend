@@ -81,8 +81,7 @@ function Produto(props: IProdutoProps) {
                         MySwal.fire({
                           title: 'Produto deletado!',
                           text: 'Produto deletado com sucesso!',
-                          // @ts-ignore
-                          type: 'success',
+                          icon: 'success',
                         }).then(() => {
                           props.reset();
                           props.history.push('/admin/products');
@@ -93,8 +92,7 @@ function Produto(props: IProdutoProps) {
                       MySwal.fire({
                         title: 'Erro!',
                         text: 'Erro ao deletar produto! Por favor, tente novamente!',
-                        // @ts-ignore
-                        type: 'error',
+                        icon: 'error',
                       });
                     }
                   });
