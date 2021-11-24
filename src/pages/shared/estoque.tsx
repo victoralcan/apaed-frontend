@@ -12,6 +12,7 @@ import { setToTransferProduct } from '../../shared/reducers/transfer.reducer';
 import { formataData } from '../../shared/utils/formataData';
 import { AUTHORITIES } from '../../config/constants';
 import Table from '../../shared/components/Table';
+import { differenceInCalendarDays, endOfToday } from 'date-fns';
 
 interface IStockProps extends StateProps, DispatchProps {}
 
@@ -37,6 +38,17 @@ function Stock(props: IStockProps) {
     // eslint-disable-next-line
   }, []);
 
+  const dateCell = (date: string) => {
+    if (date) {
+      if (differenceInCalendarDays(new Date(date), endOfToday()) > 7) {
+        return <div className="bg-success text-white">{formataData(new Date(date))}</div>;
+      } else {
+        return <div className="bg-danger text-white">{formataData(new Date(date))}</div>;
+      }
+    }
+    return <div>Não aplicável</div>;
+  };
+
   const columns = [
     {
       Header: 'Estoque',
@@ -57,9 +69,6 @@ function Stock(props: IStockProps) {
           // eslint-disable-next-line react/display-name
           Cell: ({ cell: { value: productStock } }) => {
             const differenceQuantity = productStock.totalAmount - Number(productStock.minimal_qntt);
-            console.log(productStock.name);
-            console.info('minimal_more_products', productStock.minimal_more_products);
-            console.log(differenceQuantity);
             const classNameQuantity =
               differenceQuantity < productStock.minimal_more_products
                 ? differenceQuantity > 0
@@ -73,11 +82,7 @@ function Stock(props: IStockProps) {
           Header: 'Data de Validade',
           accessor: (originalRow) => originalRow,
           // eslint-disable-next-line react/display-name
-          Cell: ({ cell: { value: productStock } }) => (
-            <div>
-              {productStock.expiration_date ? formataData(new Date(productStock.expiration_date)) : 'Não Aplicável'}
-            </div>
-          ),
+          Cell: ({ cell: { value: productStock } }) => <>{dateCell(productStock.expiration_date)}</>,
         },
         {
           Header: 'Opções',
