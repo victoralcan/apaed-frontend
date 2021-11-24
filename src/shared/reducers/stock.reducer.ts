@@ -18,6 +18,7 @@ const initialState = {
   registerNewProductToStockError: false,
   stock: [] as Array<IStock>,
   toEditProduct: {} as IStock,
+  totalCount: 0,
 };
 
 export type StockState = Readonly<typeof initialState>;
@@ -59,7 +60,8 @@ export default (state: StockState = initialState, action): StockState => {
         loading: false,
         getStockError: false,
         getStockSuccess: true,
-        stock: [...action.payload.data],
+        stock: [...action.payload.data[0]],
+        totalCount: action.payload.data[1],
       };
     case ACTION_TYPES.EDIT_PRODUCT:
       return {
