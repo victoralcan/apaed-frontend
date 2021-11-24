@@ -8,6 +8,7 @@ export interface IStock {
   donation_id?: string;
   local_id?: string;
   product_id?: string;
+  ncm_id?: string;
   brand?: string;
   ncm_code?: string;
   count?: number;
@@ -23,6 +24,7 @@ export interface IProductLocalDonationGet {
   donation?: IDonation;
   local_id?: string;
   local?: ILocal;
+  ncm_id?: string;
   product_id?: string;
   product?: IProduct;
   expiration_date?: string;

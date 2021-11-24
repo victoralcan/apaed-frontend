@@ -9,6 +9,7 @@ export interface ICategory {
   type_id?: string;
   type?: IType;
   unity_measurement_id?: string;
+  minimal_more_products?: number;
   unity_measurement?: IUnityMeasurement;
   minimal_qntt?: number;
   active?: boolean;

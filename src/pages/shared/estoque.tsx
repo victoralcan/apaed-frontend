@@ -55,9 +55,19 @@ function Stock(props: IStockProps) {
           Header: 'Quantidade',
           accessor: (originalRow) => originalRow,
           // eslint-disable-next-line react/display-name
-          Cell: ({ cell: { value: productStock } }) => (
-            <div>{productStock.count + ' ' + productStock.unity_measurement}</div>
-          ),
+          Cell: ({ cell: { value: productStock } }) => {
+            const differenceQuantity = productStock.totalAmount - Number(productStock.minimal_qntt);
+            console.log(productStock.name);
+            console.info('minimal_more_products', productStock.minimal_more_products);
+            console.log(differenceQuantity);
+            const classNameQuantity =
+              differenceQuantity < productStock.minimal_more_products
+                ? differenceQuantity > 0
+                  ? 'bg-warning text-white'
+                  : 'bg-danger text-white'
+                : 'bg-success text-white';
+            return <div className={classNameQuantity}>{productStock.count + ' ' + productStock.unity_measurement}</div>;
+          },
         },
         {
           Header: 'Data de Validade',

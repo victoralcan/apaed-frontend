@@ -99,11 +99,12 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
 
   handleValidSubmit = (event, { amount }) => {
     event.persist();
-    const { productType, expiration_date, hasExpirationDate } = this.state;
+    const { productType, expiration_date, hasExpirationDate, category } = this.state;
     const { selectedDonation } = this.props;
     const newProductLocalDonation: IProductLocalDonationPostPut = {
       product_id: String(productType.value),
       donation_id: selectedDonation.id,
+      ncm_id: String(category.value),
       amount,
       // @ts-ignore
       expiration_date: hasExpirationDate ? convertDataInputFormatToDateServerFormat(expiration_date) : undefined,

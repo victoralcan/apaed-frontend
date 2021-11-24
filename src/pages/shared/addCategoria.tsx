@@ -75,7 +75,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
     }
   };
 
-  handleValidSubmit = (event, { ncm_code, name, minimal_qntt, long_description }) => {
+  handleValidSubmit = (event, { ncm_code, name, minimal_qntt, long_description, minimal_more_products }) => {
     event.persist();
     const { selectedUnityMeasurement, selectedType } = this.state;
     const { toViewCategory } = this.props;
@@ -87,6 +87,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
         minimal_qntt,
         long_description,
         unity_measurement_id: String(selectedUnityMeasurement.value),
+        minimal_more_products,
         type_id: String(selectedType.value),
         active: true,
       };
@@ -98,6 +99,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
         long_description,
         description: name,
         unity_measurement_id: String(selectedUnityMeasurement.value),
+        minimal_more_products,
         type_id: String(selectedType.value),
         active: true,
       };
@@ -249,6 +251,19 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
                 </Col>
               </Row>
               <Row>
+                <Col md={8}>
+                  <FormGroup className="mr-4">
+                    <Label for="long_description">Quantidade minima de produtos a mais</Label>
+                    <AvField
+                      className="form-control"
+                      name="minimal_more_products"
+                      id="minimal_more_products"
+                      value={toViewCategory.minimal_more_products}
+                      required
+                      errorMessage="Esse campo é obrigatório!"
+                    />
+                  </FormGroup>
+                </Col>
                 <Col md={4}>
                   <FormGroup>
                     <Label for="unity_measurement">Unidade de Medida</Label>
