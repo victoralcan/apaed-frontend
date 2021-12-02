@@ -115,7 +115,7 @@ function CestaBasica(props: IFoodStampsProps): JSX.Element {
           {user.role.name === AUTHORITIES.ADMIN && (
             <Button
               tag={Link}
-              to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/addCestaBasica`}
+              to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/viewCestaBasica`}
               className="mb-4 float-right"
               color="success"
             >

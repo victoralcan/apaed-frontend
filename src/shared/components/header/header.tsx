@@ -48,7 +48,7 @@ function Header(props: IHeaderProps) {
                 <h6 className="text-white">Setor</h6>
               </Link>
               <Link className="header-option text-center" to="/user/cestaBasica" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Cesta básica</h6>
+                <h6 className="text-white">Cestas básicas</h6>
               </Link>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav>
@@ -88,6 +88,9 @@ function Header(props: IHeaderProps) {
               </Link>
               <Link className="header-option text-center" to="/admin/transfers" style={{ textDecoration: 'none' }}>
                 <h6 className="text-white">Transferências</h6>
+              </Link>
+              <Link className="header-option text-center" to="/admin/cestaBasica" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Cestas básicas</h6>
               </Link>
               <Link
                 className="header-option text-center"

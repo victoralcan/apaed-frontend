@@ -1,5 +1,4 @@
 import { IDonation } from './donation.model';
-import { IFoodStamp } from './foodStamp.model';
 import { ILocal } from './local.model';
 import { IProduct } from './product.model';
 

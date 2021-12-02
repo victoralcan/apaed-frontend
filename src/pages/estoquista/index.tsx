@@ -13,14 +13,14 @@ import Transferir from '../shared/transferir';
 import AddProduto from '../shared/addProduto';
 import AddTipoProduto from '../shared/addTipoProduto';
 import AddCategoria from '../shared/addCategoria';
-import cestaBasica from 'pages/shared/cestaBasica';
+import CestaBasica from 'pages/shared/cestaBasica';
+import FormCestaBasica from 'pages/shared/formCestaBasica';
 
 const Routes = ({ match }) => (
   <Switch>
     <ErrorBoundaryRoute path={`${match.url}/estoque`} component={Estoque} />
     <ErrorBoundaryRoute path={`${match.url}/fornecedor`} component={Fornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/setor`} component={Setor} />
-    <ErrorBoundaryRoute path={`${match.url}/cestaBasica`} component={cestaBasica} />
     <ErrorBoundaryRoute path={`${match.url}/addFornecedor`} component={AddFornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/viewFornecedor`} component={AddFornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/viewSetor`} component={VerSetor} />
@@ -28,6 +28,8 @@ const Routes = ({ match }) => (
     <ErrorBoundaryRoute path={`${match.url}/addProduto`} component={AddProduto} />
     <ErrorBoundaryRoute path={`${match.url}/addTipoProduto`} component={AddTipoProduto} />
     <ErrorBoundaryRoute path={`${match.url}/addCategoria`} component={AddCategoria} />
+    <ErrorBoundaryRoute path={`${match.url}/cestaBasica`} component={CestaBasica} />
+    <ErrorBoundaryRoute path={`${match.url}/viewCestaBasica`} component={FormCestaBasica} />
     <ErrorBoundaryRoute component={PageNotFound} />
   </Switch>
 );
