@@ -24,7 +24,7 @@ export interface IProductLocalDonationGet {
   donation_id?: string;
   donation?: IDonation;
   local_id?: string;
-  local?: ILocal | IFoodStamp;
+  local?: ILocal;
   ncm_id?: string;
   product_id?: string;
   product?: IProduct;
