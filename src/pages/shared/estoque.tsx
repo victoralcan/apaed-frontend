@@ -4,7 +4,7 @@ import '../../styles/pages/login.scss';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader } from 'reactstrap';
-import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleRight, faBoxes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getStock, setProductToEdit } from '../../shared/reducers/stock.reducer';
 import { IRootState } from '../../shared/reducers';
@@ -99,6 +99,16 @@ function Stock(props: IStockProps) {
                 onClick={() => props.setToTransferProduct(productStock, productStock.count)}
               >
                 <FontAwesomeIcon icon={faArrowAltCircleRight} />
+              </Button>
+              <Button
+                className="mx-3"
+                tag={Link}
+                to={`/cestaBasica`}
+                outline
+                color="secondary"
+                onClick={() => props.setToTransferProduct(productStock, productStock.count)}
+              >
+                <FontAwesomeIcon icon={faBoxes} />
               </Button>
             </div>
           ),

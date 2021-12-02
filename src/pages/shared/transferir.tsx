@@ -10,6 +10,7 @@ import { IRootState } from '../../shared/reducers';
 import { makeTransfer, resetSuccessTransfer } from '../../shared/reducers/transfer.reducer';
 import { ITransferPostPut } from '../../shared/model/transfer.model';
 import { getLocals } from '../../shared/reducers/local.reducer';
+import { getFoodStamps } from 'shared/reducers/food-stamp.reducer';
 import { IOption } from '../../shared/model/option.model';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
@@ -33,6 +34,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
 
   componentDidMount() {
     this.props.getLocals(0, 1000000);
+    this.props.getFoodStamps(0, 1000000);
   }
 
   setSelectedDestiny = (destiny) => {
@@ -63,8 +65,10 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
   };
 
   render() {
-    const { toTransferProduct, locals, user, makeTransferSuccess, makeTransferError } = this.props;
+    const { toTransferProduct, locals, user, makeTransferSuccess, makeTransferError, foodStamps } = this.props;
     const localsWithoutSelf = locals.filter((local) => local.id !== user.local_id);
+    console.log(foodStamps);
+    // const foodStampsWithoutSelf = foodStamps.filter((foodStamp) => foodStamp.id !== user.foodStamp_id);
 
     if (!makeTransferSuccess && makeTransferError) {
       const MySwal = withReactContent(Swal);
@@ -192,6 +196,7 @@ class Transferir extends React.Component<ITransferirProps, ITransferirState> {
 const mapStateToProps = (store: IRootState) => ({
   toTransferProduct: store.transfer.toTransferProduct,
   locals: store.local.locals,
+  foodStamps: store.foodStamp.foodStamps,
   user: store.authentication.account,
   makeTransferSuccess: store.transfer.makeTransferSuccess,
   makeTransferError: store.transfer.makeTransferError,
@@ -201,6 +206,7 @@ const mapStateToProps = (store: IRootState) => ({
 const mapDispatchToProps = {
   makeTransfer,
   getLocals,
+  getFoodStamps,
   resetSuccessTransfer,
 };
 

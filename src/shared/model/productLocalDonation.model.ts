@@ -1,4 +1,5 @@
 import { IDonation } from './donation.model';
+import { IFoodStamp } from './foodStamp.model';
 import { ILocal } from './local.model';
 import { IProduct } from './product.model';
 
@@ -23,7 +24,7 @@ export interface IProductLocalDonationGet {
   donation_id?: string;
   donation?: IDonation;
   local_id?: string;
-  local?: ILocal;
+  local?: ILocal | IFoodStamp;
   ncm_id?: string;
   product_id?: string;
   product?: IProduct;
