@@ -1,6 +1,8 @@
 import { FAILURE, REQUEST, SUCCESS } from './action-type.util';
 import APIUrl from '../../config/api';
 import { IFoodStamp } from 'shared/model/foodStamp.model';
+import { ITransferFoodStamp } from 'shared/model/transfer.model';
+import { IProductLocalDonationGet, IStock } from 'shared/model/productLocalDonation.model';
 
 export const ACTION_TYPES = {
   GET_FOOD_STAMPS: 'foodStamps/GET_FOOD_STAMPS',
@@ -9,6 +11,9 @@ export const ACTION_TYPES = {
   UPDATE_FOOD_STAMP: 'foodStamps/UPDATE_FOOD_STAMP',
   RESET_SUCCESS: 'foodStamps/RESET_REGISTER',
   RESET: 'foodStamps/RESET',
+  MAKE_TRANSFER: 'foodStamp/MAKE_TRANSFER',
+  SET_TRANSFER_PRODUCT: 'foodStamp/SET_TRANSFER_PRODUCT',
+  GET_PRODUCTS_IN_FOODSTAMP: 'foodStamp/GET_PRODUCTS_IN_FOODSTAMP',
   DELETE_FOOD_STAMP: 'foodStamps/DELETE',
 };
 
@@ -22,9 +27,14 @@ const initialState = {
   updateFoodStampError: false,
   deleteFoodStampSuccess: false,
   deleteFoodStampError: false,
+  makeTransferSuccess: false,
+  makeTransferError: false,
   foodStamps: [] as Array<IFoodStamp>,
   toViewFoodStamps: {} as IFoodStamp,
+  toTransferProduct: {} as IProductLocalDonationGet,
   totalCount: 0,
+  amount: 0,
+  products: [] as Array<IStock>,
 };
 
 export type FoodStampState = Readonly<typeof initialState>;
@@ -33,6 +43,7 @@ export type FoodStampState = Readonly<typeof initialState>;
 export default (state: FoodStampState = initialState, action): FoodStampState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.GET_FOOD_STAMPS):
+    case REQUEST(ACTION_TYPES.GET_PRODUCTS_IN_FOODSTAMP):
     case REQUEST(ACTION_TYPES.CREATE_FOOD_STAMP):
       return {
         ...state,
@@ -44,6 +55,11 @@ export default (state: FoodStampState = initialState, action): FoodStampState =>
         loading: true,
         updateFoodStampError: false,
         updateFoodStampSuccess: false,
+      };
+    case REQUEST(ACTION_TYPES.MAKE_TRANSFER):
+      return {
+        ...state,
+        loading: true,
       };
     case FAILURE(ACTION_TYPES.GET_FOOD_STAMPS):
       return {
@@ -72,6 +88,13 @@ export default (state: FoodStampState = initialState, action): FoodStampState =>
         loading: false,
         deleteFoodStampError: true,
         deleteFoodStampSuccess: false,
+      };
+    case FAILURE(ACTION_TYPES.MAKE_TRANSFER):
+      return {
+        ...initialState,
+        loading: false,
+        makeTransferError: true,
+        makeTransferSuccess: false,
       };
     case SUCCESS(ACTION_TYPES.GET_FOOD_STAMPS):
       return {
@@ -103,11 +126,27 @@ export default (state: FoodStampState = initialState, action): FoodStampState =>
         deleteFoodStampError: false,
         deleteFoodStampSuccess: true,
       };
+    case SUCCESS(ACTION_TYPES.MAKE_TRANSFER):
+      return {
+        ...state,
+        loading: false,
+        makeTransferError: false,
+        makeTransferSuccess: true,
+      };
+    case ACTION_TYPES.SET_TRANSFER_PRODUCT:
+      return {
+        ...state,
+        toTransferProduct: action.payload,
+        amount: action.amount,
+      };
+
     case ACTION_TYPES.RESET_SUCCESS:
       return {
         ...state,
         getFoodStampsError: false,
         getFoodStampsSuccess: false,
+        toTransferProduct: {},
+        amount: 0,
       };
     case ACTION_TYPES.SET_FOOD_STAMP_VIEW:
       return {
@@ -156,6 +195,30 @@ export const setToViewFoodStamp = (foodStamp: IFoodStamp) => ({
   type: ACTION_TYPES.SET_FOOD_STAMP_VIEW,
   payload: foodStamp,
 });
+
+export const makeTransfer = (transfer: ITransferFoodStamp) => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.MAKE_TRANSFER,
+    payload: APIUrl.post('transfer/foodStamp', transfer),
+  });
+};
+
+export const setToTransferProduct = (product: IStock, amount: number) => async (dispatch) => {
+  const { data: fetchedProduct } = await APIUrl.get(`stock/${product.id}`);
+  await dispatch({
+    type: ACTION_TYPES.SET_TRANSFER_PRODUCT,
+    payload: fetchedProduct,
+    amount,
+  });
+};
+
+export const getStockByFoodStampId = (foodStampId: number) => async (dispatch) => {
+  const { data: products } = await APIUrl.get(`stock/foodStamp/${foodStampId}`);
+  await dispatch({
+    type: ACTION_TYPES.GET_PRODUCTS_IN_FOODSTAMP,
+    payload: products,
+  });
+};
 
 export const resetSuccessGetfoodStamp = () => ({
   type: ACTION_TYPES.RESET_SUCCESS,

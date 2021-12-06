@@ -4,9 +4,9 @@ import { ILocal } from './local.model';
 export interface ITransferGet {
   id?: string;
   origin_id?: string;
-  origin?: ILocal | IFoodStamp;
+  origin?: ILocal;
   destiny_id?: string;
-  destiny?: ILocal | IFoodStamp;
+  destiny?: ILocal;
   transfer_date?: string;
   description?: string;
   product_name?: string;
@@ -21,7 +21,7 @@ export interface ITransferGet {
 export interface ITransferPostPut {
   id?: string;
   destiny_id?: string;
-  destiny?: ILocal | IFoodStamp;
+  destiny?: ILocal;
   product_id?: string;
   product_name?: string;
   product_brand?: string;
@@ -33,4 +33,12 @@ export interface ITransferPostPut {
   active?: boolean;
   created_at?: string;
   updated_at?: string;
+}
+
+export interface ITransferFoodStamp {
+  product_id?: string;
+  food_stamp_id?: string;
+  total_amount_transfered?: number;
+  expiration_date?: string;
+  active?: boolean;
 }

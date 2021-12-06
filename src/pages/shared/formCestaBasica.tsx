@@ -6,16 +6,27 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, FormGroup, Label, Row } from 'reactstrap';
 import { AvField, AvForm, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation';
 import { IRootState } from '../../shared/reducers';
-import { createFoodStamp, updateFoodStamp, reset as resetFoodStamp } from '../../shared/reducers/food-stamp.reducer';
+import {
+  createFoodStamp,
+  updateFoodStamp,
+  reset as resetFoodStamp,
+  getStockByFoodStampId,
+} from '../../shared/reducers/food-stamp.reducer';
 import { IFoodStamp } from '../../shared/model/foodStamp.model';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import { AUTHORITIES } from '../../config/constants';
+import Table from 'shared/components/Table';
+import { differenceInCalendarDays, endOfToday } from 'date-fns';
+import { formataData } from 'shared/utils/formataData';
+import { faArrowAltCircleRight, faBoxes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IAddFoodStampProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 interface IAddFoodStampState {
   readOnly: boolean;
+  products: any[];
 }
 
 class FormCestaBasica extends React.Component<IAddFoodStampProps, IAddFoodStampState> {
@@ -23,6 +34,7 @@ class FormCestaBasica extends React.Component<IAddFoodStampProps, IAddFoodStampS
     super(props);
     this.state = {
       readOnly: false,
+      products: this.props.getStockByFoodStampId(props.toViewFoodStamp.id),
     };
   }
 
@@ -52,7 +64,7 @@ class FormCestaBasica extends React.Component<IAddFoodStampProps, IAddFoodStampS
       const newFoodStamp: IFoodStamp = {
         name,
         type,
-        open,
+        open: true,
         active: true,
       };
       this.props.createFoodStamp(newFoodStamp);
@@ -114,6 +126,87 @@ class FormCestaBasica extends React.Component<IAddFoodStampProps, IAddFoodStampS
       });
     }
 
+    const dateCell = (date: string) => {
+      if (date) {
+        if (differenceInCalendarDays(new Date(date), endOfToday()) > 7) {
+          return <div className="bg-success text-white">{formataData(new Date(date))}</div>;
+        } else {
+          return <div className="bg-danger text-white">{formataData(new Date(date))}</div>;
+        }
+      }
+      return <div>Não aplicável</div>;
+    };
+
+    const columns = [
+      {
+        Header: 'Produtos',
+        columns: [
+          {
+            Header: 'Codigo NCM',
+            accessor: 'ncm_code',
+          },
+          {
+            Header: 'Nome',
+            accessor: (originalRow) => originalRow,
+            // eslint-disable-next-line react/display-name
+            Cell: ({ cell: { value: productStock } }) => <div>{productStock.name + ' ' + productStock.brand}</div>,
+          },
+          {
+            Header: 'Quantidade',
+            accessor: (originalRow) => originalRow,
+            // eslint-disable-next-line react/display-name
+            Cell: ({ cell: { value: productStock } }) => {
+              const differenceQuantity = productStock.totalAmount - Number(productStock.minimal_qntt);
+              const classNameQuantity =
+                differenceQuantity < productStock.minimal_more_products
+                  ? differenceQuantity > 0
+                    ? 'bg-warning text-white'
+                    : 'bg-danger text-white'
+                  : 'bg-success text-white';
+              return (
+                <div className={classNameQuantity}>{productStock.count + ' ' + productStock.unity_measurement}</div>
+              );
+            },
+          },
+          {
+            Header: 'Data de Validade',
+            accessor: (originalRow) => originalRow,
+            // eslint-disable-next-line react/display-name
+            Cell: ({ cell: { value: productStock } }) => <>{dateCell(productStock.expiration_date)}</>,
+          },
+          /* {
+            Header: 'Opções',
+            accessor: (originalRow) => originalRow,
+            // eslint-disable-next-line react/display-name
+            Cell: ({ cell: { value: productStock } }) => (
+              <div>
+                <Button
+                  className="mx-3"
+                  tag={Link}
+                  to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/transferir`}
+                  outline
+                  color="secondary"
+                  onClick={() => props.setToTransferProduct(productStock, productStock.count)}
+                >
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                </Button>
+                <Button
+                  className="mx-3"
+                  tag={Link}
+                  to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/transferirCesta`}
+                  outline
+                  color="secondary"
+                  onClick={() => props.setToTransferFoodStampProduct(productStock, productStock.count)}
+                >
+                  <FontAwesomeIcon icon={faBoxes} />
+                </Button>
+              </div>
+            ),
+          }, */
+        ],
+      },
+    ];
+
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
         <Card className="w-50 shadow-lg">
@@ -152,22 +245,41 @@ class FormCestaBasica extends React.Component<IAddFoodStampProps, IAddFoodStampS
                   </FormGroup>
                 </Col>
               </Row>
+              {toViewFoodStamp.id && (
+                <Row>
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="open">Aberta</Label>
+                      <AvRadioGroup
+                        inline
+                        name="open"
+                        id="open"
+                        required
+                        value={toViewFoodStamp.open}
+                        errorMessage="Esse campo é obrigatório!"
+                      >
+                        <AvRadio customInput label="Sim" name="open" value={true} readOnly={readOnly} />
+                        <AvRadio customInput label="Não" name="open" value={false} readOnly={readOnly} />
+                      </AvRadioGroup>
+                    </FormGroup>
+                  </Col>
+                </Row>
+              )}
               <Row>
-                <Col md={8}>
-                  <FormGroup>
-                    <Label for="open">Aberta</Label>
-                    <AvRadioGroup
-                      inline
-                      name="open"
-                      id="open"
-                      required
-                      value={toViewFoodStamp.open}
-                      errorMessage="Esse campo é obrigatório!"
-                    >
-                      <AvRadio customInput label="Sim" value={true} readOnly={readOnly} />
-                      <AvRadio customInput label="Não" value={false} readOnly={readOnly} />
-                    </AvRadioGroup>
-                  </FormGroup>
+                {/* <Col md={12}>Produtos</Col> */}
+                <Col md={12}>
+                  <Table
+                    columns={columns}
+                    data={stock}
+                    filterCriteria="ncm_code"
+                    filterBy="Codigo NCM"
+                    fetchData={fetchData}
+                    loading={loading}
+                    pageCount={Math.ceil(totalCount / tablePageSize)}
+                    totalCount={totalCount}
+                    currentPage={currentPage}
+                    canGoToPage={false}
+                  />
                 </Col>
               </Row>
               {!toViewFoodStamp.id && (
@@ -206,12 +318,14 @@ const mapStateToProps = (store: IRootState) => ({
   loadingFoodStamp: store.foodStamp.loading,
   toViewFoodStamp: store.foodStamp.toViewFoodStamps,
   user: store.authentication.account,
+  products: store.foodStamp.products,
 });
 
 const mapDispatchToProps = {
   createFoodStamp,
   updateFoodStamp,
   resetFoodStamp,
+  getStockByFoodStampId,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

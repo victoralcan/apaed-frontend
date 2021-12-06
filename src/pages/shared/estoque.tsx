@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getStock, setProductToEdit } from '../../shared/reducers/stock.reducer';
 import { IRootState } from '../../shared/reducers';
 import { setToTransferProduct } from '../../shared/reducers/transfer.reducer';
+import { setToTransferProduct as setToTransferFoodStampProduct } from '../../shared/reducers/food-stamp.reducer';
 import { formataData } from '../../shared/utils/formataData';
 import { AUTHORITIES } from '../../config/constants';
 import Table from '../../shared/components/Table';
@@ -103,10 +104,10 @@ function Stock(props: IStockProps) {
               <Button
                 className="mx-3"
                 tag={Link}
-                to={`/cestaBasica`}
+                to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/transferirCesta`}
                 outline
                 color="secondary"
-                onClick={() => props.setToTransferProduct(productStock, productStock.count)}
+                onClick={() => props.setToTransferFoodStampProduct(productStock, productStock.count)}
               >
                 <FontAwesomeIcon icon={faBoxes} />
               </Button>
@@ -149,6 +150,7 @@ const mapDispatchToProps = {
   getStock,
   setProductToEdit,
   setToTransferProduct,
+  setToTransferFoodStampProduct,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
