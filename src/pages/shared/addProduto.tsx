@@ -389,7 +389,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                   <br />
                   <Button
                     className="mb-4 float-right float-down"
-                    color="success"
+                    color="primary"
                     type="button"
                     onClick={() => this.setState({ isModalOpen: true })}
                   >
@@ -410,13 +410,15 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                   <Modal isOpen={isModalOpen} toggle={() => this.setState({ isModalOpen: !isModalOpen })}>
                     <ModalHeader toggle={() => this.setState({ isModalOpen: !isModalOpen })}>Lista</ModalHeader>
                     <ModalBody>
-                      {productsList.map((product, i) => (
-                        <div key={i}>{product.name}</div>
-                      ))}
+                      {productsList.length > 0 ? (
+                        productsList.map((product, i) => <div key={i}>{product.name}</div>)
+                      ) : (
+                        <div>Ainda não há produtos na lista</div>
+                      )}
                     </ModalBody>
                     <ModalFooter>
                       <Button
-                        color="primary"
+                        color="success"
                         onClick={() => {
                           this.handleSubmitProductsList();
                           this.setState({ isModalOpen: !isModalOpen });
