@@ -34,6 +34,14 @@ export interface IProductLocalDonationGet {
   updated_at?: string;
 }
 
-export interface IProductLocalDonationPostPut extends IProductLocalDonationGet {
+export interface IProductLocalDonationPostPut {
+  donation_id?: string;
+  local_id?: string;
+  ncm_id?: string;
+  product_id?: string;
+  expiration_date?: string;
+  name?: string;
+  category?: string;
   amount?: number;
+  active?: boolean;
 }

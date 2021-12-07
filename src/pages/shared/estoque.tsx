@@ -25,6 +25,7 @@ function Stock(props: IStockProps) {
 
   useEffect(() => {
     props.getStock(0, 10);
+    // eslint-disable-next-line
   }, []);
 
   const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
