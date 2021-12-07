@@ -5,7 +5,21 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import Select from 'react-select';
 import { AvField, AvForm, AvRadio, AvRadioGroup, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
-import { Button, Card, CardBody, CardHeader, Col, FormGroup, Input, Label, Row } from 'reactstrap';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
+} from 'reactstrap';
 import { IRootState } from '../../shared/reducers';
 import { getDonorByDocument, reset as resetDonor } from '../../shared/reducers/donor.reducer';
 import withReactContent from 'sweetalert2-react-content';
@@ -34,8 +48,9 @@ interface IAddProdutoState {
   category: IOption;
   donation: IOption;
   expiration_date?: string;
-  registerMore: boolean;
   hasExpirationDate: boolean;
+  productsList: IProductLocalDonationPostPut[];
+  isModalOpen: boolean;
 }
 
 class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
@@ -46,8 +61,9 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       category: {},
       donation: {},
       expiration_date: convertToDataInputFormat(new Date()),
-      registerMore: false,
       hasExpirationDate: true,
+      productsList: [],
+      isModalOpen: false,
     };
   }
 
@@ -101,6 +117,12 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
     event.persist();
     const { productType, expiration_date, hasExpirationDate, category } = this.state;
     const { selectedDonation } = this.props;
+    const MySwal = withReactContent(Swal);
+    MySwal.fire({
+      title: 'Produto adicionado!',
+      text: 'Produto adicionado na lista!',
+      icon: 'success',
+    });
     const newProductLocalDonation: IProductLocalDonationPostPut = {
       product_id: String(productType.value),
       donation_id: selectedDonation.id,
@@ -109,8 +131,17 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       // @ts-ignore
       expiration_date: hasExpirationDate ? convertDataInputFormatToDateServerFormat(expiration_date) : undefined,
       active: true,
+      name: productType.label,
+      category: category.label,
     };
-    this.props.registerNewProductToStock(newProductLocalDonation);
+    this.setState({
+      productsList: [...this.state.productsList, newProductLocalDonation],
+      productType: {},
+      category: {},
+      donation: {},
+      expiration_date: convertToDataInputFormat(new Date()),
+      hasExpirationDate: true,
+    });
   };
 
   handleNewDonation = (event, { type }) => {
@@ -129,6 +160,11 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
     this.props.createNewDonation(newDonation);
   };
 
+  handleSubmitProductsList = () => {
+    const { productsList } = this.state;
+    productsList.forEach((product) => this.props.registerNewProductToStock(product));
+  };
+
   render() {
     const {
       donor,
@@ -144,7 +180,10 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       registerNewProductToStockSuccess,
       category,
       user,
+      loadingStock,
     } = this.props;
+
+    const { isModalOpen, productsList } = this.state;
 
     if (!getDonorSuccess && getDonorError) {
       const MySwal = withReactContent(Swal);
@@ -159,25 +198,14 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       this.props.resetDonation();
     }
 
-    if (registerNewProductToStockSuccess && !registerNewProductToStockError) {
+    if (registerNewProductToStockSuccess && !registerNewProductToStockError && !loadingStock) {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
-        title: 'Produto Cadastrado',
-        text: 'Produto cadastrado com sucesso!',
+        title: 'Produtos Cadastrados',
+        text: 'Produtos cadastrados com sucesso!',
         icon: 'success',
       }).then(() => {
-        if (this.state.registerMore) {
-          this.setState({
-            productType: {},
-            category: {},
-            donation: {},
-            expiration_date: convertToDataInputFormat(new Date()),
-            registerMore: false,
-            hasExpirationDate: true,
-          });
-        } else {
-          this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`);
-        }
+        this.props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`);
       });
       this.props.resetSuccessRegister();
     }
@@ -359,16 +387,16 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                     </Row>
                   </Row>
                   <br />
-                  <Button className="mb-4 float-right float-down" color="success" type="submit">
-                    Adicionar produto
-                  </Button>
                   <Button
-                    className="mb-8 float-right mx-3"
-                    color="warning"
-                    type="submit"
-                    onClick={() => this.setState({ registerMore: true })}
+                    className="mb-4 float-right float-down"
+                    color="success"
+                    type="button"
+                    onClick={() => this.setState({ isModalOpen: true })}
                   >
-                    Adicionar mais produtos
+                    Ver Lista
+                  </Button>
+                  <Button className="mb-8 float-right mx-3" color="warning" type="submit">
+                    Adicionar produto na lista
                   </Button>
                   <Button
                     tag={Link}
@@ -379,6 +407,29 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                   >
                     Cancelar
                   </Button>
+                  <Modal isOpen={isModalOpen} toggle={() => this.setState({ isModalOpen: !isModalOpen })}>
+                    <ModalHeader toggle={() => this.setState({ isModalOpen: !isModalOpen })}>Lista</ModalHeader>
+                    <ModalBody>
+                      {productsList.map((product, i) => (
+                        <div key={i}>{product.name}</div>
+                      ))}
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          this.handleSubmitProductsList();
+                          this.setState({ isModalOpen: !isModalOpen });
+                        }}
+                      >
+                        Salvar Produtos
+                      </Button>
+                      &nbsp;
+                      <Button color="secondary" onClick={() => this.setState({ isModalOpen: !isModalOpen })}>
+                        Sair
+                      </Button>
+                    </ModalFooter>
+                  </Modal>
                 </AvForm>
               )
             ) : (
@@ -425,6 +476,7 @@ const mapStateToProps = (store: IRootState) => ({
   registerNewProductToStockSuccess: store.stock.registerNewProductToStockSuccess,
   registerNewProductToStockError: store.stock.registerNewProductToStockError,
   user: store.authentication.account,
+  loadingStock: store.stock.loading,
 });
 
 const mapDispatchToProps = {
