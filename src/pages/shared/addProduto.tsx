@@ -411,7 +411,35 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                     <ModalHeader toggle={() => this.setState({ isModalOpen: !isModalOpen })}>Lista</ModalHeader>
                     <ModalBody>
                       {productsList.length > 0 ? (
-                        productsList.map((product, i) => <div key={i}>{product.name}</div>)
+                        <table>
+                          <tr>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Quantidade</th>
+                            <th></th>
+                          </tr>
+                          {productsList.map((product, i) => {
+                            console.log(product);
+                            return (
+                              <tr key={product.product_id}>
+                                <td>{product.name}</td>
+                                <td>{product.category}</td>
+                                <td>{product.amount}</td>
+                                <td>
+                                  <Button
+                                    onClick={() => {
+                                      const copia = [...productsList];
+                                      copia.splice(i, 1);
+                                      this.setState({ productsList: [...copia] });
+                                    }}
+                                  >
+                                    Remover
+                                  </Button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </table>
                       ) : (
                         <div>Ainda não há produtos na lista</div>
                       )}

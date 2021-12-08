@@ -7,6 +7,7 @@ import { IProductLocalDonationGet, IStock } from 'shared/model/productLocalDonat
 export const ACTION_TYPES = {
   GET_FOOD_STAMPS: 'foodStamps/GET_FOOD_STAMPS',
   SET_FOOD_STAMP_VIEW: 'foodStamps/SET_FOOD_STAMP_VIEW',
+  // SET_FOOD_STAMP_LIST_VIEW: 'foodStamps/SET_FOOD_STAMP_LIST_VIEW',
   CREATE_FOOD_STAMP: 'foodStamps/CREATE_FOOD_STAMP',
   UPDATE_FOOD_STAMP: 'foodStamps/UPDATE_FOOD_STAMP',
   RESET_SUCCESS: 'foodStamps/RESET_REGISTER',
@@ -31,6 +32,7 @@ const initialState = {
   makeTransferError: false,
   foodStamps: [] as Array<IFoodStamp>,
   toViewFoodStamps: {} as IFoodStamp,
+  toViewFoodStampsList: [] as Array<IFoodStamp>,
   toTransferProduct: {} as IProductLocalDonationGet,
   totalCount: 0,
   amount: 0,
@@ -153,6 +155,11 @@ export default (state: FoodStampState = initialState, action): FoodStampState =>
         ...state,
         toViewFoodStamps: action.payload,
       };
+    // case ACTION_TYPES.SET_FOOD_STAMP_LIST_VIEW:
+    //   return {
+    //     ...state,
+    //     toViewFoodStampsList: action.payload,
+    //   };
     case ACTION_TYPES.RESET:
       return {
         ...initialState,
@@ -196,6 +203,11 @@ export const setToViewFoodStamp = (foodStamp: IFoodStamp) => ({
   payload: foodStamp,
 });
 
+// export const setToViewFoodStampList = (foodStamp: IFoodStamp) => ({
+//   type: ACTION_TYPES.SET_FOOD_STAMP_LIST_VIEW,
+//   payload: foodStamp,
+// });
+
 export const makeTransfer = (transfer: ITransferFoodStamp) => async (dispatch) => {
   await dispatch({
     type: ACTION_TYPES.MAKE_TRANSFER,
@@ -212,13 +224,13 @@ export const setToTransferProduct = (product: IStock, amount: number) => async (
   });
 };
 
-export const getStockByFoodStampId = (foodStampId: number) => async (dispatch) => {
-  const { data: products } = await APIUrl.get(`stock/foodStamp/${foodStampId}`);
-  await dispatch({
-    type: ACTION_TYPES.GET_PRODUCTS_IN_FOODSTAMP,
-    payload: products,
-  });
-};
+// export const getStockByFoodStampId = (foodStampId: number) => async (dispatch) => {
+//   const { data: products } = await APIUrl.get(`stock/foodStamp/${foodStampId}`);
+//   await dispatch({
+//     type: ACTION_TYPES.GET_PRODUCTS_IN_FOODSTAMP,
+//     payload: products,
+//   });
+// };
 
 export const resetSuccessGetfoodStamp = () => ({
   type: ACTION_TYPES.RESET_SUCCESS,
