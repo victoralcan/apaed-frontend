@@ -20,22 +20,12 @@ import { AUTHORITIES } from '../../config/constants';
 
 interface IAddFornecedorProps extends StateProps, DispatchProps, RouteComponentProps {}
 
-interface IAddFornecedorState {
-  readOnly: boolean;
-}
-
-class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedorState> {
+class FormFornecedor extends React.Component<IAddFornecedorProps> {
   constructor(props) {
     super(props);
     this.state = {
       readOnly: false,
     };
-  }
-
-  componentDidMount() {
-    if (this.props.user.role.name === AUTHORITIES.USER) {
-      this.setState({ readOnly: true });
-    }
   }
 
   componentWillUnmount() {
@@ -110,8 +100,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
       toViewContact,
       user,
     } = this.props;
-
-    const { readOnly } = this.state;
 
     if (!createDonorSuccess && createDonorError) {
       const MySwal = withReactContent(Swal);
@@ -188,7 +176,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="name"
                       id="name"
                       required
-                      readOnly={readOnly}
                       value={toViewDonor.name}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -202,7 +189,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="email"
                       id="email"
                       required
-                      readOnly={readOnly}
                       value={toViewDonor.email}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -218,7 +204,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="document"
                       id="document"
                       required
-                      readOnly={readOnly}
                       value={toViewDonor.document}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -233,7 +218,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       id="public_place"
                       required
                       value={toViewContact.public_place}
-                      readOnly={readOnly}
                       errorMessage="Esse campo é obrigatório!"
                     />
                   </FormGroup>
@@ -248,7 +232,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="complement"
                       id="complement"
                       required
-                      readOnly={readOnly}
                       value={toViewContact.complement}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -262,7 +245,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="number"
                       id="number"
                       required
-                      readOnly={readOnly}
                       value={toViewContact.number}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -278,7 +260,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="district"
                       id="district"
                       required
-                      readOnly={readOnly}
                       value={toViewContact.district}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -292,7 +273,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="city"
                       id="city"
                       required
-                      readOnly={readOnly}
                       value={toViewContact.city}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -306,7 +286,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="state"
                       id="state"
                       required
-                      readOnly={readOnly}
                       value={toViewContact.state}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -322,7 +301,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="country"
                       id="country"
                       required
-                      readOnly={readOnly}
                       value={toViewContact.country}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -336,7 +314,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="zip_code"
                       id="zip_code"
                       required
-                      readOnly={readOnly}
                       value={toViewContact.zip_code}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -350,7 +327,6 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                       name="phone"
                       id="phone"
                       required
-                      readOnly={readOnly}
                       value={toViewContact.phone}
                       errorMessage="Esse campo é obrigatório!"
                     />
@@ -363,7 +339,7 @@ class FormFornecedor extends React.Component<IAddFornecedorProps, IAddFornecedor
                   Adicionar fornecedor/doador
                 </Button>
               )}
-              {toViewDonor.id && user.role.name === AUTHORITIES.ADMIN && (
+              {toViewDonor.id && (
                 <Button className="mb-4 float-right float-down" color="success" type="submit">
                   Confirmar Alterações
                 </Button>
