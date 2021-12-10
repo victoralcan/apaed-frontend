@@ -15,6 +15,7 @@ import Categoria from './categoria';
 import ViewCategoria from '../shared/addCategoria';
 import AddTipoProduto from '../shared/addTipoProduto';
 import Products from './produto';
+import AddProduto from '../shared/addProduto';
 import CestaBasica from 'pages/shared/cestaBasica';
 import FormCestaBasica from 'pages/shared/formCestaBasica';
 import TransferirCesta from 'pages/shared/transferirCesta';
@@ -23,7 +24,7 @@ const Routes = ({ match }) => (
   <Switch>
     <ErrorBoundaryRoute path={`${match.url}/estoque`} component={Estoque} />
     <ErrorBoundaryRoute path={`${match.url}/transferir`} component={Transferir} />
-    <ErrorBoundaryRoute path={`${match.url}/addProduto`} component={Estoque} />
+    <ErrorBoundaryRoute path={`${match.url}/addProduto`} component={AddProduto} />
     <ErrorBoundaryRoute path={`${match.url}/fornecedor`} component={Fornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/addFornecedor`} component={FormFornecedor} />
     <ErrorBoundaryRoute path={`${match.url}/viewFornecedor`} component={FormFornecedor} />
