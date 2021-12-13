@@ -135,7 +135,7 @@ class FormUsers extends React.Component<IAddUserProps, IAddUserState> {
       errorMessage,
     } = this.props;
 
-    if (!createUserSuccess && createUserError) {
+    if (!createUserSuccess && createUserError && !loading) {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
         title: 'Erro!',
@@ -144,11 +144,11 @@ class FormUsers extends React.Component<IAddUserProps, IAddUserState> {
       });
     }
 
-    if (!updateUserSuccess && updateUserError) {
+    if (!updateUserSuccess && updateUserError && !loading) {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
         title: 'Erro!',
-        text: 'Erro ao atualizar o usuário! Por favor, tente novamente!',
+        text: errorMessage ? errorMessage : 'Erro ao atualizar o usuário! Por favor, tente novamente!',
         icon: 'error',
       });
     }

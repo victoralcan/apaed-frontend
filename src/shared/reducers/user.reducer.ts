@@ -52,6 +52,7 @@ export default (state: UserState = initialState, action): UserState => {
         loading: true,
         updateUserError: false,
         updateUserSuccess: false,
+        errorMessage: '',
       };
     case REQUEST(ACTION_TYPES.GET_ROLES):
       return {
@@ -86,6 +87,7 @@ export default (state: UserState = initialState, action): UserState => {
         loading: false,
         updateUserError: true,
         updateUserSuccess: false,
+        errorMessage: action.payload.response.data.error,
       };
     case FAILURE(ACTION_TYPES.GET_ROLES):
       return {
