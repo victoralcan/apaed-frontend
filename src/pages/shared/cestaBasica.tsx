@@ -26,14 +26,10 @@ function CestaBasica(props: IFoodStampsProps): JSX.Element {
     deleteFoodStampError,
     deleteFoodStampSuccess,
     stockByFoodStampId,
-    totalCountByFoodStampId,
   } = props;
   const fetchIdRef = React.useRef(0);
-  const fetchIdRefProduct = React.useRef(0);
   const [tablePageSize, setTablePageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-  const [currentPageProduct, setCurrentPageProduct] = useState(0);
-  const [tablePageSizeProduct, setTablePageSizeProduct] = useState(10);
   const [isModalOpen, setModalOpen] = useState(false);
   const [foodStampId, setFoodStampId] = useState('');
 
@@ -50,19 +46,6 @@ function CestaBasica(props: IFoodStampsProps): JSX.Element {
       const skip = pageIndex * pageSize;
       const take = pageSize;
       props.getFoodStamps(skip, take);
-    }
-    // eslint-disable-next-line
-  }, []);
-
-  const fetchDataFoodStamp = React.useCallback(({ pageSize, pageIndex }) => {
-    const fetchId = ++fetchIdRefProduct.current;
-    console.log(foodStampId);
-    if (fetchId === fetchIdRefProduct.current) {
-      setTablePageSizeProduct(pageSize);
-      setCurrentPageProduct(pageIndex);
-      const skip = pageIndex * pageSize;
-      const take = pageSize;
-      props.getStockByFoodStampId(foodStampId, skip, take);
     }
     // eslint-disable-next-line
   }, []);
@@ -144,82 +127,6 @@ function CestaBasica(props: IFoodStampsProps): JSX.Element {
     },
   ];
 
-  const stockColumns = [
-    {
-      Header: 'Produtos',
-      columns: [
-        {
-          Header: 'Codigo NCM',
-          accessor: 'ncm_code',
-        },
-        {
-          Header: 'Nome',
-          accessor: 'name',
-        },
-        {
-          Header: 'Quantidade',
-          accessor: () => {},
-          // eslint-disable-next-line react/display-name
-          Cell: () => <div>{props.totalCountByFoodStampId}</div>,
-        },
-        {
-          Header: 'Opções',
-          accessor: (originalRow) => originalRow,
-          // eslint-disable-next-line react/display-name
-          Cell: ({ cell: { value: foodStamp } }) => (
-            <>
-              <Button
-                onClick={() => {
-                  props.setToViewFoodStamp(foodStamp);
-                  // props.getContactById(foodStamp.id);
-                  props.history.push(`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/viewCestaBasica`);
-                }}
-                color="info"
-              >
-                <FontAwesomeIcon icon={faInfo} />
-              </Button>
-              <Button
-                onClick={() => {
-                  Swal.fire({
-                    title: 'Deseja deletar a Cesta básica?',
-                    confirmButtonText: 'Deletar',
-                    showCancelButton: true,
-                    cancelButtonText: 'Cancelar',
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      props.deleteFoodStamp(foodStamp.id);
-                      if (deleteFoodStampSuccess && !deleteFoodStampError && !loading) {
-                        const MySwal = withReactContent(Swal);
-                        MySwal.fire({
-                          title: 'Cesta básica deletada!',
-                          text: 'Cesta básica deletada com sucesso!',
-                          icon: 'success',
-                        }).then(() => {
-                          props.reset();
-                          props.history.push('/admin/cestaBasica');
-                        });
-                      }
-                    } else if (!deleteFoodStampSuccess && deleteFoodStampError && !loading) {
-                      const MySwal = withReactContent(Swal);
-                      MySwal.fire({
-                        title: 'Erro!',
-                        text: 'Erro ao deletar Cesta básica! Por favor, tente novamente!',
-                        icon: 'error',
-                      });
-                    }
-                  });
-                }}
-                color="trash"
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </Button>
-            </>
-          ),
-        },
-      ],
-    },
-  ];
-
   return (
     <div className="d-flex h-100 align-items-center justify-content-center">
       <Modal
@@ -236,7 +143,7 @@ function CestaBasica(props: IFoodStampsProps): JSX.Element {
               <tr>
                 <th>Nome</th>
                 <th>NCM</th>
-                <th></th>
+                <th />
               </tr>
               {stockByFoodStampId.map((product) => {
                 console.log(product);

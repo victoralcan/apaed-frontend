@@ -40,6 +40,7 @@ import { IProductLocalDonationPostPut } from '../../shared/model/productLocalDon
 import { registerNewProductToStock, resetSuccessRegister } from '../../shared/reducers/stock.reducer';
 import { IOption } from '../../shared/model/option.model';
 import { AUTHORITIES } from '../../config/constants';
+import { isPast } from 'date-fns';
 
 interface IAddProdutoProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -118,11 +119,14 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
     const { productType, expiration_date, hasExpirationDate, category } = this.state;
     const { selectedDonation } = this.props;
     const MySwal = withReactContent(Swal);
-    MySwal.fire({
-      title: 'Produto adicionado!',
-      text: 'Produto adicionado na lista!',
-      icon: 'success',
-    });
+    if (hasExpirationDate && isPast(new Date(expiration_date))) {
+      MySwal.fire({
+        title: 'Data de validade inválida!',
+        text: 'A data de validade não pode ser passado!',
+        icon: 'error',
+      });
+      return;
+    }
     const newProductLocalDonation: IProductLocalDonationPostPut = {
       product_id: String(productType.value),
       donation_id: selectedDonation.id,
@@ -141,6 +145,11 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       donation: {},
       expiration_date: convertToDataInputFormat(new Date()),
       hasExpirationDate: true,
+    });
+    MySwal.fire({
+      title: 'Produto adicionado!',
+      text: 'Produto adicionado na lista!',
+      icon: 'success',
     });
   };
 
@@ -416,7 +425,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                             <th>Nome</th>
                             <th>Categoria</th>
                             <th>Quantidade</th>
-                            <th></th>
+                            <th />
                           </tr>
                           {productsList.map((product, i) => {
                             console.log(product);

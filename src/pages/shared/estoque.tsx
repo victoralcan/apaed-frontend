@@ -99,6 +99,7 @@ function Stock(props: IStockProps) {
                 outline
                 color="secondary"
                 onClick={() => props.setToTransferProduct(productStock, productStock.count)}
+                title="Transferir produto para setor"
               >
                 <FontAwesomeIcon icon={faArrowAltCircleRight} />
               </Button>
@@ -109,6 +110,7 @@ function Stock(props: IStockProps) {
                 outline
                 color="secondary"
                 onClick={() => props.setToTransferFoodStampProduct(productStock, productStock.count)}
+                title="Adicionar produto a cesta"
               >
                 <FontAwesomeIcon icon={faBoxes} />
               </Button>

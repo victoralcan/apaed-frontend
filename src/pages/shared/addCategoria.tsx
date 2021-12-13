@@ -253,7 +253,7 @@ class Categoria extends React.Component<ICategoriaProps, ICategoriaState> {
               <Row>
                 <Col md={8}>
                   <FormGroup className="mr-4">
-                    <Label for="long_description">Quantidade minima de produtos a mais</Label>
+                    <Label for="long_description">Quantidade Sobressalente</Label>
                     <AvField
                       className="form-control"
                       name="minimal_more_products"

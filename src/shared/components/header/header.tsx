@@ -38,17 +38,8 @@ function Header(props: IHeaderProps) {
         <Nav className="d-flex w-100" navbar>
           {props.user.role.name === AUTHORITIES.USER ? (
             <>
-              <Link className="header-option text-center" to="/user/estoque" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Estoque</h6>
-              </Link>
               <Link className="header-option text-center" to="/user/fornecedor" style={{ textDecoration: 'none' }}>
                 <h6 className="text-white">Fornecedor</h6>
-              </Link>
-              <Link className="header-option text-center" to="/user/setor" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Setor</h6>
-              </Link>
-              <Link className="header-option text-center" to="/user/cestaBasica" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Cestas básicas</h6>
               </Link>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav>
@@ -60,6 +51,15 @@ function Header(props: IHeaderProps) {
                   </Link>
                 </DropdownMenu>
               </UncontrolledDropdown>
+              <Link className="header-option text-center" to="/user/estoque" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Estoque</h6>
+              </Link>
+              <Link className="header-option text-center" to="/user/setor" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Setor</h6>
+              </Link>
+              <Link className="header-option text-center" to="/user/cestaBasica" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Cestas básicas</h6>
+              </Link>
               <Link
                 className="header-option text-center"
                 to="/"
@@ -71,21 +71,6 @@ function Header(props: IHeaderProps) {
             </>
           ) : (
             <>
-              <Link className="header-option text-center" to="/admin/estoque" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Estoque</h6>
-              </Link>
-              <Link className="header-option text-center" to="/admin/categories" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Categoria</h6>
-              </Link>
-              <Link className="header-option text-center" to="/admin/products" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Tipo Produto</h6>
-              </Link>
-              <Link className="header-option text-center" to="/admin/fornecedor" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Fornecedor</h6>
-              </Link>
-              <Link className="header-option text-center" to="/admin/setor" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Setor</h6>
-              </Link>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav>
                   <h6 className="text-white header-option text-center">Produto</h6>
@@ -96,6 +81,21 @@ function Header(props: IHeaderProps) {
                   </Link>
                 </DropdownMenu>
               </UncontrolledDropdown>
+              <Link className="header-option text-center" to="/admin/fornecedor" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Fornecedor</h6>
+              </Link>
+              <Link className="header-option text-center" to="/admin/estoque" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Estoque</h6>
+              </Link>
+              <Link className="header-option text-center" to="/admin/categories" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Categoria</h6>
+              </Link>
+              <Link className="header-option text-center" to="/admin/products" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Tipo Produto</h6>
+              </Link>
+              <Link className="header-option text-center" to="/admin/setor" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Setor</h6>
+              </Link>
               <Link className="header-option text-center" to="/admin/transfers" style={{ textDecoration: 'none' }}>
                 <h6 className="text-white">Transferências</h6>
               </Link>
