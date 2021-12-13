@@ -11,6 +11,7 @@ import type, { TypeState } from './type.reducer';
 import unityMeasurement, { UnityMeasurementState } from './unityMeasurement.reducer';
 import contact, { ContactState } from './contact.reducer';
 import foodStamp, { FoodStampState } from './food-stamp.reducer';
+import user, { UserState } from './user.reducer';
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -25,6 +26,7 @@ export interface IRootState {
   readonly unityMeasurement: UnityMeasurementState;
   readonly contact: ContactState;
   readonly foodStamp: FoodStampState;
+  readonly user: UserState;
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -40,6 +42,7 @@ const rootReducer = combineReducers<IRootState>({
   unityMeasurement,
   contact,
   foodStamp,
+  user,
 });
 
 export default rootReducer;

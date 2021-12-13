@@ -186,7 +186,7 @@ export const updateDonor = (donor: IDonor) => async (dispatch) => {
 
 export const deleteDonor = (donor_id: string) => async (dispatch) => {
   await dispatch({
-    type: ACTION_TYPES.UPDATE_DONOR,
+    type: ACTION_TYPES.DELETE_DONOR,
     payload: APIUrl.delete(`donors/${donor_id}`),
   });
   dispatch(getDonors(0, 10));

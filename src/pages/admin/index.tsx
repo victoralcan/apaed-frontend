@@ -19,9 +19,13 @@ import AddProduto from '../shared/addProduto';
 import CestaBasica from 'pages/shared/cestaBasica';
 import FormCestaBasica from 'pages/shared/formCestaBasica';
 import TransferirCesta from 'pages/shared/transferirCesta';
+import Users from './users';
+import ViewUser from './formUsers';
 
 const Routes = ({ match }) => (
   <Switch>
+    <ErrorBoundaryRoute path={`${match.url}/users`} component={Users} />
+    <ErrorBoundaryRoute path={`${match.url}/viewUser`} component={ViewUser} />
     <ErrorBoundaryRoute path={`${match.url}/estoque`} component={Estoque} />
     <ErrorBoundaryRoute path={`${match.url}/transferir`} component={Transferir} />
     <ErrorBoundaryRoute path={`${match.url}/addProduto`} component={AddProduto} />
