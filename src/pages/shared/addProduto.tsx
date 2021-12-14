@@ -52,6 +52,7 @@ interface IAddProdutoState {
   hasExpirationDate: boolean;
   productsList: IProductLocalDonationPostPut[];
   isModalOpen: boolean;
+  isModalCancelOpen: boolean;
 }
 
 class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
@@ -65,6 +66,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       hasExpirationDate: true,
       productsList: [],
       isModalOpen: false,
+      isModalCancelOpen: false,
     };
   }
 
@@ -153,6 +155,12 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
     });
   };
 
+  handleCancel = () => {
+    this.state.productsList.length > 0
+      ? this.setState({ isModalCancelOpen: true })
+      : this.props.history.push(`/${this.props.user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`);
+  };
+
   handleNewDonation = (event, { type }) => {
     event.persist();
 
@@ -192,7 +200,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
       loadingStock,
     } = this.props;
 
-    const { isModalOpen, productsList } = this.state;
+    const { isModalOpen, productsList, isModalCancelOpen } = this.state;
 
     if (!getDonorSuccess && getDonorError) {
       const MySwal = withReactContent(Swal);
@@ -408,8 +416,9 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                     Adicionar produto na lista
                   </Button>
                   <Button
-                    tag={Link}
-                    to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`}
+                    onClick={() => this.handleCancel()}
+                    // tag={Link}
+                    // to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`}
                     className="mb-8 float-left"
                     type="button"
                     color="danger"
@@ -466,6 +475,32 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                       &nbsp;
                       <Button color="secondary" onClick={() => this.setState({ isModalOpen: !isModalOpen })}>
                         Sair
+                      </Button>
+                    </ModalFooter>
+                  </Modal>
+
+                  <Modal
+                    isOpen={isModalCancelOpen}
+                    toggle={() => this.setState({ isModalCancelOpen: !isModalCancelOpen })}
+                  >
+                    <ModalHeader toggle={() => this.setState({ isModalCancelOpen: !isModalCancelOpen })}>
+                      Tem certeza?
+                    </ModalHeader>
+                    <ModalBody>Existem produtos na sua lista. Tem certeza que deseja cancelar a operação?</ModalBody>
+                    <ModalFooter>
+                      <Button
+                        color="success"
+                        tag={Link}
+                        to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/estoque`}
+                      >
+                        Sim
+                      </Button>
+                      &nbsp;
+                      <Button
+                        color="secondary"
+                        onClick={() => this.setState({ isModalCancelOpen: !isModalCancelOpen })}
+                      >
+                        Não
                       </Button>
                     </ModalFooter>
                   </Modal>
