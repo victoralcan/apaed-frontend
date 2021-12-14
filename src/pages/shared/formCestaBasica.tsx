@@ -38,7 +38,7 @@ class FormCestaBasica extends React.Component<IAddFoodStampProps, IAddFoodStampS
     this.props.resetFoodStamp();
   }
 
-  handleValidSubmit = (event, { name, type, open }) => {
+  handleValidSubmit = (event, { name, type, open, delivered }) => {
     event.persist();
     const { toViewFoodStamp } = this.props;
     if (toViewFoodStamp.id) {
@@ -48,6 +48,7 @@ class FormCestaBasica extends React.Component<IAddFoodStampProps, IAddFoodStampS
         type,
         open,
         active: true,
+        delivered,
       };
       this.props.updateFoodStamp(updatedFoodStamp);
     } else {
@@ -56,6 +57,7 @@ class FormCestaBasica extends React.Component<IAddFoodStampProps, IAddFoodStampS
         type,
         open: true,
         active: true,
+        delivered: false,
       };
       this.props.createFoodStamp(newFoodStamp);
     }
@@ -169,6 +171,26 @@ class FormCestaBasica extends React.Component<IAddFoodStampProps, IAddFoodStampS
                       >
                         <AvRadio customInput label="Sim" name="open" value={true} readOnly={readOnly} />
                         <AvRadio customInput label="Não" name="open" value={false} readOnly={readOnly} />
+                      </AvRadioGroup>
+                    </FormGroup>
+                  </Col>
+                </Row>
+              )}
+              {toViewFoodStamp.id && (
+                <Row>
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="delivered">Entregue</Label>
+                      <AvRadioGroup
+                        inline
+                        name="delivered"
+                        id="delivered"
+                        required
+                        value={toViewFoodStamp.delivered}
+                        errorMessage="Esse campo é obrigatório!"
+                      >
+                        <AvRadio customInput label="Sim" name="delivered" value={true} readOnly={readOnly} />
+                        <AvRadio customInput label="Não" name="delivered" value={false} readOnly={readOnly} />
                       </AvRadioGroup>
                     </FormGroup>
                   </Col>

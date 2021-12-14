@@ -6,4 +6,5 @@ export interface IFoodStamp {
   active?: boolean;
   created_at?: string;
   updated_at?: string;
+  delivered?: boolean;
 }
