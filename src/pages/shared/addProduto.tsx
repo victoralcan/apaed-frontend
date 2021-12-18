@@ -81,6 +81,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
     if (prevProps.donor.id !== this.props.donor.id) {
       this.props.getCategories(0, 1000000);
     }
+    // window.onbeforeunload = () => this.setState({ isModalCancelOpen: true });
   }
 
   changeProductType = (productType) => {
@@ -316,7 +317,7 @@ class AddProduto extends React.Component<IAddProdutoProps, IAddProdutoState> {
                     <Col md={4}>
                       <Button
                         tag={Link}
-                        to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/addCategoria`}
+                        to={`/${user.role.name === AUTHORITIES.ADMIN ? 'admin' : 'user'}/viewCategoria`}
                         className="mt-3 mx-3"
                         color="primary"
                       >

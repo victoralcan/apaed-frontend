@@ -71,6 +71,9 @@ function Header(props: IHeaderProps) {
             </>
           ) : (
             <>
+              <Link className="header-option text-center" to="/admin/fornecedor" style={{ textDecoration: 'none' }}>
+                <h6 className="text-white">Fornecedor</h6>
+              </Link>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav>
                   <h6 className="text-white header-option text-center">Produto</h6>
@@ -81,9 +84,6 @@ function Header(props: IHeaderProps) {
                   </Link>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <Link className="header-option text-center" to="/admin/fornecedor" style={{ textDecoration: 'none' }}>
-                <h6 className="text-white">Fornecedor</h6>
-              </Link>
               <Link className="header-option text-center" to="/admin/estoque" style={{ textDecoration: 'none' }}>
                 <h6 className="text-white">Estoque</h6>
               </Link>
