@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Como Rodar
 
+Antes de tudo, precisamos de um .env no projeto com a variável REACT_APP_API_URL, onde colocamos a URL do nosso back-end
+
 Para rodar o projeto, digite `yarn` na raiz do projeto para instalar as dependências. Após, apenas digite `yarn start` para iniciar o projeto.
 
 ## Available Scripts
